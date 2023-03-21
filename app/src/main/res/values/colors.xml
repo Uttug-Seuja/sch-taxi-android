@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="purple_01">#9180FF</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +8,75 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="opacity_black">#99000000</color>
+
+    <color name="gray10">#212121</color>
+    <color name="gray09">#424242</color>
+    <color name="gray08_1">#535353</color>
+    <color name="gray08">#616161</color>
+    <color name="gray07">#757575</color>
+    <color name="gray06">#9E9E9E</color>
+    <color name="gray05">#BDBDBD</color>
+    <color name="gray04">#E0E0E0</color>
+    <color name="gray03">#EEEEEE</color>
+    <color name="gray02">#F5F5F5</color>
+    <color name="gray01">#FAFAFA</color>
+
+    <color name="background_white_mode">#F6F6F6</color>
+
+    <color name="main_yellow_light_mode">#FFEC8A</color>
+    <color name="main_yellow2_text">#FFD260</color>
+    <color name="main_yellow_dark_mode">#FFF285</color>
+
+    <color name="green01">#2db400</color>
+    <color name="green02">#60c141</color>
+    <color name="green03">#85ce69</color>
+    <color name="green04">#a5db8e</color>
+
+
+
+    <color name="main_purple">#9180FF</color>
+    <color name="main_purple_dark_mode">#614DDC</color>
+
+    <color name="system_red_caution">#FF5050</color>
+    <color name="system_blue_positive">#67A8FF</color>
+
+
+    <color name="primary">#3F80FF</color>
+    <color name="press">#3266CC</color>
+    <color name="disable">#ACACAC</color>
+    <color name="toast">#3C3C3C</color>
+
+    <color name="main">#1A1E27</color>
+
+    <!-- sub color -->
+    <color name="green_50">#34C185</color>
+    <color name="green_10">#DFF5EC</color>
+    <color name="blue_50">#3F80FF</color>
+    <color name="blue_10">#E3ECFF</color>
+    <color name="pink_50">#FF70D7</color>
+    <color name="pink_10">#FFE0F6</color>
+    <color name="orange_50">#FF9F40</color>
+    <color name="purple_50">#B9A0FE</color>
+
+
+    <!-- gray -->
+    <color name="gray_background">#F6F7F9</color>
+    <color name="gray_100">#F4F6F8</color>
+    <color name="gray_200">#E8EBF0</color>
+    <color name="gray_300">#D8DCE2</color>
+    <color name="gray_400">#C4CAD4</color>
+    <color name="gray_450">#A5ADBD</color>
+    <color name="gray_500">#8E95A3</color>
+    <color name="gray_600">#5B616C</color>
+    <color name="gray_700">#353C49</color>
+    <color name="gray_800">#1A1E27</color>
+
+    <!-- system color -->
+    <color name="green_system_color">#09BC7B</color>
+    <color name="red_system_color">#FF4D4D</color>
+
+    <color name="transparency_color">#FF000000</color>
 </resources>

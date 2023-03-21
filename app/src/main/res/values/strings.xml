@@ -1,3 +1,74 @@
 <resources>
     <string name="app_name">sch_taxi</string>
+    <!--네비게이션 메뉴-->
+    <string name="bottom_home">홈</string>
+    <string name="bottom_alarm_room">알림방</string>
+    <string name="bottom_my">MY</string>
+
+    <string name="setprofile_nickname_hint">닉네임을 입력해주세요</string>
+    <string name="setprofile_nickname">닉네임</string>
+    <string name="setprofile_gender">성별</string>
+    <string name="setprofile_gender_man">남자</string>
+    <string name="setprofile_gender_woman">여자</string>
+    <string name="setprofile_age">생년월일</string>
+    <string name="setprofile_age_hint">생년월일 8자리를 입력해주세요</string>
+    <string name="ok_text">확인</string>
+    <string name="camera">카메라</string>
+    <string name="close">취소</string>
+    <string name="gallery">내 사진첩</string>
+    <string name="onBackPressed_Message">뒤로가기 버튼을\n한번 더 누르면 종료됩니다.</string>
+
+    <string name="alarm_settings_new_push">새로운 푸시알림 도착 알림</string>
+    <string name="alarm_settings_new_push_description">소속 그룹 내 신규 푸시알림</string>
+
+    <string name="alarm_settings_reaction_push">푸시알림 리액션 알림</string>
+    <string name="alarm_settings_reaction_push_description">내 푸시알림에 리액션이 남겨졌을 때 알림</string>
+
+    <!--팝업 모달-->
+    <string name="logout_title">로그아웃 하시겠어요?</string>
+    <string name="logout_description">언제든 다시 돌아올 수 있어요!</string>
+    <string name="no">아니요</string>
+
+    <string name="user_delete_title">정말 탈퇴하시겠어요?</string>
+    <string name="user_delete_description">탈퇴시 모든 알림방과\n푸시메세지가 사라져요.</string>
+    <string name="user_delete_yes">회원 탈퇴</string>
+
+    <string name="alarm_permission_title">똑똑! 푸쉬 알림을 켜주세요</string>
+    <string name="alarm_permission_description">문을 열고 알림을 받아보세요</string>
+    <string name="alarm_permission_yes">허용</string>
+    <string name="alarm_permission_no">허용 안함</string>
+
+    <string name="alarm_permission_no_title">기기 알림이 꺼졌어요</string>
+    <string name="alarm_permission_no_description">마이페이지 >알림 설정에서\n다시 푸시알림을 켤 수 있어요</string>
+    <string name="alarm_permission_no_confirm">확인</string>
+
+
+    <string name="alarm_settings_not_receive_push_at_night">야간 푸시알림</string>
+    <string name="alarm_settings_not_receive_push_at_night_description">오후 9시부터 다음날 오전 8시까지의 알림</string>
+    <string name="bookmark_create_title">오늘은 어디까지 읽으셨나요?</string>
+    <string name="bookmark_create_bookmark_title_hint">책갈피 제목을 입력해주세요</string>
+    <string name="bookmark_create_bookmark_title">책갈피 이름</string>
+    <string name="bookmark_create_summary_title">줄거리</string>
+    <string name="bookmark_create_page_hint">오늘 읽은 마지막 페이지를 입력해주세요</string>
+    <string name="bookmark_create_summary_hint">책의 줄거리를 입력해주세요</string>
+    <string name="bookmark_create_color_title">색상</string>
+    <string name="ok">완료</string>
+    <string name="hoder_bookmark_title">이것이 자바다</string>
+    <string name="hoder_bookmark_mood">😄</string>
+    <string name="holder_bookmark_read_page">그날 읽은 페이지: 225쪽</string>
+    <string name="delete">삭제하기</string>
+    <string name="update">수정하기</string>
+    <string name="boast">자랑하기</string>
+
+    <!--프로필-->
+    <string name="profile_title">프로필</string>
+    <string name="profile_name_title">닉네임</string>
+    <string name="profile_email_title">이메일</string>
+    <string name="save">저장</string>
+    <string name="accept">적용하기</string>
+
+    <string name="logout">로그아웃</string>
+    <string name="user_delete">탈퇴하기</string>
+
+
 </resources>
