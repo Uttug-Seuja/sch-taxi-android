@@ -21,7 +21,11 @@ class HomeViewModel @Inject constructor(
     init {
         getTempList()
     }
-
+    fun onClickedSearch() {
+        baseViewModelScope.launch {
+//            _navigationEvent.emit(HomeNavigationAction.NavigateToSearch)
+        }
+    }
     private fun getTempList() {
 //        val test1 = BookCoverStack(
 //            listOf(
