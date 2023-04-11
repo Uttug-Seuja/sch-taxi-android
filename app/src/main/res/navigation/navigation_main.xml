@@ -42,6 +42,58 @@
     </fragment>
 
     <fragment
+        android:id="@+id/taxiCreateFragment"
+        android:name="com.sch.sch_taxi.ui.taxicreate.TaxiCreateFragment"
+        android:label="TaxiCreateFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_taxi_create">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.sch.sch_taxi.ui.notifications.NotificationsFragment"
+        android:label="NotificationsFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_notifications">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.sch.sch_taxi.ui.mypage.MyPageFragment"
+        android:label="MyPageFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_my_page">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/taxiDetailFragment"
+        android:name="com.sch.sch_taxi.ui.taxidetail.TaxiDetailFragment"
+        android:label="TaxiDetailFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_taxi_detail">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/taxiSearchFragment"
+        android:name="com.sch.sch_taxi.ui.taxisearch.TaxiSearchFragment"
+        android:label="TaxiSearchFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_taxi_search">
+
+    </fragment>
+
+
+
+    <fragment
         android:id="@+id/registerFragment"
         android:name="com.sch.sch_taxi.ui.register.RegisterFragment"
         android:label="RegisterFragment"
