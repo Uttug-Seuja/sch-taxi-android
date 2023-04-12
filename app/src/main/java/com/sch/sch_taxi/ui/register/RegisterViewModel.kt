@@ -82,9 +82,11 @@ class RegisterViewModel @Inject constructor(
 
     override fun onGoogleLoginClicked() {
         baseViewModelScope.launch {
-            _navigationHandler.emit(RegisterNavigationAction.NavigateToGoogleLogin)
-        }
+//            _navigationHandler.emit(RegisterNavigationAction.NavigateToGoogleLogin)
 
+            _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginFirst)
+
+        }
     }
 
 }
