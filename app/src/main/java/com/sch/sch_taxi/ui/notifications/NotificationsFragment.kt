@@ -1,12 +1,18 @@
 package com.sch.sch_taxi.ui.notifications
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentHomeBinding
 import com.sch.sch_taxi.databinding.FragmentNotificationsBinding
+import com.sch.sch_taxi.ui.home.HomeFragmentDirections
 import com.sch.sch_taxi.ui.home.HomeViewModel
+import com.sch.sch_taxi.ui.notifications.adapter.NotificationsAdapter
+import com.sch.sch_taxi.ui.taxisearch.TaxiSearchNavigationAction
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
@@ -18,7 +24,8 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
         get() = R.layout.fragment_notifications
 
     override val viewModel: NotificationsViewModel by viewModels()
-//    private val bookmarkStack2Adapter by lazy { BookCoverStack2Adapter(viewModel) }
+    private val notificationsAdapter by lazy { NotificationsAdapter(viewModel) }
+    private val navController by lazy { findNavController() }
 
     override fun initStartView() {
         binding.apply {
@@ -26,18 +33,23 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        setupEvent()
         initAdapter()
     }
 
-    private fun setupEvent() {
+    override fun initDataBinding() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.navigationHandler.collectLatest {
+                when(it) {
+                    is NotificationsNavigationAction.NavigateToBack -> navController.popBackStack()
+                    NotificationsNavigationAction.NavigateToChatting -> TODO()
+                    NotificationsNavigationAction.NavigateToTaxiRoom -> TODO()
+                }
+            }
+        }
     }
 
     private fun initAdapter() {
-//        binding.bookmarkRecycler.adapter = bookmarkStack2Adapter
-    }
-
-    override fun initDataBinding() {
+        binding.rvNotifications.adapter = notificationsAdapter
     }
 
     override fun initAfterBinding() {
