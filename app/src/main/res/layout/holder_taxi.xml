@@ -17,6 +17,7 @@
 
     <LinearLayout
         android:id="@+id/match_cardView"
+        onSingleClick="@{()-> eventListener.onClickedTaxiDetail()}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

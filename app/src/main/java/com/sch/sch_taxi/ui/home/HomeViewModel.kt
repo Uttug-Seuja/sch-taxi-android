@@ -27,9 +27,27 @@ class HomeViewModel @Inject constructor(
         getTempList()
     }
 
-    fun onClickedSearch() {
+    override fun onClickedSearch() {
         baseViewModelScope.launch {
             _navigationHandler.emit(HomeNavigationAction.NavigateToSearch)
+        }
+    }
+
+    override fun onClickedTaxiDetail() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(HomeNavigationAction.NavigateToTaxiDetail)
+        }
+    }
+
+    override fun onClickedNotifications() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(HomeNavigationAction.NavigateToNotifications)
+        }
+    }
+
+    override fun onClickedTaxiCreate() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(HomeNavigationAction.NavigateToTaxiCreate)
         }
     }
 
