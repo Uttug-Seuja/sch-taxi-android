@@ -1,0 +1,25 @@
+package com.sch.domain.model
+
+data class Taxi(
+    val id: Int,
+    val title: String,
+    val reserveDate: String,
+    val reserveTime: String,
+    val startingPlace: String,
+    val destination: String,
+    val sex: String,
+    val userSex: String,
+    val createdAt: String,
+    val currentNum: Int,
+    val passengerNum: Int,
+    val challengeWord: String,
+    val countersignWord: String,
+    val startLatitude: Double,
+    val startLongitude: Double,
+    val finishLatitude: Double,
+    val finishLongitude: Double,
+    val reservationStatus: String,
+    val userUid: String,
+    val name: String,
+    val schoolNum: String,
+)
