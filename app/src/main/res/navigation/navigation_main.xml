@@ -39,6 +39,18 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_home">
 
+        <action
+            android:id="@+id/action_homeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_taxiDetailFragment"
+            app:destination="@id/taxiDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_taxiCreateFragment"
+            app:destination="@id/taxiCreateFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_taxiSearchFragment"
+            app:destination="@id/taxiSearchFragment" />
     </fragment>
 
     <fragment
