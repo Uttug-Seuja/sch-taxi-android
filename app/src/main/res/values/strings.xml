@@ -3,7 +3,7 @@
     <!--네비게이션 메뉴-->
     <string name="bottom_home">홈</string>
     <string name="bottom_alarm_room">알림방</string>
-    <string name="bottom_my">MY</string>
+    <string name="bottom_my">나의 순택</string>
 
     <string name="setprofile_nickname_hint">닉네임을 입력해주세요</string>
     <string name="setprofile_nickname">닉네임</string>
@@ -69,6 +69,7 @@
 
     <string name="logout">로그아웃</string>
     <string name="user_delete">탈퇴하기</string>
+    <string name="bottom_chatting">채팅</string>
 
 
 </resources>

@@ -8,16 +8,10 @@
         android:title="@string/bottom_home"/>
 
     <item
-        android:id="@+id/booksFragment"
+        android:id="@+id/chattingFragment"
         android:enabled="true"
         android:icon="@drawable/ic_room_bottom"
-        android:title="서재"/>
-
-    <item
-        android:id="@+id/bookClubFragment"
-        android:enabled="true"
-        android:icon="@drawable/ic_room_bottom"
-        android:title="북클럽"/>
+        android:title="@string/bottom_chatting"/>
 
     <item
         android:id="@+id/myPageFragment"
