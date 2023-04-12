@@ -13,9 +13,9 @@
     </data>
 
     <LinearLayout
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"
         tools:context=".ui.home.HomeFragment">
 
@@ -54,12 +54,12 @@
                     app:cardUseCompatPadding="true">
 
                     <LinearLayout
-                        app:onSingleClick="@{() -> vm.onClickedSearch()}"
                         android:id="@+id/searchViewLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:elevation="1dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        app:onSingleClick="@{() -> vm.onClickedSearch()}">
 
                         <TextView
                             android:layout_width="0dp"
@@ -83,7 +83,6 @@
         </FrameLayout>
 
 
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1.5dp"
@@ -99,14 +98,15 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_match"
+                android:id="@+id/rv_taxi"
+                taxiAdapter="@{vm.taxiEvent}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="80dp"
                 android:layout_gravity="center"
-                android:visibility="visible"
+                android:layout_marginBottom="80dp"
                 android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
+                android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScroolingViewBehavior" />
 
@@ -114,14 +114,12 @@
                 android:id="@+id/noResultCard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_marginBottom="80dp"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:text="아직 게시글이 없습니다"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
-
-
 
 
     </LinearLayout>

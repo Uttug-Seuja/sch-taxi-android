@@ -12,6 +12,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.sch.domain.model.Taxis
+import com.sch.sch_taxi.ui.home.adapter.TaxiAdapter
 
 @BindingAdapter("addImageCardViewVisible")
 fun CardView.bindAddImageCardViewVisible(uri: String) {
@@ -47,13 +49,13 @@ fun TextView.bindEditTextVisible(textLength: Int) {
     }
 }
 
-//@BindingAdapter("bookCoverStackAdapter")
-//fun RecyclerView.bindBookCoverStackAdapter(itemList: BookCoverStacks) {
-//    val boundAdapter = this.adapter
-//    if (boundAdapter is BookCoverStack2Adapter) {
-//        boundAdapter.submitList(itemList.bookCoverStacks)
-//    }
-//}
+@BindingAdapter("taxiAdapter")
+fun RecyclerView.bindTaxiAdapter(itemList: Taxis) {
+    val boundAdapter = this.adapter
+    if (boundAdapter is TaxiAdapter) {
+        boundAdapter.submitList(itemList.Taxi)
+    }
+}
 
 @BindingAdapter("textVisible")
 fun TextView.bindTextVisible(text: String) {
