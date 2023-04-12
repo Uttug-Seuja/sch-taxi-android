@@ -19,10 +19,21 @@
         android:orientation="vertical"
         tools:context=".ui.detail.DetailActivity">
 
-        <androidx.appcompat.widget.Toolbar
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/mainToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
+
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_arrow_back_24" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,10 +42,26 @@
                 android:text="신창역 -> 순천향대 후문"
                 android:textColor="@color/black"
                 android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/edit_btn"
+                onSingleClick="@{() -> vm.onClickedTaxiMoreBottomDialog()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:src="@drawable/ic_more_black"
+                app:layout_constraintBottom_toBottomOf="@id/mainToolbar"
+                app:layout_constraintEnd_toEndOf="@id/mainToolbar"
+                app:layout_constraintTop_toTopOf="@id/mainToolbar">
 
-        </androidx.appcompat.widget.Toolbar>
+            </ImageView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:layout_width="match_parent"

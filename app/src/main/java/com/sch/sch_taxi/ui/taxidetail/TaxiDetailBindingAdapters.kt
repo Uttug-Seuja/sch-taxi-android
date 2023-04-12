@@ -1,6 +1,7 @@
 package com.sch.sch_taxi.ui.taxidetail
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.text.SpannableStringBuilder
 import android.text.Spanned
@@ -8,9 +9,11 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
+import com.sch.sch_taxi.R
 
 @BindingAdapter("addImageCardViewVisible")
 fun CardView.bindAddImageCardViewVisible(uri: String) {
@@ -53,6 +56,15 @@ fun TextView.bindEditTextVisible(textLength: Int) {
 //        boundAdapter.submitList(itemList.bookCoverStacks)
 //    }
 //}
+
+@SuppressLint("UseCompatLoadingForDrawables")
+fun EditText.messageTextOnFocusChangeListener(context: Context, linearLayout: LinearLayout) {
+    this.onFocusChangeListener = View.OnFocusChangeListener { view, gainFocus ->
+        //포커스가 주어졌을 때
+        if (gainFocus) linearLayout.background = context.getDrawable(R.drawable.custom_backgroundgray03_radius10_line_gray08)
+        else linearLayout.background = context.getDrawable(R.drawable.custom_backgroundgray03_radius10)
+    }
+}
 
 @BindingAdapter("textVisible")
 fun TextView.bindTextVisible(text: String) {
