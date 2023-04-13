@@ -11,7 +11,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -72,7 +71,7 @@ class BottomTaxiReport(
         savedInstanceState: Bundle?,
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.bottom_sheet_alarm_report, container, false)
+        return inflater.inflate(R.layout.dialog_bottom_taxi_report, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
