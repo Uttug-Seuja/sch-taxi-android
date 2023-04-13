@@ -7,7 +7,6 @@ import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentChatBinding
 import com.sch.sch_taxi.ui.chat.adapter.ChatAdapter
-import com.sch.sch_taxi.ui.notifications.adapter.NotificationsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

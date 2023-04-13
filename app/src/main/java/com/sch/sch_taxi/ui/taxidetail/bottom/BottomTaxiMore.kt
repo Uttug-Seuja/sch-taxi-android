@@ -39,7 +39,7 @@ class BottomTaxiMore(
         savedInstanceState: Bundle?,
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.dialog_bottom_book_more, container, false)
+        return inflater.inflate(R.layout.dialog_bottom_taxi_more, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

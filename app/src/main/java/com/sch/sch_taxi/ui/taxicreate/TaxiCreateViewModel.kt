@@ -16,8 +16,9 @@ class TaxiCreateViewModel @Inject constructor(
 
     private val TAG = "TaxiCreateViewModel"
 
-    private val _navigationEvent: MutableSharedFlow<TaxiCreateNavigationAction> = MutableSharedFlow()
-    val navigationEvent: SharedFlow<TaxiCreateNavigationAction> = _navigationEvent
+    private val _navigationHandler: MutableSharedFlow<TaxiCreateNavigationAction> =
+        MutableSharedFlow()
+    val navigationHandler: SharedFlow<TaxiCreateNavigationAction> = _navigationHandler
 
     lateinit var titleEvent: MutableStateFlow<String>
     lateinit var startPlaceEvent: MutableStateFlow<String>
@@ -36,14 +37,18 @@ class TaxiCreateViewModel @Inject constructor(
             destinationEvent = MutableStateFlow("")
             seatEvent = MutableStateFlow("좌석 선택")
             genderEvent = MutableStateFlow("모집 성별")
-            dateEvent = MutableStateFlow("약속 날짜")
-            reservationTimeEvent = MutableStateFlow("약속 시간")
+            dateEvent = MutableStateFlow("약속 시간")
 
         }
     }
 
+    override fun onClickedBack() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(TaxiCreateNavigationAction.NavigateToBack)
+        }
+    }
 
-    fun onCreatePromiseClicked() {
+    override fun onClickedTaxiCreate() {
         baseViewModelScope.launch {
             Log.d("ttt", titleEvent.value.toString())
             Log.d("ttt", reservationTimeEvent.value.toString())
@@ -81,7 +86,7 @@ class TaxiCreateViewModel @Inject constructor(
 //                        )
 //                    )
 //                        .onSuccess {
-//                            _navigationEvent.emit(CreateNavigationAction.NavigateToHome)
+                    _navigationHandler.emit(TaxiCreateNavigationAction.NavigateToTaxiDetail)
 //                        }
 //                        .onError { e ->
 //                            Log.d("ttt", e.toString())
@@ -91,11 +96,29 @@ class TaxiCreateViewModel @Inject constructor(
 //                            }
 //                        }
                 }
-            }else{
+            } else {
                 baseViewModelScope.launch {
 //                    _toastMessage.emit("빈 곳 없이 작성해주세요")
                 }
             }
+        }
+    }
+
+    override fun onClickedSelectGander() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(TaxiCreateNavigationAction.NavigateToSelectGender)
+        }
+    }
+
+    override fun onClickedSelectReservation() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(TaxiCreateNavigationAction.NavigateToSelectReservation)
+        }
+    }
+
+    override fun onClickedSelectSeat() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(TaxiCreateNavigationAction.NavigateToSelectSeat)
         }
     }
 }

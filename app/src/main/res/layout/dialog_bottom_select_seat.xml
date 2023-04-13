@@ -4,11 +4,11 @@
     android:id="@+id/bottomSheetDashBoardLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/custom_bottom_sheet"
     android:minHeight="350dp"
     android:orientation="vertical"
     app:behavior_draggable="true"
-    app:behavior_hideable="true"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    app:behavior_hideable="true">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolbar"
@@ -24,8 +24,7 @@
             android:lineSpacingExtra="8.7sp"
             android:text="좌석 선택"
             android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="normal" />
+            android:textSize="18dp" />
 
 
     </androidx.appcompat.widget.Toolbar>
@@ -41,7 +40,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="10dp"
-            android:background="@drawable/seat_un_selected"
+            android:background="@drawable/seat_selected"
             android:gravity="center"
             android:src="@drawable/seat_un_selected"
             android:text="운전자"
@@ -54,9 +53,8 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="10dp"
-            android:background="@drawable/seat_un_selected"
+            android:background="@drawable/selector_seat_button"
             android:gravity="center"
-            android:src="@drawable/seat_un_selected"
             android:text="1"
             android:textColor="@color/black"
             android:textSize="14dp"
@@ -75,7 +73,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="5dp"
-            android:background="@drawable/seat_un_selected"
+            android:background="@drawable/selector_seat_button"
             android:gravity="center"
             android:src="@drawable/seat_un_selected"
             android:text="2"
@@ -88,7 +86,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="5dp"
-            android:background="@drawable/seat_un_selected"
+            android:background="@drawable/selector_seat_button"
             android:gravity="center"
             android:src="@drawable/seat_un_selected"
             android:text="3"
@@ -101,7 +99,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_margin="5dp"
-            android:background="@drawable/seat_un_selected"
+            android:background="@drawable/selector_seat_button"
             android:gravity="center"
             android:src="@drawable/seat_un_selected"
             android:text="4"
