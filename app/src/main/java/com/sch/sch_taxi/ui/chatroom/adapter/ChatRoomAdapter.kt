@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Taxi
-import com.sch.sch_taxi.databinding.HolderChatMeBinding
-import com.sch.sch_taxi.databinding.HolderChatOtherBinding
+import com.sch.sch_taxi.databinding.HolderChatRoomMeBinding
+import com.sch.sch_taxi.databinding.HolderChatRoomOtherBinding
 import com.sch.sch_taxi.ui.chatroom.ChatRoomActionHandler
 
-class ChatAdapter(
+class ChatRoomAdapter(
     private val eventListener: ChatRoomActionHandler,
 ) : ListAdapter<Taxi, RecyclerView.ViewHolder>(TaxiSearchItemDiffCallback) {
 
@@ -21,36 +21,36 @@ class ChatAdapter(
         return when (viewType) {
             VIEW_TYPE_USER_MESSAGE_ME -> {
                 MyUserHolder(
-                    HolderChatMeBinding.inflate(
+                    HolderChatRoomMeBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
                     )
                         .apply {
-                            eventListener = this@ChatAdapter.eventListener
+                            eventListener = this@ChatRoomAdapter.eventListener
                         }
                 )
             }
             VIEW_TYPE_USER_MESSAGE_OTHER -> {
                 OtherUserHolder(
-                    HolderChatOtherBinding.inflate(
+                    HolderChatRoomOtherBinding.inflate(
                         LayoutInflater.from(parent.context),
                         parent,
                         false
                     )
                         .apply {
-                            eventListener = this@ChatAdapter.eventListener
+                            eventListener = this@ChatRoomAdapter.eventListener
                         }
                 )
             }
             else -> MyUserHolder(
-                HolderChatMeBinding.inflate(
+                HolderChatRoomMeBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent,
                     false
                 )
                     .apply {
-                        eventListener = this@ChatAdapter.eventListener
+                        eventListener = this@ChatRoomAdapter.eventListener
                     }
             )
         }
@@ -74,7 +74,7 @@ class ChatAdapter(
     }
 
     class MyUserHolder(
-        private val binding: HolderChatMeBinding
+        private val binding: HolderChatRoomMeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Taxi) {
@@ -86,7 +86,7 @@ class ChatAdapter(
     }
 
     class OtherUserHolder(
-        private val binding: HolderChatOtherBinding
+        private val binding: HolderChatRoomOtherBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Taxi) {
