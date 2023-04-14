@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.sch.sch_taxi.ui.chat.ChatViewModel" />
+            type="com.sch.sch_taxi.ui.chatroom.ChatRoomViewModel" />
 
         <import type="android.view.View" />
     </data>

@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.chat.adapter
+package com.sch.sch_taxi.ui.chatroom.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Taxi
 import com.sch.sch_taxi.databinding.HolderChatMeBinding
 import com.sch.sch_taxi.databinding.HolderChatOtherBinding
-import com.sch.sch_taxi.databinding.HolderNotificationBinding
-import com.sch.sch_taxi.ui.chat.ChatActionHandler
+import com.sch.sch_taxi.ui.chatroom.ChatRoomActionHandler
 
 class ChatAdapter(
-    private val eventListener: ChatActionHandler,
+    private val eventListener: ChatRoomActionHandler,
 ) : ListAdapter<Taxi, RecyclerView.ViewHolder>(TaxiSearchItemDiffCallback) {
 
     private val VIEW_TYPE_USER_MESSAGE_ME = 10
