@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.sch.sch_taxi.ui.taxisearchresult.TaxiSearchViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.view.SearchActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/searchViewLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="18dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_close"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="horizontal">
+
+                    <EditText
+
+                        android:id="@+id/et_search_field"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@drawable/ic_baseline_search_24"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/black"
+                        android:gravity="center_vertical"
+                        android:hint="검색어를 입력해주세요"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:textSize="14sp"
+
+                        />
+
+                    <requestFocus />
+
+
+                    <ImageButton
+                        android:id="@+id/textClearButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="12dp"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:src="@drawable/ic_edit"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_taxi_search"
+            taxiSearchAdapter="@{vm.taxiSearchEvent}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_taxi_search_result"
+            taxiSearchAdapter="@{vm.taxiSearchEvent}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
+
+        <TextView
+            android:id="@+id/noResultCard"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:text="@string/search_empty_title"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/mainToolbar">
+
+
+        </TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
