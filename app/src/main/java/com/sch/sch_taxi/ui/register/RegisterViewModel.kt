@@ -84,7 +84,7 @@ class RegisterViewModel @Inject constructor(
         baseViewModelScope.launch {
 //            _navigationHandler.emit(RegisterNavigationAction.NavigateToGoogleLogin)
 
-            _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginFirst)
+            _navigationHandler.emit(RegisterNavigationAction.NavigateToGoogleLogin)
 
         }
     }

@@ -186,7 +186,7 @@
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:underlineWidth="1dp" />
+                        />
 
                     <ImageView
                         android:layout_width="20dp"

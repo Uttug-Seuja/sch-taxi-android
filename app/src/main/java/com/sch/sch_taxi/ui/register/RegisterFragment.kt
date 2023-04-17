@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
+import com.sch.sch_taxi.BuildConfig
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentRegisterBinding
@@ -65,7 +66,7 @@ class RegisterFragment :
         exception = viewModel.errorEvent
 //        requestMultiplePermission.launch(permissionList)
 
-//        createNotification()
+        createNotification()
 
     }
 
@@ -135,18 +136,18 @@ class RegisterFragment :
          *  그러면 오른쪽 위에 클라이언트 ID가 보이는데 그것을 requestIdToken에 넣으면 된다.
          *  R.string.default_web_client_id를 넣어도 작동한다고 하는데 나는 잘 되지 않는다.
          */
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .requestIdToken(BuildConfig.GOOGLE_LOGIN_CLIENT_ID)
-//            .requestEmail()
-//            .build()
-//
-//
-//        val mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-//        val account = GoogleSignIn.getLastSignedInAccount(requireContext())
-//
-//        val signInIntent = mGoogleSignInClient.signInIntent
-//
-//        googleLauncher.launch(signInIntent)
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(BuildConfig.GOOGLE_LOGIN_CLIENT_ID)
+            .requestEmail()
+            .build()
+
+
+        val mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
+        val account = GoogleSignIn.getLastSignedInAccount(requireContext())
+
+        val signInIntent = mGoogleSignInClient.signInIntent
+
+        googleLauncher.launch(signInIntent)
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {

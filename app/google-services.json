@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "434283149935",
+    "project_id": "sch-taxi",
+    "storage_bucket": "sch-taxi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434283149935:android:c3d21a634022d7face2b9a",
+        "android_client_info": {
+          "package_name": "com.sch.sch_taxi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "434283149935-62vlmur20mvnrvdu16t0igetcgm1vflm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sch.sch_taxi",
+            "certificate_hash": "be08731fd08077064e72910e716ef9a80fbbabc5"
+          }
+        },
+        {
+          "client_id": "434283149935-i00sggmqf8g0goscsei73in7olgfsc3h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnKWHv7x2ZCfvCvTyvY3LnMOLImkRicwM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "434283149935-i00sggmqf8g0goscsei73in7olgfsc3h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

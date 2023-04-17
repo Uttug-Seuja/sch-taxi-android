@@ -6,7 +6,12 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
+    id 'com.google.gms.google-services'
 }
+
+// local.properties 사용을 위함
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
     namespace 'com.sch.sch_taxi'
@@ -20,6 +25,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // url 변수 지정
+        buildConfigField "String", "GOOGLE_LOGIN_CLIENT_ID", properties['google.login.clientId']
     }
 
     buildTypes {
@@ -117,7 +125,7 @@ dependencies {
     //dotsindicator
     implementation("com.tbuonomo:dotsindicator:4.3")
 
-    //google sdk login
+    //google sdk
     implementation platform('com.google.firebase:firebase-bom:31.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
