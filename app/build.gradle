@@ -28,9 +28,8 @@ android {
 
         // url 변수 지정
         buildConfigField "String", "GOOGLE_LOGIN_CLIENT_ID", properties['google_login_clientId']
-        buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
-        manifestPlaceholders = [KAKAO_LOGIN_OAUTH: properties['kakao_login_oauth']]
-
+        buildConfigField "String", "KAKAO_LOGIN_NATIVE_APP_KEY", properties['kakao_login_native_app_key']
+        manifestPlaceholders = [KAKAO_LOGIN_OAUTH: properties['kakao_login_oauth'], KAKAO_NATIVE_APP_KEY: properties['kakao_native_app_key']]
 
     }
 
@@ -150,4 +149,7 @@ dependencies {
 
     //kakao sdk login
     implementation "com.kakao.sdk:v2-all:2.11.2"
+
+    // Kakao map
+    implementation files('libs/libDaumMapAndroid.jar')
 }

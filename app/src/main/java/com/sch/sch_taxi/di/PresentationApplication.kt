@@ -25,7 +25,7 @@ class PresentationApplication :Application(){
         super.onCreate()
         // 다크모드 비활성화
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
+        KakaoSdk.init(this, BuildConfig.KAKAO_LOGIN_NATIVE_APP_KEY)
         val keyHash = Utility.getKeyHash(this)
         Log.d("HashKey", keyHash)
 
