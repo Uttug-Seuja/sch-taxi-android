@@ -61,6 +61,9 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_taxi_create">
 
+        <action
+            android:id="@+id/action_taxiCreateFragment_to_taxiDetailFragment"
+            app:destination="@id/taxiDetailFragment" />
     </fragment>
 
     <fragment
@@ -81,16 +84,45 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_my_page">
 
+        <action
+            android:id="@+id/action_myPageFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/taxiDetailFragment"
-        android:name="com.sch.sch_taxi.ui.taxidetail.TaxiDetailFragment"
-        android:label="TaxiDetailFragment"
+        android:id="@+id/chatFragment"
+        android:name="com.sch.sch_taxi.ui.chat.ChatFragment"
+        android:label="ChatFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"
-        tools:layout="@layout/fragment_taxi_detail">
+        tools:layout="@layout/fragment_chat">
 
+        <action
+            android:id="@+id/action_chatFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chatRoomFragment"
+        android:name="com.sch.sch_taxi.ui.chatroom.ChatRoomFragment"
+        android:label="ChatRoomFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_chat_room">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.sch.sch_taxi.ui.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profileFragment_to_saveProfile"
+            app:destination="@id/saveProfile" />
     </fragment>
 
     <fragment
@@ -101,8 +133,47 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_taxi_search">
 
+        <action
+            android:id="@+id/action_taxiSearchFragment_to_taxiSearchResultFragment"
+            app:destination="@id/taxiSearchResultFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/taxiSearchResultFragment"
+        android:name="com.sch.sch_taxi.ui.taxisearchresult.TaxiSearchResultFragment"
+        android:label="TaxiSearchResultFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_taxi_search_result">
+
+        <action
+            android:id="@+id/action_taxiSearchResultFragment_to_taxiDetailFragment"
+            app:destination="@id/taxiDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/taxiDetailFragment"
+        android:name="com.sch.sch_taxi.ui.taxidetail.TaxiDetailFragment"
+        android:label="TaxiDetailFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_taxi_detail">
+
+        <action
+            android:id="@+id/action_taxiDetailFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+        <action
+            android:id="@+id/action_taxiDetailFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/saveProfile"
+        android:name="com.sch.sch_taxi.ui.editprofile.saveprofile.SaveProfileFragment"
+        android:label="SaveProfile"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_save_profile"></fragment>
 
 
     <fragment
