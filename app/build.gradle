@@ -27,7 +27,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // url 변수 지정
-        buildConfigField "String", "GOOGLE_LOGIN_CLIENT_ID", properties['google.login.clientId']
+        buildConfigField "String", "GOOGLE_LOGIN_CLIENT_ID", properties['google_login_clientId']
+        buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
+        manifestPlaceholders = [KAKAO_LOGIN_OAUTH: properties['kakao_login_oauth']]
+
+
     }
 
     buildTypes {
@@ -143,4 +147,7 @@ dependencies {
 
     // paging
     implementation "androidx.paging:paging-runtime-ktx:3.0.1"
+
+    //kakao sdk login
+    implementation "com.kakao.sdk:v2-all:2.11.2"
 }

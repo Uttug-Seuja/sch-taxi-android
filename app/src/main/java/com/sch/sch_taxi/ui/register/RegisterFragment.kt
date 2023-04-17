@@ -16,6 +16,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.model.AuthErrorCause
+import com.kakao.sdk.user.UserApiClient
 import com.sch.sch_taxi.BuildConfig
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
@@ -60,7 +63,7 @@ class RegisterFragment :
     @RequiresApi(Build.VERSION_CODES.M)
     override fun initStartView() {
         binding.apply {
-            this.viewmodel = viewModel
+            this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
@@ -84,6 +87,7 @@ class RegisterFragment :
                         }
                     }
                     is RegisterNavigationAction.NavigateToNotificationAlarm -> createNotification()
+                    is RegisterNavigationAction.NavigateToKakaoLogin -> kakaoLogin()
                     is RegisterNavigationAction.NavigateToGoogleLogin -> googleLogin()
                     is RegisterNavigationAction.NavigateToLoginFirst -> navigate(
                         RegisterFragmentDirections.actionRegisterFragmentToSetProfileFragment()
@@ -105,6 +109,35 @@ class RegisterFragment :
             Log.d("ttt", it.toString())
 //            viewModel.deviceId.value = Settings.Secure.getString(requireContext().contentResolver, Settings.Secure.ANDROID_ID)
         }
+    }
+
+    private fun kakaoLogin() {
+        val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+            Log.d("ttt token", token.toString())
+            Log.d("ttt error", error.toString())
+
+            // 로그인 실패
+            if (error != null) {
+                when {
+                    error.toString() == AuthErrorCause.AccessDenied.toString() -> toastMessage("접근이 거부 됨(동의 취소)")
+                    error.toString() == AuthErrorCause.InvalidClient.toString() -> toastMessage("유효하지 않은 앱")
+                    error.toString() == AuthErrorCause.InvalidGrant.toString() -> toastMessage("인증 수단이 유효하지 않아 인증할 수 없는 상태")
+                    error.toString() == AuthErrorCause.InvalidRequest.toString() -> toastMessage("요청 파라미터 오류")
+                    error.toString() == AuthErrorCause.InvalidScope.toString() -> toastMessage("유효하지 않은 scope ID")
+                    error.toString() == AuthErrorCause.Misconfigured.toString() -> toastMessage("설정이 올바르지 않음(android key hash)")
+                    error.toString() == AuthErrorCause.ServerError.toString() -> toastMessage("서버 내부 에러")
+                    error.toString() == AuthErrorCause.Unauthorized.toString() -> toastMessage("앱이 요청 권한이 없음")
+                    else -> toastMessage("카카오톡의 미로그인")
+                }
+            } else if (token != null) {
+                token.idToken?.let {
+                    viewModel.oauthLogin(idToken = it, provider = "KAKAO")
+                }
+            }
+        }
+
+        // 카카오톡 설치여부 확인
+        UserApiClient.instance.loginWithKakaoAccount(requireContext(), callback = kakaoCallback)
     }
 
     private fun googleLogin() {
@@ -156,7 +189,7 @@ class RegisterFragment :
 
             val idToken = completedTask.getResult(ApiException::class.java).idToken
             idToken?.let { token ->
-                viewModel.oauthLogin(idToken = token)
+                viewModel.oauthLogin(idToken = token,  provider = "GOOGLE")
             }
         } catch (e: ApiException) {
             toastMessage("구글 로그인에 실패 하였습니다.")

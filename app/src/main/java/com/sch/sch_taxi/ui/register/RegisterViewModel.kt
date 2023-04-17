@@ -33,7 +33,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun oauthLogin(idToken: String) {
+    fun oauthLogin(idToken: String, provider: String) {
         baseViewModelScope.launch {
             showLoading()
 //            mainRepository.getTokenValidation(idToken = idToken, provider = provider)
@@ -80,10 +80,14 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    override fun onKakaoLoginClicked() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(RegisterNavigationAction.NavigateToKakaoLogin)
+        }
+    }
+
     override fun onGoogleLoginClicked() {
         baseViewModelScope.launch {
-//            _navigationHandler.emit(RegisterNavigationAction.NavigateToGoogleLogin)
-
             _navigationHandler.emit(RegisterNavigationAction.NavigateToGoogleLogin)
 
         }

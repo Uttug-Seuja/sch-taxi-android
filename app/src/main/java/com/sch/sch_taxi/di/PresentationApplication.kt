@@ -4,6 +4,10 @@ import android.app.Application
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.util.Utility
+import com.sch.data.DataApplication
+import com.sch.sch_taxi.BuildConfig
 import dagger.hilt.android.HiltAndroidApp
 
 
@@ -21,6 +25,17 @@ class PresentationApplication :Application(){
         super.onCreate()
         // 다크모드 비활성화
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("HashKey", keyHash)
+
+        DataApplication.sSharedPreferences = applicationContext.getSharedPreferences("KnockKnock", MODE_PRIVATE)
+        DataApplication.editor = DataApplication.sSharedPreferences.edit()
+
+        sSharedPreferences = DataApplication.sSharedPreferences
+        editor = sSharedPreferences.edit()
+
+        Log.d("access_token", sSharedPreferences.getString("access_token", "").toString())
 
     }
 }

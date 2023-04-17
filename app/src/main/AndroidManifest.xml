@@ -31,11 +31,27 @@
                 android:value="" />
         </activity>
 
-        <!--   서비스를 추가하고 인텐트 필터를 설정한다.   -->
-        <service android:name=".service.MyFirebaseMessagingService"
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauth"
+                    android:scheme="${KAKAO_LOGIN_OAUTH}" />
+            </intent-filter>
+        </activity>
+
+        <!--   서비스를 추가하고 인텐트 필터를 설정한다.   -->
+        <service
+            android:name=".service.MyFirebaseMessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
