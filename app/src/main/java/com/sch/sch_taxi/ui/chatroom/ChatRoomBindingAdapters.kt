@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Taxis
-import com.sch.sch_taxi.ui.notifications.adapter.NotificationsAdapter
+import com.sch.sch_taxi.ui.mypost.adapter.MyPostAdapter
 
 @BindingAdapter("addImageCardViewVisible")
 fun CardView.bindAddImageCardViewVisible(uri: String) {
@@ -52,7 +52,7 @@ fun TextView.bindEditTextVisible(textLength: Int) {
 @BindingAdapter("notificationsAdapter")
 fun RecyclerView.bindNotificationsAdapter(itemList: Taxis) {
     val boundAdapter = this.adapter
-    if (boundAdapter is NotificationsAdapter) {
+    if (boundAdapter is MyPostAdapter) {
         boundAdapter.submitList(itemList.Taxi)
     }
 }

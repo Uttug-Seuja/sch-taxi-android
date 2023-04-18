@@ -12,7 +12,6 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sch.domain.model.Taxi
 import com.sch.domain.model.Taxis
 import com.sch.sch_taxi.ui.notifications.adapter.NotificationsAdapter
 
@@ -64,12 +63,6 @@ fun TextView.bindTextVisible(text: String) {
     else this.visibility = View.GONE
 }
 
-@BindingAdapter("editTextCountColorChange")
-fun TextView.bindEditTextCountColorChange(textLength: Int) {
-    this.text = "$textLength/200"
-    if (textLength == 0) this.text = this.textChangeColor( "#ff0000", 0, 1)
-    else this.text = this.textChangeColor( "#616161", 0, textLength.toString().length)
-}
 
 fun TextView.textChangeColor(
     color: String,

@@ -1,32 +1,20 @@
 package com.sch.sch_taxi.ui.taxicreate
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.util.Log
-import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.sch.domain.model.KakaoLocals
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
-import com.sch.sch_taxi.databinding.FragmentNotificationsBinding
 import com.sch.sch_taxi.databinding.FragmentTaxiCreateBinding
-import com.sch.sch_taxi.ui.notifications.NotificationsNavigationAction
-import com.sch.sch_taxi.ui.notifications.adapter.NotificationsAdapter
 import com.sch.sch_taxi.ui.taxicreate.adapter.KakaoLocalAdapter
 import com.sch.sch_taxi.ui.taxicreate.bottom.BottomSelectGander
 import com.sch.sch_taxi.ui.taxicreate.bottom.BottomSelectSeat
 import com.sch.sch_taxi.ui.taxicreate.bottom.BottomTaxiReservationPicker
 import com.sch.sch_taxi.ui.taxicreate.bottom.GanderType
-import com.sch.sch_taxi.ui.taxidetail.bottom.BottomTaxiMore
-import com.sch.sch_taxi.ui.taxidetail.bottom.TaxiMoreType
 import com.sch.sch_taxi.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import java.time.format.DateTimeFormatter
 

@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.notifications.adapter
+package com.sch.sch_taxi.ui.mypost.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,19 +7,17 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Taxi
 import com.sch.sch_taxi.databinding.HolderNotificationBinding
-import com.sch.sch_taxi.ui.mypost.adapter.MyPostAdapter
 import com.sch.sch_taxi.ui.mypost.MyPostActionHandler
-import com.sch.sch_taxi.ui.notifications.NotificationsActionHandler
 
-class NotificationsAdapter(
-    private val eventListener: NotificationsActionHandler,
-) : ListAdapter<Taxi, NotificationsAdapter.NotificationsViewHolder>(TaxiSearchItemDiffCallback) {
+class MyPostAdapter(
+    private val eventListener: MyPostActionHandler,
+) : ListAdapter<Taxi, MyPostAdapter.NotificationsViewHolder>(TaxiSearchItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationsViewHolder {
         return NotificationsViewHolder(
             HolderNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 .apply {
-                    eventListener = this@NotificationsAdapter.eventListener
+                    eventListener = this@MyPostAdapter.eventListener
                 }
         )
     }

@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.chat
+package com.sch.sch_taxi.ui.mypost
 
 import android.annotation.SuppressLint
 import android.graphics.Color
