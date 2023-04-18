@@ -152,4 +152,11 @@ dependencies {
 
     // Kakao map
     implementation files('libs/libDaumMapAndroid.jar')
+
+    //Room
+    implementation("androidx.room:room-runtime:2.5.1")
+    kapt("androidx.room:room-compiler:2.5.1")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:2.5.1")
 }
