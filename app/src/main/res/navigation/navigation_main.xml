@@ -68,7 +68,7 @@
 
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.sch.sch_taxi.ui.mypost.MyPostFragment"
+        android:name="com.sch.sch_taxi.ui.myparticipation.MyParticipationFragment"
         android:label="NotificationsFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"

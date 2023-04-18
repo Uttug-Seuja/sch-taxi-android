@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.mypost
+package com.sch.sch_taxi.ui.myparticipation
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Taxis
-import com.sch.sch_taxi.ui.mypost.adapter.MyPostAdapter
+import com.sch.sch_taxi.ui.myparticipation.adapter.MyParticipationAdapter
 
 @BindingAdapter("addImageCardViewVisible")
 fun CardView.bindAddImageCardViewVisible(uri: String) {
@@ -52,7 +52,7 @@ fun TextView.bindEditTextVisible(textLength: Int) {
 @BindingAdapter("notificationsAdapter")
 fun RecyclerView.bindNotificationsAdapter(itemList: Taxis) {
     val boundAdapter = this.adapter
-    if (boundAdapter is MyPostAdapter) {
+    if (boundAdapter is MyParticipationAdapter) {
         boundAdapter.submitList(itemList.Taxi)
     }
 }
@@ -63,6 +63,12 @@ fun TextView.bindTextVisible(text: String) {
     else this.visibility = View.GONE
 }
 
+@BindingAdapter("editTextCountColorChange")
+fun TextView.bindEditTextCountColorChange(textLength: Int) {
+    this.text = "$textLength/200"
+    if (textLength == 0) this.text = this.textChangeColor( "#ff0000", 0, 1)
+    else this.text = this.textChangeColor( "#616161", 0, textLength.toString().length)
+}
 
 fun TextView.textChangeColor(
     color: String,

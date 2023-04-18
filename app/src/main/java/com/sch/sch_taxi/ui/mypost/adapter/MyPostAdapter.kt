@@ -17,7 +17,7 @@ class MyPostAdapter(
         return NotificationsViewHolder(
             HolderNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 .apply {
-                    eventListener = this@MyPostAdapter.eventListener
+//                    eventListener = this@MyPostAdapter.eventListener
                 }
         )
     }
