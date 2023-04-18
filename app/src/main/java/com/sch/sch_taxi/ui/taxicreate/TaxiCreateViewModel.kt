@@ -9,6 +9,7 @@ import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.repository.KakaoRepository
 import com.sch.domain.runCatching
+import com.sch.domain.usecase.remote.GetResultKeywordUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -18,7 +19,7 @@ import javax.inject.Named
 
 @HiltViewModel
 class TaxiCreateViewModel @Inject constructor(
-    private val kakaoRepository: KakaoRepository
+    private val getResultKeywordUseCase: GetResultKeywordUseCase
 ) : BaseViewModel(), TaxiCreateActionHandler {
 
     private val TAG = "TaxiCreateViewModel"
@@ -66,7 +67,7 @@ class TaxiCreateViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             placeEvent.debounce(200).collectLatest { keyword ->
-                kakaoRepository.getResultKeyword(keyword = keyword, page = 1)
+                getResultKeywordUseCase(keyword = keyword, page = 1)
                     .runCatching {
                         if (!it.body()?.documents.isNullOrEmpty()) {
                             val item = mutableListOf<KakaoLocal>()
