@@ -22,7 +22,15 @@
           }
         },
         {
-          "client_id": "434283149935-i00sggmqf8g0goscsei73in7olgfsc3h.apps.googleusercontent.com",
+          "client_id": "434283149935-i7m0qal827l3sehbmvg0hraolahec54f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sch.sch_taxi",
+            "certificate_hash": "0221f165f854c7ff17344cdb38c2afc13f38d7fb"
+          }
+        },
+        {
+          "client_id": "434283149935-ec0lvhng36dmrl7vv95vc7e8d1f83nkb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +43,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "434283149935-i00sggmqf8g0goscsei73in7olgfsc3h.apps.googleusercontent.com",
+              "client_id": "434283149935-ec0lvhng36dmrl7vv95vc7e8d1f83nkb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
