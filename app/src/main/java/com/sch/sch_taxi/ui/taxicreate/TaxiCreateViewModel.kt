@@ -2,16 +2,23 @@ package com.sch.sch_taxi.ui.taxicreate
 
 import android.database.sqlite.SQLiteException
 import android.util.Log
+import com.sch.domain.model.KakaoLocal
+import com.sch.domain.model.KakaoLocals
+import com.sch.domain.model.Taxis
+import com.sch.domain.onError
+import com.sch.domain.onSuccess
+import com.sch.domain.repository.KakaoRepository
+import com.sch.domain.runCatching
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class TaxiCreateViewModel @Inject constructor(
+    private val kakaoRepository: KakaoRepository
 ) : BaseViewModel(), TaxiCreateActionHandler {
 
     private val TAG = "TaxiCreateViewModel"
@@ -21,8 +28,19 @@ class TaxiCreateViewModel @Inject constructor(
     val navigationHandler: SharedFlow<TaxiCreateNavigationAction> = _navigationHandler
 
     lateinit var titleEvent: MutableStateFlow<String>
-    lateinit var startPlaceEvent: MutableStateFlow<String>
-    lateinit var destinationEvent: MutableStateFlow<String>
+
+    var startPlaceTitleEvent: MutableStateFlow<String> = MutableStateFlow<String>("")
+    var startPlaceEvent: MutableStateFlow<KakaoLocal?> = MutableStateFlow(null)
+    var startPlacesEvent: MutableStateFlow<KakaoLocals> = MutableStateFlow(KakaoLocals(emptyList()))
+
+    var destinationTitleEvent: MutableStateFlow<String> = MutableStateFlow<String>("")
+    var destinationEvent: MutableStateFlow<KakaoLocal?> = MutableStateFlow(null)
+    var destinationsEvent: MutableStateFlow<KakaoLocals> =
+        MutableStateFlow(KakaoLocals(emptyList()))
+
+    val isStartKeyword: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+    val isDestinationsKeyword: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+
     lateinit var seatEvent: MutableStateFlow<String>
     lateinit var genderEvent: MutableStateFlow<String>
     lateinit var dateEvent: MutableStateFlow<String>
@@ -30,14 +48,67 @@ class TaxiCreateViewModel @Inject constructor(
 
 
     init {
-
         baseViewModelScope.launch {
             titleEvent = MutableStateFlow("")
-            startPlaceEvent = MutableStateFlow("")
-            destinationEvent = MutableStateFlow("")
             seatEvent = MutableStateFlow("좌석 선택")
             genderEvent = MutableStateFlow("모집 성별")
             dateEvent = MutableStateFlow("약속 시간")
+
+        }
+
+        // 카카오 로컬 검색
+        onClickedSearchKeyword(startPlaceTitleEvent)
+        onClickedSearchKeyword(destinationTitleEvent)
+
+    }
+
+    private fun onClickedSearchKeyword(placeEvent: MutableStateFlow<String>) {
+        baseViewModelScope.launch {
+            showLoading()
+            placeEvent.debounce(200).collectLatest { keyword ->
+                kakaoRepository.getResultKeyword(keyword = keyword, page = 1)
+                    .runCatching {
+                        if (!it.body()?.documents.isNullOrEmpty()) {
+                            val item = mutableListOf<KakaoLocal>()
+                            it.body()!!.documents.forEach { Place ->
+                                item.add(
+                                    KakaoLocal(
+                                        name = Place.place_name,
+                                        road = Place.road_address_name,
+                                        address = Place.address_name,
+                                        x = Place.x.toDouble(),
+                                        y = Place.y.toDouble()
+                                    )
+                                )
+                            }
+                            baseViewModelScope.launch {
+                                if (placeEvent == startPlaceTitleEvent) startPlacesEvent.value = KakaoLocals(item)
+                                else destinationsEvent.value = KakaoLocals(item)
+                            }
+                        }
+                    }
+            }
+            dismissLoading()
+        }
+    }
+
+    override fun onClickedKeyword(kakaoLocal: KakaoLocal) {
+
+        baseViewModelScope.launch {
+            if (isStartKeyword.value) {
+                startPlaceTitleEvent.value = kakaoLocal.name
+                startPlaceEvent.value = kakaoLocal
+                startPlacesEvent.value = KakaoLocals(emptyList())
+            }
+            if (isDestinationsKeyword.value) {
+                destinationTitleEvent.value = kakaoLocal.name
+                destinationEvent.value = kakaoLocal
+                destinationsEvent.value = KakaoLocals(emptyList())
+            }
+        }
+
+        baseViewModelScope.launch {
+            _navigationHandler.emit(TaxiCreateNavigationAction.NavigateToKeywordClicked)
 
         }
     }
@@ -54,7 +125,7 @@ class TaxiCreateViewModel @Inject constructor(
             Log.d("ttt", reservationTimeEvent.value.toString())
             Log.d("ttt", genderEvent.value.toString())
 
-            if (titleEvent.value.isNotEmpty() && startPlaceEvent.value.isNotEmpty() && destinationEvent.value.isNotEmpty() && seatEvent.value.isNotEmpty()
+            if (titleEvent.value.isNotEmpty() && startPlaceTitleEvent.value.isNotEmpty() && destinationTitleEvent.value.isNotEmpty() && seatEvent.value.isNotEmpty()
                 && genderEvent.value != "모집 성별" && dateEvent.value != "탑승 날짜" && reservationTimeEvent.value != "탑승 시간"
             ) {
 

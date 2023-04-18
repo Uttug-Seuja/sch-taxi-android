@@ -12,6 +12,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/main_taxi_create"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
@@ -102,14 +103,14 @@
                 android:background="#eeeeee" />
 
             <EditText
-                android:id="@+id/edit_start_place"
+                android:id="@+id/et_start_place"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:background="@null"
                 android:ems="10"
                 android:hint="출발지를 입력해주세요"
-                android:text="@={vm.startPlaceEvent}"
+                android:text="@={vm.startPlaceTitleEvent}"
                 android:textColor="#5C5C5C"
                 android:textSize="16sp" />
 
@@ -120,14 +121,14 @@
                 android:background="#eeeeee" />
 
             <EditText
-                android:id="@+id/edit_destination"
+                android:id="@+id/et_destination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:background="@null"
                 android:ems="10"
                 android:hint="도착지를 입력해주세요"
-                android:text="@={vm.destinationEvent}"
+                android:text="@={vm.destinationTitleEvent}"
                 android:textColor="#5C5C5C"
                 android:textSize="16sp" />
 
@@ -138,13 +139,28 @@
                 android:background="#eeeeee" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_kakao_local"
+                android:id="@+id/rv_start_places"
+                kakaoLocalAdapter="@{vm.startPlacesEvent}"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:visibility="gone" />
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_destinations"
+                kakaoLocalAdapter="@{vm.destinationsEvent}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
 
             <LinearLayout
+                android:id="@+id/ll_select_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -255,16 +271,16 @@
                     android:background="#eeeeee" />
 
 
-<!--                <TextView-->
-<!--                    android:id="@+id/content_text"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="20dp"-->
-<!--                    android:background="@null"-->
-<!--                    android:ems="10"-->
-<!--                    android:hint="* 참고사항 *\n• 장소는 작성자가 직접 섭외해주셔야 합니다.\n• 대운동장 예약은 별개로 예약하셔야 합니다.\n• 게시글 수정 시 인원수는 변경할 수 없습니다."-->
-<!--                    android:textColor="#5C5C5C"-->
-<!--                    android:textSize="16sp" />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/content_text"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="20dp"-->
+                <!--                    android:background="@null"-->
+                <!--                    android:ems="10"-->
+                <!--                    android:hint="* 참고사항 *\n• 장소는 작성자가 직접 섭외해주셔야 합니다.\n• 대운동장 예약은 별개로 예약하셔야 합니다.\n• 게시글 수정 시 인원수는 변경할 수 없습니다."-->
+                <!--                    android:textColor="#5C5C5C"-->
+                <!--                    android:textSize="16sp" />-->
             </LinearLayout>
 
         </LinearLayout>

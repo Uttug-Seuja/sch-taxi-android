@@ -6,5 +6,6 @@ sealed class TaxiCreateNavigationAction {
     object NavigateToSelectGender: TaxiCreateNavigationAction()
     object NavigateToSelectReservation: TaxiCreateNavigationAction()
     object NavigateToSelectSeat: TaxiCreateNavigationAction()
+    object NavigateToKeywordClicked: TaxiCreateNavigationAction()
 
 }
