@@ -129,9 +129,9 @@ class TaxiSearchViewModel @Inject constructor(
         }
     }
 
-    override fun onClickedTaxiSearchResult() {
+    override fun onClickedTaxiSearchResult(searchTitle : String) {
         baseViewModelScope.launch {
-            _navigationHandler.emit(TaxiSearchNavigationAction.NavigateToTaxiSearchResult)
+            _navigationHandler.emit(TaxiSearchNavigationAction.NavigateToTaxiSearchResult(searchTitle = searchTitle))
         }
     }
 

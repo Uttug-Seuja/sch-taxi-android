@@ -2,26 +2,28 @@ package com.sch.sch_taxi.ui.taxisearchresult
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
-import com.sch.sch_taxi.databinding.FragmentTaxiSearchBinding
 import com.sch.sch_taxi.databinding.FragmentTaxiSearchResultBinding
 import com.sch.sch_taxi.ui.home.HomeFragmentDirections
-import com.sch.sch_taxi.ui.taxisearch.adapter.TaxiSearchAdapter
-import com.sch.sch_taxi.ui.taxisearchresult.adapter.TaxiSearchResultAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class TaxiSearchResultFragment : BaseFragment<FragmentTaxiSearchResultBinding, TaxiSearchViewModel>(R.layout.fragment_taxi_search_result) {
+class TaxiSearchResultFragment : BaseFragment<FragmentTaxiSearchResultBinding, TaxiSearchResultViewModel>(R.layout.fragment_taxi_search_result) {
 
     private val TAG = "TaxiSearchResultFragment"
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_taxi_search_result
 
-    override val viewModel: TaxiSearchViewModel by viewModels()
+    override val viewModel: TaxiSearchResultViewModel by viewModels()
+    private val navController by lazy { findNavController() }
+    private val args: TaxiSearchResultFragmentArgs by navArgs()
+
 //    private val taxiSearchResultAdapter by lazy { TaxiSearchResultAdapter(viewModel) }
 
     override fun initStartView() {
@@ -30,6 +32,7 @@ class TaxiSearchResultFragment : BaseFragment<FragmentTaxiSearchResultBinding, T
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
+        viewModel.searchTitleEvent.value = args.searchResultTitle
         initAdapter()
     }
 
@@ -38,6 +41,7 @@ class TaxiSearchResultFragment : BaseFragment<FragmentTaxiSearchResultBinding, T
             viewModel.navigationHandler.collectLatest {
                 when(it) {
                     is TaxiSearchResultNavigationAction.NavigateToTaxiSearchResult -> navigate(HomeFragmentDirections.actionHomeFragmentToTaxiDetailFragment())
+                    is TaxiSearchResultNavigationAction.NavigateToBack -> navController.popBackStack()
                 }
             }
         }

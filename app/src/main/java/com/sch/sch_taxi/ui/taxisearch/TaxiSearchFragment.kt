@@ -52,7 +52,7 @@ class TaxiSearchFragment : BaseFragment<FragmentTaxiSearchBinding, TaxiSearchVie
                 when(it) {
                     is TaxiSearchNavigationAction.NavigateToTaxiSearchResult -> {
 //                        requireActivity().hideKeyboard()
-                        navigate(TaxiSearchFragmentDirections.actionTaxiSearchFragmentToTaxiSearchResultFragment())
+                        navigate(TaxiSearchFragmentDirections.actionTaxiSearchFragmentToTaxiSearchResultFragment(it.searchTitle))
                     }
                     is TaxiSearchNavigationAction.NavigateToBack -> navController.popBackStack()
                 }

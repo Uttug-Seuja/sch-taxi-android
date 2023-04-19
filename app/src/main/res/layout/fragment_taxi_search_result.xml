@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.sch.sch_taxi.ui.taxisearchresult.TaxiSearchViewModel" />
+            type="com.sch.sch_taxi.ui.taxisearchresult.TaxiSearchResultViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -29,6 +29,7 @@
 
             <ImageView
                 android:id="@+id/iv_close"
+                onSingleClick="@{() -> vm.onClickedBack()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
@@ -67,25 +68,28 @@
                         android:drawableTint="@color/black"
                         android:gravity="center_vertical"
                         android:hint="검색어를 입력해주세요"
+                        android:imeOptions="actionDone"
+                        android:maxLines="1"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:text="@={vm.searchTitleEvent}"
                         android:textSize="14sp"
 
                         />
 
-                    <requestFocus />
 
-
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/textClearButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="12dp"
-                        android:background="@null"
                         android:gravity="center"
-                        android:src="@drawable/ic_edit"
-                        android:visibility="gone" />
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_cancel_24"
+                        android:visibility="visible"
+                        app:imageViewVisible="@{vm.searchTitleEvent}"
+                        app:onSingleClick="@{() -> vm.onClickedDeleteSearchTitle()}"
+                        app:tint="@color/blue_50" />
 
                 </LinearLayout>
 

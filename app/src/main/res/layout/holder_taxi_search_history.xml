@@ -17,7 +17,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_search_item"
-        onSingleClick="@{() -> eventListener.onClickedTaxiSearchResult()}"
+        onSingleClick="@{() -> eventListener.onClickedTaxiSearchResult(holder.title)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"

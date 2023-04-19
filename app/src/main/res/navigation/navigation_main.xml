@@ -146,6 +146,10 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_taxi_search_result">
 
+        <argument
+            android:name="search_result_title"
+            app:argType="string" />
+
         <action
             android:id="@+id/action_taxiSearchResultFragment_to_taxiDetailFragment"
             app:destination="@id/taxiDetailFragment" />
