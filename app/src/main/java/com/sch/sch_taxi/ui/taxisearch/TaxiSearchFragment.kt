@@ -61,7 +61,7 @@ class TaxiSearchFragment : BaseFragment<FragmentTaxiSearchBinding, TaxiSearchVie
         binding.etSearchField.setOnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
                 // 엔터 눌렀을때 행동
-                viewModel.onClickedTaxiSearch()
+                viewModel.createSearchHistory()
                 return@setOnKeyListener  true
             }
 

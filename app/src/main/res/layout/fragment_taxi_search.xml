@@ -62,7 +62,6 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
-                        android:maxLines="1"
                         android:background="@android:color/transparent"
                         android:drawableStart="@drawable/ic_baseline_search_24"
                         android:drawablePadding="8dp"
@@ -70,6 +69,7 @@
                         android:gravity="center_vertical"
                         android:hint="검색어를 입력해주세요"
                         android:imeOptions="actionDone"
+                        android:maxLines="1"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
                         android:text="@={vm.searchTitleEvent}"
@@ -99,14 +99,51 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_taxi_search_history_keyword"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
+
+
+        <TextView
+            android:id="@+id/tv_search_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="최근 검색어"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_taxi_search_history_keyword" />
+
+        <TextView
+            android:id="@+id/tv_all_delete"
+            onSingleClick="@{() -> vm.onClickedDeleteSearchHistoryList()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="모두 지우기"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_taxi_search_history_keyword" />
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_taxi_search_history"
             taxiSearchHistoryAdapter="@{vm.taxiSearchHistoryEvent}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="6dp"
             android:visibility="visible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_search_history"
+            app:spanCount="2" />
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -114,7 +151,7 @@
             taxiSearchAdapter="@{vm.taxiSearchEvent}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
