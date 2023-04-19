@@ -21,6 +21,6 @@ fun Activity.showKeyboard(view : View) {
     // 프래그먼트기 때문에 getActivity() 사용
     val inputManager: InputMethodManager =
         this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    inputManager.showSoftInput(view, 0)
 
 }

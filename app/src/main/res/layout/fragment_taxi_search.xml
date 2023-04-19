@@ -29,6 +29,7 @@
 
             <ImageView
                 android:id="@+id/iv_close"
+                onSingleClick="@{() -> vm.onClickedBack()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
@@ -61,14 +62,17 @@
                         android:layout_height="50dp"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
+                        android:maxLines="1"
                         android:background="@android:color/transparent"
                         android:drawableStart="@drawable/ic_baseline_search_24"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/black"
                         android:gravity="center_vertical"
                         android:hint="검색어를 입력해주세요"
+                        android:imeOptions="actionDone"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:text="@={vm.searchTitleEvent}"
                         android:textSize="14sp"
 
                         />
@@ -93,6 +97,16 @@
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_taxi_search_history"
+            taxiSearchHistoryAdapter="@{vm.taxiSearchHistoryEvent}"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
 
 
         <androidx.recyclerview.widget.RecyclerView

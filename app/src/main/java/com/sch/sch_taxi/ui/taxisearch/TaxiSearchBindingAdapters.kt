@@ -12,8 +12,11 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.sch.domain.model.SearchHistory
+import com.sch.domain.model.SearchHistoryList
 import com.sch.domain.model.Taxis
 import com.sch.sch_taxi.ui.taxisearch.adapter.TaxiSearchAdapter
+import com.sch.sch_taxi.ui.taxisearch.adapter.TaxiSearchHistoryAdapter
 
 @BindingAdapter("addImageCardViewVisible")
 fun CardView.bindAddImageCardViewVisible(uri: String) {
@@ -46,6 +49,14 @@ fun TextView.bindEditTextVisible(textLength: Int) {
     } else {
         this.setTextColor(Color.parseColor("#FFD260"))
         this.isClickable = true
+    }
+}
+
+@BindingAdapter("taxiSearchHistoryAdapter")
+fun RecyclerView.bindTaxiSearchHistoryAdapter(itemList: SearchHistoryList) {
+    val boundAdapter = this.adapter
+    if (boundAdapter is TaxiSearchHistoryAdapter) {
+        boundAdapter.submitList(itemList.searchHistory)
     }
 }
 
