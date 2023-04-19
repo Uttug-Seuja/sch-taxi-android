@@ -66,6 +66,7 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
      * Exception을 처리할 SharedFlow
     */
     protected var exception: SharedFlow<Throwable>? = null
+    protected var toastMessage: SharedFlow<String>? = null
     private var toast: Toast? = null
 
     init {
@@ -87,6 +88,12 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
                 viewModel.loadingEvent.collect {
                     if(!it) { showLoadingDialog() }
                     else { dismissLoadingDialog() }
+                }
+            }
+
+            launch {
+                toastMessage?.collect { message ->
+                    showToastMessage(message)
                 }
             }
 
@@ -139,6 +146,11 @@ abstract class BaseFragment<T : ViewDataBinding, R : BaseViewModel>(layoutId: In
     protected fun showToastMessage(e: Throwable?) {
         toast?.cancel()
         toast = Toast.makeText(activity, e?.message, Toast.LENGTH_SHORT)?.apply { show() }
+    }
+
+    fun showToastMessage(message: String) {
+        toast?.cancel()
+        toast = Toast.makeText(activity, message, Toast.LENGTH_LONG)?.apply { show() }
     }
 
     // Toast Message 관련 함수

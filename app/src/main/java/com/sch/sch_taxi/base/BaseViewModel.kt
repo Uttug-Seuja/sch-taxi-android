@@ -24,6 +24,10 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
+    protected val _toastMessage = MutableSharedFlow<String>()
+    val toastMessage: SharedFlow<String>
+        get() = _toastMessage
+
     private val _needLoginEvent: MutableSharedFlow<Boolean> = MutableSharedFlow<Boolean>()
     val needLoginEvent: SharedFlow<Boolean> = _needLoginEvent
 
