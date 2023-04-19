@@ -1,7 +1,7 @@
 package com.sch.data.interceptor
 
 import com.google.gson.Gson
-import com.sch.data.model.error.*
+import com.sch.data.model.remote.error.*
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

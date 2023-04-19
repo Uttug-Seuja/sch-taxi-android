@@ -1,9 +1,9 @@
 package com.sch.data.api
 
-import com.sch.data.model.request.PostRefreshTokenRequest
-import com.sch.data.model.request.PostSignUpRequest
-import com.sch.data.model.request.PostUserProfileRequest
-import com.sch.data.model.response.BaseResponse
+import com.sch.data.model.remote.request.PostRefreshTokenRequest
+import com.sch.data.model.remote.request.PostSignUpRequest
+import com.sch.data.model.remote.request.PostUserProfileRequest
+import com.sch.data.model.remote.response.BaseResponse
 import com.sch.domain.model.ImageUrl
 import com.sch.domain.model.LogInStatus
 import com.sch.domain.model.LoginResponse

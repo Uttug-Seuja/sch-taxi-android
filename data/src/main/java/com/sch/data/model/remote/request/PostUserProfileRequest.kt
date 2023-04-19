@@ -1,4 +1,4 @@
-package com.sch.data.model.request
+package com.sch.data.model.remote.request
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package com.sch.data.model.error
+package com.sch.data.model.remote.error
 
 interface ErrorResponse {
     val success: Boolean

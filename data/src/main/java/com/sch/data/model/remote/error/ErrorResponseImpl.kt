@@ -1,7 +1,7 @@
-package com.sch.data.model.error
+package com.sch.data.model.remote.error
 
 import com.google.gson.annotations.SerializedName
-import com.sch.data.model.error.ErrorResponse
+import com.sch.data.model.remote.error.ErrorResponse
 
 data class ErrorResponseImpl(
     @SerializedName("success") override val success: Boolean,

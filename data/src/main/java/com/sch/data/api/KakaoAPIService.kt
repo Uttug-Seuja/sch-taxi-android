@@ -1,11 +1,8 @@
 package com.sch.data.api
 
-import com.sch.data.model.response.BaseResponse
 import com.sch.domain.model.*
 import retrofit2.Response
 import retrofit2.http.*
-import javax.inject.Inject
-import javax.inject.Named
 
 interface KakaoAPIService {
 

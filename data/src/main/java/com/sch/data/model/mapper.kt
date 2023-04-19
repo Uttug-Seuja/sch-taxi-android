@@ -1,5 +1,9 @@
 package com.sch.data.model
 
+import com.sch.data.model.local.SearchHistoryEntity
+import com.sch.domain.model.SearchHistory
+import com.sch.domain.model.SearchHistoryList
+
 //import com.o2.data.model.response.PagingGroupList
 //import com.depromeet.domain.model.GroupList
 //import com.depromeet.domain.model.NotificationContent
@@ -26,3 +30,34 @@ package com.sch.data.model
 //        notifications = notifications,
 //    )
 //}
+
+fun SearchHistory.toData(): SearchHistoryEntity {
+    return SearchHistoryEntity(
+        title = this.title
+    )
+}
+
+//fun List<SearchHistoryEntity>.toDomain(): List<SearchHistory> {
+//    return map { SearchHistory(
+//        searchHistoryIdx = it.searchHistoryIdx,
+//        title = it.title
+//    ) }
+//}
+
+fun List<SearchHistoryEntity>.toDomain(): SearchHistoryList {
+    return SearchHistoryList(
+        map {
+            SearchHistory(
+                searchHistoryIdx = it.searchHistoryIdx,
+                title = it.title
+            )
+        }
+    )
+}
+
+fun SearchHistoryEntity.toDomain(): SearchHistory {
+    return SearchHistory(
+        searchHistoryIdx = this.searchHistoryIdx,
+        title = this.title
+    )
+}
