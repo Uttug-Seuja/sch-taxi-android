@@ -50,7 +50,7 @@ class TaxiSearchFragment : BaseFragment<FragmentTaxiSearchBinding, TaxiSearchVie
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
                 when(it) {
-                    is TaxiSearchNavigationAction.NavigateToTaxiSearchResult -> navigate(HomeFragmentDirections.actionHomeFragmentToTaxiDetailFragment())
+                    is TaxiSearchNavigationAction.NavigateToTaxiSearchResult -> navigate(TaxiSearchFragmentDirections.actionTaxiSearchFragmentToTaxiSearchResultFragment())
                     is TaxiSearchNavigationAction.NavigateToBack -> navController.popBackStack()
                 }
             }
