@@ -79,17 +79,18 @@
 
                     <requestFocus />
 
-
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/textClearButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginHorizontal="12dp"
-                        android:background="@null"
                         android:gravity="center"
-                        android:src="@drawable/ic_edit"
-                        android:visibility="gone" />
+                        android:padding="12dp"
+                        android:src="@drawable/baseline_cancel_24"
+                        android:visibility="visible"
+                        app:imageViewVisible="@{vm.searchTitleEvent}"
+                        app:onSingleClick="@{() -> vm.onClickedDeleteSearchTitle()}"
+                        app:tint="@color/blue_50" />
 
                 </LinearLayout>
 

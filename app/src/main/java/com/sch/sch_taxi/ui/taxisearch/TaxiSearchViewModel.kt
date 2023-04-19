@@ -116,6 +116,13 @@ class TaxiSearchViewModel @Inject constructor(
         }
     }
 
+    override fun onClickedDeleteSearchTitle() {
+        Log.d("ttt", "??")
+        baseViewModelScope.launch{
+            searchTitleEvent.value = ""
+        }
+    }
+
     override fun onClickedBack() {
         baseViewModelScope.launch {
             _navigationHandler.emit(TaxiSearchNavigationAction.NavigateToBack)

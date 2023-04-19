@@ -7,6 +7,7 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -27,6 +28,12 @@ fun ConstraintLayout.bindConstraintLayoutVisible(searchText : String) {
 
 @BindingAdapter("recyclerViewVisible")
 fun RecyclerView.bindRecyclerViewVisible(searchText : String) {
+    if (searchText.isEmpty()) this.visibility = View.GONE
+    else this.visibility = View.VISIBLE
+}
+
+@BindingAdapter("imageViewVisible")
+fun ImageView.bindImageViewVisible(searchText : String) {
     if (searchText.isEmpty()) this.visibility = View.GONE
     else this.visibility = View.VISIBLE
 }

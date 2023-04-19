@@ -6,5 +6,7 @@ interface TaxiSearchActionHandler {
     fun onClickedTaxiSearchResult()
     fun onClickedDeleteSearchHistory(searchHistoryIdx: Int)
     fun onClickedDeleteSearchHistoryList()
+    fun onClickedDeleteSearchTitle()
+
 
 }
