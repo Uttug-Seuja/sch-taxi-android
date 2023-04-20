@@ -2,8 +2,8 @@ package com.sch.data.interceptor
 
 
 
-import com.sch.data.model.remote.error.ErrorResponseImpl
 import com.sch.data.model.remote.request.PostRefreshTokenRequest
+import com.sch.data.model.remote.error.ErrorResponseImpl
 import com.sch.data.DataApplication.Companion.editor
 import com.sch.data.DataApplication.Companion.sSharedPreferences
 import com.sch.data.api.ApiClient.BASE_URL

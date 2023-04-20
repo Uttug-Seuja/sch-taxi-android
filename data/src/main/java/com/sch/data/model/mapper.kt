@@ -5,9 +5,9 @@ import com.sch.domain.model.SearchHistory
 import com.sch.domain.model.SearchHistoryList
 
 //import com.o2.data.model.response.PagingGroupList
-//import com.depromeet.domain.model.GroupList
-//import com.depromeet.domain.model.NotificationContent
-//import com.depromeet.domain.model.NotificationListContent
+//import com.sch.domain.model.GroupList
+//import com.sch.domain.model.NotificationContent
+//import com.sch.domain.model.NotificationListContent
 //
 //fun PagingGroupList.toDomain() : GroupList {
 //    return GroupList(

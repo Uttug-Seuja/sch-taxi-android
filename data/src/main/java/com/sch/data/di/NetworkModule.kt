@@ -45,18 +45,6 @@ object NetworkModule {
 //            .addInterceptor(BearerInterceptor()) // Refresh Token
             .addInterceptor(ErrorResponseInterceptor()) // Error Response
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addInterceptor{
-
-                val original = it.request()
-                if (original.url.encodedPath.equals("/api/v1/user", true)){
-                    val response = it.proceed(original)
-                    response.headers["Authorization"]
-                    response.headers["RefreshToken"]
-
-                }
-
-                it.proceed(original)
-            }
             .build()
     }
 
@@ -73,6 +61,6 @@ object NetworkModule {
     @Singleton
     @Provides
     @Named("Main")
-    fun provideMainAPIService(@Named("Main") retrofit: Retrofit) : MainAPIService =
+    fun provideMainAPIService(@Named("Main") retrofit: Retrofit): MainAPIService =
         retrofit.create(MainAPIService::class.java)
 }
