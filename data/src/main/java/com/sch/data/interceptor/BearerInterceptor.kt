@@ -43,10 +43,10 @@ class BearerInterceptor : Interceptor {
                         .create(MainAPIService::class.java).postRefreshToken(PostRefreshTokenRequest(it))
 
                     if(result.success) {
-                        editor.putString("access_token", result.data.access_token)
-                        editor.putString("refresh_token", result.data.refresh_token)
+                        editor.putString("access_token", result.data.accessToken)
+                        editor.putString("refresh_token", result.data.refreshToken)
                         editor.commit()
-                        accessToken = result.data.access_token
+                        accessToken = result.data.accessToken
                         isRefreshable = true
                     }
                 }
