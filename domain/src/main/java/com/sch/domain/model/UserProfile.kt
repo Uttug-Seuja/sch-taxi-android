@@ -1,8 +1,10 @@
 package com.sch.domain.model
 
+import com.google.gson.annotations.SerializedName
+
 data class UserProfile(
-    val email: String,
-    val id: Int,
-    val nickname: String,
-    val profile_path: String
+    @SerializedName("email") val email: String,
+    @SerializedName("id") val id: Int,
+    @SerializedName("nickname") val nickname: String,
+    @SerializedName("profilePath") val profilePath: String
 )
