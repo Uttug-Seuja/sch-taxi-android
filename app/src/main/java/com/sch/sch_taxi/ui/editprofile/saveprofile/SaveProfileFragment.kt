@@ -79,7 +79,7 @@ class SaveProfileFragment : BaseFragment<FragmentSaveProfileBinding, SaveProfile
 
         lifecycleScope.launchWhenStarted {
             viewModel.profileName.collectLatest {
-                if(it != "" && it != viewModel.beforeProfile!!.nickname) {
+                if(it != "" && it != viewModel.beforeProfile!!.name) {
                     viewModel.editPossibleState.emit(true)
                 }
             }

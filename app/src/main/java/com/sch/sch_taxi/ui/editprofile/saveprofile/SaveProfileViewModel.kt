@@ -63,7 +63,7 @@ class SaveProfileViewModel @Inject constructor(
     override fun onProfileSaveClicked() {
         baseViewModelScope.launch {
             showLoading()
-            if (beforeProfile!!.profile_path != profileImg.value) {
+            if (beforeProfile!!.profilePath != profileImg.value) {
 //                mainRepository.postUserProfile(
 //                    nickname = profileName.value,
 //                    profile_path = profileImg.value
