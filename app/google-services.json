@@ -1,28 +1,20 @@
 {
   "project_info": {
-    "project_number": "434283149935",
-    "project_id": "sch-taxi",
-    "storage_bucket": "sch-taxi.appspot.com"
+    "project_number": "408249456756",
+    "project_id": "sch-taxi-3281f",
+    "storage_bucket": "sch-taxi-3281f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:434283149935:android:c3d21a634022d7face2b9a",
+        "mobilesdk_app_id": "1:408249456756:android:26b5908b5bc4128bc05921",
         "android_client_info": {
           "package_name": "com.sch.sch_taxi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "434283149935-62vlmur20mvnrvdu16t0igetcgm1vflm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.sch.sch_taxi",
-            "certificate_hash": "be08731fd08077064e72910e716ef9a80fbbabc5"
-          }
-        },
-        {
-          "client_id": "434283149935-i7m0qal827l3sehbmvg0hraolahec54f.apps.googleusercontent.com",
+          "client_id": "408249456756-cdic7uhpv211emivcvps3q0kvod3sdim.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.sch.sch_taxi",
@@ -30,20 +22,20 @@
           }
         },
         {
-          "client_id": "434283149935-ec0lvhng36dmrl7vv95vc7e8d1f83nkb.apps.googleusercontent.com",
+          "client_id": "408249456756-n2uie10cem1u02bo9m585uiup6a5p0ai.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDnKWHv7x2ZCfvCvTyvY3LnMOLImkRicwM"
+          "current_key": "AIzaSyCEjydx7L4q_irP0tPCWqNnjkd6p5RHL3s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "434283149935-ec0lvhng36dmrl7vv95vc7e8d1f83nkb.apps.googleusercontent.com",
+              "client_id": "408249456756-n2uie10cem1u02bo9m585uiup6a5p0ai.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
