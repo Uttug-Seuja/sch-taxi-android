@@ -22,6 +22,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
+        buildConfigField "String", "BASE_URL", properties['base_url']
         buildConfigField "String", "KAKAO_LOCAL_REST_APP_KEY", properties['kakao_local_rest_app_key']
 
     }
