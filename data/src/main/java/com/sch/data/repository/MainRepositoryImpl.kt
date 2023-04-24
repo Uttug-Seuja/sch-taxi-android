@@ -15,13 +15,21 @@ import javax.inject.Named
 class MainRepositoryImpl @Inject constructor(
     @Named("Main") private val mainAPIService: MainAPIService
 ) : MainRepository {
+
     override suspend fun postRegister(
         idToken: String,
         provider: String,
-        nickname: String,
+        name: String,
+        schoolNum: String,
+        gender: String,
         profilePath: String
     ): NetworkResult<Token> {
-        val body = PostRegisterRequest(nickname = nickname, profilePath = profilePath)
+        val body = PostRegisterRequest(
+            name = name,
+            schoolNum = schoolNum,
+            gender = gender,
+            profilePath = profilePath
+        )
         return handleApi {
             mainAPIService.postRegister(
                 idToken = idToken,
@@ -65,77 +73,110 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.deleteUser(oauthAccessToken = oauthAccessToken) }
     }
 
-    override suspend fun getUserProfile(): NetworkResult<UserProfile> {
-        return handleApi { mainAPIService.getUserProfile().data.toDomain() }
+    override suspend fun getUserProfile(userId: Int): NetworkResult<UserProfile> {
+        return handleApi { mainAPIService.getUserProfile(userId = userId).data.toDomain() }
     }
 
-    override suspend fun putUserProfile(
-        nickname: String,
+    override suspend fun patchUserProfile(
         profilePath: String
     ): NetworkResult<UserProfile> {
-        val body = PutUserProfileRequest(nickname = nickname, profilePath = profilePath)
-        return handleApi { mainAPIService.putUserProfile(body = body).data.toDomain() }
+        val body = PatchUserProfileRequest(profilePath = profilePath)
+        return handleApi { mainAPIService.patchUserProfile(body = body).data.toDomain() }
     }
 
     override suspend fun postReservation(
+        reservationId: Int,
         title: String,
-        reserveDate: String,
-        sex: String,
-        startingPlace: String,
+        startPoint: String,
         destination: String,
-        challengeWord: String,
-        countersignWord: String,
+        departureDate: String,
+        gender: String,
+        passengerNum: String,
+        currentNum: String,
         startLatitude: Double,
         startLongitude: Double,
-        finishLatitude: Double,
-        finishLongitude: Double
+        destinationLatitude: Double,
+        destinationLongitude: Double
     ): NetworkResult<Reservation> {
         val body = PostReservationRequest(
             title = title,
-            reserveDate = reserveDate,
-            sex = sex,
-            startingPlace = startingPlace,
+            departureDate = departureDate,
+            gender = gender,
+            startPoint = startPoint,
             destination = destination,
-            challengeWord = challengeWord,
-            countersignWord = countersignWord,
             startLatitude = startLatitude,
             startLongitude = startLongitude,
-            finishLatitude = finishLatitude,
-            finishLongitude = finishLongitude
+            destinationLatitude = destinationLatitude,
+            destinationLongitude = destinationLongitude
         )
         return handleApi { mainAPIService.postReservation(body = body).data.toDomain() }
     }
 
-    override suspend fun putReservation(id: Int, title: String): NetworkResult<Reservation> {
-        val body = PutReservationRequest(title = title)
-        return handleApi { mainAPIService.putReservation(id = id, body = body).data.toDomain() }
+    override suspend fun patchReservation(
+        reservationId: Int,
+        title: String,
+        startPoint: String,
+        destination: String,
+        departureDate: String,
+        gender: String,
+        passengerNum: String,
+        currentNum: String,
+        startLatitude: Double,
+        startLongitude: Double,
+        destinationLatitude: Double,
+        destinationLongitude: Double
+    ): NetworkResult<Reservation> {
+        val body = PatchReservationRequest(
+            title = title,
+            departureDate = departureDate,
+            startPoint = startPoint,
+            destination = destination,
+            startLatitude = startLatitude,
+            startLongitude = startLongitude,
+            destinationLatitude = destinationLatitude,
+            destinationLongitude = destinationLongitude
+        )
+        return handleApi {
+            mainAPIService.patchReservation(
+                reservationId = reservationId,
+                body = body
+            ).data.toDomain()
+        }
     }
 
-    override suspend fun deleteReservation(id: Int): NetworkResult<Unit> {
-        return handleApi { mainAPIService.deleteReservation(id = id) }
+    override suspend fun deleteReservation(reservationId: Int): NetworkResult<Unit> {
+        return handleApi { mainAPIService.deleteReservation(reservationId = reservationId) }
     }
 
-    override suspend fun getReservationDetail(id: Int): NetworkResult<ReservationDetail> {
-        return handleApi { mainAPIService.getReservationDetail(id = id).data.toDomain() }
+    override suspend fun getReservationDetail(reservationId: Int): NetworkResult<Reservation> {
+        return handleApi { mainAPIService.getReservationDetail(reservationId = reservationId).data.toDomain() }
     }
 
     override suspend fun getReservation(
         page: Int,
         size: Int,
-        sort: String?
     ): NetworkResult<PagingReservations> {
         return handleApi {
             mainAPIService.getReservation(
                 page = page,
                 size = size,
-                sort = sort
             ).data.pagingReservationsResponse.toDomain()
         }
     }
 
-    override suspend fun getReservationKeyword(keyword: String): NetworkResult<ReservationKeyword> {
+    override suspend fun getReservationKeyword(
+        keyword: String,
+        page: Int,
+        size: Int
+    ): NetworkResult<ReservationKeyword> {
         val body = GetReservationKeywordRequest(keyword = keyword)
-        return handleApi { mainAPIService.getReservationKeyword(body = body).data.toDomain() }
+        return handleApi {
+            mainAPIService.getReservationKeyword(
+                body = body,
+                page = page,
+                size = size
+            ).data.toDomain()
+        }
 
     }
 
@@ -143,7 +184,6 @@ class MainRepositoryImpl @Inject constructor(
         keyword: String,
         page: Int,
         size: Int,
-        sort: String?
     ): NetworkResult<PagingReservations> {
         val body = GetReservationKeywordRequest(keyword = keyword)
         return handleApi {
@@ -151,17 +191,32 @@ class MainRepositoryImpl @Inject constructor(
                 body = body,
                 page = page,
                 size = size,
-                sort = sort
             ).data.pagingReservationsResponse.toDomain()
         }
     }
 
-    override suspend fun postParticipation(id: Int): NetworkResult<Participation> {
-        return handleApi { mainAPIService.postParticipation(id = id).data.toDomain() }
+    override suspend fun postParticipation(
+        id: Int,
+        seatPosition: String
+    ): NetworkResult<Participation> {
+        return handleApi {
+            mainAPIService.postParticipation(
+                id = id,
+                seatPosition = seatPosition
+            ).data.toDomain()
+        }
     }
 
-    override suspend fun putParticipation(id: Int): NetworkResult<Participation> {
-        return handleApi { mainAPIService.putParticipation(id = id).data.toDomain() }
+    override suspend fun patchParticipation(
+        participationId: Int,
+        seatPosition: String
+    ): NetworkResult<Participation> {
+        return handleApi {
+            mainAPIService.patchParticipation(
+                id = participationId,
+                seatPosition = seatPosition
+            ).data.toDomain()
+        }
     }
 
     override suspend fun deleteParticipation(id: Int): NetworkResult<Unit> {
@@ -175,13 +230,11 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getUserReservation(
         page: Int,
         size: Int,
-        sort: String?
     ): NetworkResult<PagingReservations> {
         return handleApi {
             mainAPIService.getUserReservation(
                 page = page,
-                size = size,
-                sort = sort
+                size = size
             ).data.pagingReservationsResponse.toDomain()
         }
     }
@@ -189,13 +242,11 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getUserParticipation(
         page: Int,
         size: Int,
-        sort: String?
     ): NetworkResult<PagingReservations> {
         return handleApi {
             mainAPIService.getUserParticipation(
                 page = page,
                 size = size,
-                sort = sort
             ).data.pagingReservationsResponse.toDomain()
         }
     }
@@ -258,8 +309,11 @@ class MainRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getRecommendMessage(): NetworkResult<RecommendMessageList> {
-        TODO("Not yet implemented")
+    override suspend fun getRecommendKeyword(): NetworkResult<RecommendKeywordList> {
+
+        return handleApi {
+            mainAPIService.getRecommendKeyword().data.recommendKeywordResponse.toDomain()
+        }
     }
 
     override suspend fun getAppVersion(): NetworkResult<AppVersion> {
@@ -268,10 +322,6 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getProfiles(): NetworkResult<ProfileList> {
         return handleApi { mainAPIService.getProfiles().data.profiles.toDomain() }
-    }
-
-    override suspend fun getProfilesRandom(): NetworkResult<Profile> {
-        return handleApi { mainAPIService.getProfilesRandom().data.toDomain() }
     }
 
     override suspend fun getAlarms(): NetworkResult<AlarmList> {

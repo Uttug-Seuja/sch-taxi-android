@@ -24,7 +24,13 @@ fun IsRegisteredResponse.toDomain(): IsRegistered {
 
 fun UserProfileResponse.toDomain(): UserProfile {
     return UserProfile(
-        email = email, id = id, nickname = nickname, profilePath = profilePath
+        userId = userId,
+        schoolNum = schoolNum,
+        gender = gender,
+        name = name,
+        email = email,
+        profilePath = profilePath,
+        currentTemperature = currentTemperature
     )
 }
 
@@ -44,39 +50,21 @@ fun SearchHistoryEntity.toDomain(): SearchHistory {
 
 fun ReservationResponse.toDomain(): Reservation {
     return Reservation(
-        id = this.id,
-        title = this.title,
-        reservationTime = this.reservationTime,
-        startingPlace = this.startingPlace,
-        destination = this.destination,
-        sex = this.sex,
-        reservationStatus = this.reservationStatus
-    )
-}
-
-fun ReservationDetailResponse.toDomain(): ReservationDetail {
-    return ReservationDetail(
-        id = id,
+        reservationId = reservationId,
         title = title,
-        reserveDate = reserveDate,
-        reserveTime = reserveTime,
-        startingPlace = startingPlace,
+        startPoint = startPoint,
         destination = destination,
-        sex = sex,
-        userSex = userSex,
-        createdAt = createdAt,
-        currentNum = currentNum,
+        departureDate = departureDate,
+        gender = gender,
         passengerNum = passengerNum,
-        challengeWord = challengeWord,
-        countersignWord = countersignWord,
+        currentNum = currentNum,
         startLatitude = startLatitude,
         startLongitude = startLongitude,
-        finishLatitude = finishLatitude,
-        finishLongitude = finishLongitude,
-        reservationStatus = reservationStatus,
-        userUid = userUid,
-        name = name,
-        schoolNum = schoolNum
+        destinationLatitude = destinationLatitude,
+        destinationLongitude = destinationLongitude,
+        isHost = isHost,
+        createAt = createdAt,
+        updateAt = updateAt
     )
 }
 
@@ -89,7 +77,7 @@ fun ReservationKeywordResponse.toDomain(): ReservationKeyword {
 }
 
 fun ParticipationResponse.toDomain(): Participation {
-    return Participation(reservationId = this.reservationId, isParticipation = isParticipation)
+    return Participation(participationId = participationId)
 }
 
 fun OptionsResponse.toDomain(): Options {
@@ -159,5 +147,15 @@ fun ReportNotificationResponse.toDomain(): ReportNotification {
         report_reason = this.report_reason,
         description = this.description,
         defendant_id = this.defendant_id
+    )
+}
+
+fun List<RecommendKeywordResponse>.toDomain(): RecommendKeywordList {
+    return RecommendKeywordList(
+        map {
+            RecommendKeyword(
+                keyword = it.keyword
+            )
+        }
     )
 }

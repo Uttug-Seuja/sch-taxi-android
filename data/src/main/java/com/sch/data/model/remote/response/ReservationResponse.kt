@@ -4,11 +4,24 @@ import com.google.gson.annotations.SerializedName
 
 
 data class ReservationResponse(
-    @SerializedName("id") val id: Int,
+    @SerializedName("reservationId") val reservationId: Int,
     @SerializedName("title") val title: String,
-    @SerializedName("reservationTime") val reservationTime: String,
-    @SerializedName("startingPlace") val startingPlace: String,
+    @SerializedName("startPoint") val startPoint: String,
     @SerializedName("destination") val destination: String,
-    @SerializedName("sex") val sex: String,
+    @SerializedName("departureDate") val departureDate: String,
     @SerializedName("reservationStatus") val reservationStatus: String,
-)
+    @SerializedName("gender") val gender: String,
+    @SerializedName("passengerNum") val passengerNum: Int,
+    @SerializedName("currentNum") val currentNum: Int,
+    @SerializedName("startLatitude") val startLatitude: Double,
+    @SerializedName("startLongitude") val startLongitude: Double,
+    @SerializedName("destinationLatitude") val destinationLatitude: Double,
+    @SerializedName("destinationLongitude") val destinationLongitude: Double,
+    @SerializedName("isHost") val isHost: Boolean,
+    @SerializedName("createdAt") val createdAt: String,
+    @SerializedName("updateAt") val updateAt: String,
+//    @SerializedName("userInfoVo") val updateAt: String,
+
+
+
+    )

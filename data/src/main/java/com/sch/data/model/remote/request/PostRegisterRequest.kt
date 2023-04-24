@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 
 data class PostRegisterRequest(
-    @SerializedName("nickname") val nickname: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("schoolNum") val schoolNum: String,
+    @SerializedName("gender") val gender: String,
     @SerializedName("profilePath") val profilePath: String,
 )

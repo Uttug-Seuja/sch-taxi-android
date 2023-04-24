@@ -2,8 +2,6 @@ package com.sch.data.api
 
 import com.sch.data.model.remote.request.*
 import com.sch.data.model.remote.response.*
-import com.sch.domain.model.PagingReservation
-import com.sch.domain.model.PagingReservations
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
@@ -21,20 +19,20 @@ interface MainAPIService {
     @POST("/api/v1/credentials/refresh")
     suspend fun postRefreshToken(@Body body: PostRefreshTokenRequest): BaseResponse<LoginResponse>
 
+    // 로그인 요청 <- 가입한 유저 <- 1번 true일 경우
+    @POST("/api/v1/credentials/login")
+    suspend fun postLogin(
+        @Query("idToken") idToken: String, @Query("provider") provider: String
+    ): BaseResponse<LoginResponse>
+
     // 로그아웃
     @POST("/api/v1/credentials/logout")
     suspend fun postLogout(): Unit
 
-    // 로그인 요청 <- 가입한 유저 <- 1번 true일 경우
-    @POST("/api/v1/credentials/login")
-    suspend fun postLogin(
-        @Query("id_token") idToken: String, @Query("provider") provider: String
-    ): BaseResponse<LoginResponse>
-
     // 토큰 검증 <- 로그인시 제일 처음 1번
     @GET("/api/v1/credentials/oauth/valid/register")
     suspend fun getTokenValidation(
-        @Query("id_token") idToken: String, @Query("provider") provider: String
+        @Query("idToken") idToken: String, @Query("provider") provider: String
     ): BaseResponse<IsRegisteredResponse>
 
     // 회원 탈퇴
@@ -43,7 +41,9 @@ interface MainAPIService {
 
     // 유저 프로필
     @GET("/api/v1/users/profile")
-    suspend fun getUserProfile(): BaseResponse<UserProfileResponse>
+    suspend fun getUserProfile(
+        @Path("userId") userId: Int,
+        ): BaseResponse<UserProfileResponse>
 
     /***
     PUT : 자원의 전체 교체, 자원교체 시 모든 필드 필요
@@ -54,38 +54,48 @@ interface MainAPIService {
 
     // 유저 프로필 변경
     @PUT("/api/v1/users/profile")
-    suspend fun putUserProfile(@Body body: PutUserProfileRequest): BaseResponse<UserProfileResponse>
+    suspend fun patchUserProfile(@Body body: PatchUserProfileRequest): BaseResponse<UserProfileResponse>
 
     // 예약 만들기
     @POST("/api/v1/groups/open")
     suspend fun postReservation(@Body body: PostReservationRequest): BaseResponse<ReservationResponse>
 
-    // 예약 수정
-    @PUT("/api/v1/groups/{id}")
-    suspend fun putReservation(
-        @Path("id") id: Int,
-        @Body body: PutReservationRequest
-    ): BaseResponse<ReservationResponse>
-
     // 예약 삭제
     @DELETE("/api/v1/groups/{id}")
-    suspend fun deleteReservation(@Path("id") id: Int): Unit
+    suspend fun deleteReservation(@Path("reservationId") reservationId: Int): Unit
+
+    // 예약 수정
+    @PUT("/api/v1/groups/{id}")
+    suspend fun patchReservation(
+        @Path("reservationId") reservationId: Int,
+        @Body body: PatchReservationRequest
+    ): BaseResponse<ReservationResponse>
 
     // 예약 상세정보
     @GET("/api/v1/storages")
-    suspend fun getReservationDetail(@Path("id") id: Int): BaseResponse<ReservationDetailResponse>
+    suspend fun getReservationDetail(@Path("reservationId") reservationId: Int): BaseResponse<ReservationResponse>
 
     // 예약 전체 조회
     @GET("/api/v1/storages")
     suspend fun getReservation(
         @Query("page") page: Int,
         @Query("size") size: Int,
-        @Query("sort") sort: String?
+    ): BaseResponse<PagingReservationResponse>
+
+    // 내 예약 글
+    @GET("/api/v1/storages")
+    suspend fun getUserReservation(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
     ): BaseResponse<PagingReservationResponse>
 
     // 예약 키워드 검색하기
     @GET("/api/v1/storages")
-    suspend fun getReservationKeyword(@Body body: GetReservationKeywordRequest): BaseResponse<ReservationKeywordResponse>
+    suspend fun getReservationKeyword(
+        @Body body: GetReservationKeywordRequest,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): BaseResponse<ReservationKeywordResponse> // 나중에 해야흠
 
     // 예약 검색하기
     @GET("/api/v1/storages")
@@ -93,40 +103,39 @@ interface MainAPIService {
         @Body body: GetReservationKeywordRequest,
         @Query("page") page: Int,
         @Query("size") size: Int,
-        @Query("sort") sort: String?
     ): BaseResponse<PagingReservationResponse>
+
+    // 추천 키워드 조회
+    @GET("/api/v1/recommendmessage")
+    suspend fun getRecommendKeyword(): BaseResponse<RecommendKeywordListResponse>
 
     // 참여하기
     @POST("/api/v1/groups/open")
-    suspend fun postParticipation(@Path("id") id: Int): BaseResponse<ParticipationResponse>
-    // body = PostParticipationRequest(val seat_position = SEAT_1)
-
-    // 참여 수정하기
-    @PUT("/api/v1/groups/open")
-    suspend fun putParticipation(@Path("id") id: Int): BaseResponse<ParticipationResponse>
+    suspend fun postParticipation(
+        @Path("reservationId") id: Int,
+        @Body seatPosition: String
+    ): BaseResponse<ParticipationResponse>
 
     // 참여 취소하기
     @DELETE("/api/v1/groups/open")
-    suspend fun deleteParticipation(@Path("id") id: Int): Unit
+    suspend fun deleteParticipation(@Path("participationId") id: Int): Unit
+
+    // 참여 수정하기
+    @PATCH("/api/v1/groups/open")
+    suspend fun patchParticipation(
+        @Path("participationId") id: Int,
+        @Body seatPosition: String
+    ): BaseResponse<ParticipationResponse>
 
     // 내가 예약 했는지 확인
     @GET("/api/v1/participation")
     suspend fun getParticipation(@Path("id") id: Int): BaseResponse<ParticipationResponse>
 
-    // 내 예약 글
-    @GET("/api/v1/storages")
-    suspend fun getUserReservation(
-        @Query("page") page: Int,
-        @Query("size") size: Int,
-        @Query("sort") sort: String?
-    ): BaseResponse<PagingReservationResponse>
-
-    // 내가 참여한 예약
+    // 내가 참여한 예약글
     @GET("/api/v1/storages")
     suspend fun getUserParticipation(
         @Query("page") page: Int,
         @Query("size") size: Int,
-        @Query("sort") sort: String?
     ): BaseResponse<PagingReservationResponse>
 
     // 야간 푸시알림 설정 <- 마이페이지
@@ -170,21 +179,9 @@ interface MainAPIService {
     @DELETE("/api/v1/groups/{id}/members/leave")
     suspend fun deleteLeaveGroup(@Path("id") id: Int): BaseResponse<GroupResponse>
 
-    // 추천 메세지 조회
-    @GET("/api/v1/recommendmessage")
-    suspend fun getRecommendMessage(): BaseResponse<RecommendMessageListResponse>
-
-    // 앱버젼 체크
-    @GET("/api/v1/asset/version")
-    suspend fun getAppVersion(): BaseResponse<AppVersionResponse>
-
     // 프로필 이미지
     @GET("/api/v1/asset/profiles")
     suspend fun getProfiles(): BaseResponse<ProfileListResponse>
-
-    // 프로필 이미지 랜덤
-    @GET("/api/v1/asset/profiles/random")
-    suspend fun getProfilesRandom(): BaseResponse<ProfileResponse>
 
     // 알림 가져오기
     @GET("/api/v1/alarms")
@@ -194,7 +191,7 @@ interface MainAPIService {
     @GET("/api/v1/alarms/count")
     suspend fun getAlarmsCount(): BaseResponse<AlarmCountResponse>
 
-    // 알림 신고하기
+    // 유저 신고하기
     @POST("/api/v1/reports/notifications/{notification_id}")
     suspend fun postReportsNotifications(
         @Path("notification_id") notification_id: Int,
