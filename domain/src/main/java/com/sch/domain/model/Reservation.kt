@@ -1,13 +1,21 @@
 package com.sch.domain.model
 
 
-
 data class Reservation(
-    val id: Int,
+    val reservationId: Int,
     val title: String,
-    val reservationTime: String,
-    val startingPlace: String,
+    val startPoint: String,
     val destination: String,
-    val sex: String,
-    val reservationStatus: String,
+    val departureDate: String,
+    val gender: String,
+    val passengerNum: Int,
+    val currentNum: Int,
+    val startLatitude: Double,
+    val startLongitude: Double,
+    val destinationLatitude: Double,
+    val destinationLongitude: Double,
+    val isHost: Boolean,
+    val createAt: String,
+    val updateAt: String
+
 )

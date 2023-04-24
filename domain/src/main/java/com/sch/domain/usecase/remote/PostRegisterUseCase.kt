@@ -14,13 +14,17 @@ class PostRegisterUseCase @Inject constructor(
     suspend operator fun invoke(
         idToken: String,
         provider: String,
-        nickname: String,
+        name: String,
+        schoolNum: String,
+        gender: String,
         profilePath: String
     ): NetworkResult<Token> =
         repository.postRegister(
             idToken = idToken,
             provider = provider,
-            nickname = nickname,
+            name = name,
+            schoolNum = schoolNum,
+            gender = gender,
             profilePath = profilePath
         )
 }

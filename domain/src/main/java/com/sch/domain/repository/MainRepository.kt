@@ -11,7 +11,9 @@ interface MainRepository {
     suspend fun postRegister(
         idToken: String,
         provider: String,
-        nickname: String,
+        name: String,
+        schoolNum: String,
+        gender: String,
         profilePath: String
     ): NetworkResult<Token>
 
@@ -31,55 +33,74 @@ interface MainRepository {
     suspend fun deleteUser(oauthAccessToken: String): NetworkResult<Unit>
 
     // 유저 프로필
-    suspend fun getUserProfile(): NetworkResult<UserProfile>
+    suspend fun getUserProfile(userId: Int): NetworkResult<UserProfile>
 
     // 유저 프로필 변경
-    suspend fun putUserProfile(nickname: String, profilePath: String): NetworkResult<UserProfile>
+    suspend fun patchUserProfile(profilePath: String): NetworkResult<UserProfile>
 
     // 예약 만들기
     suspend fun postReservation(
+        reservationId: Int,
         title: String,
-        reserveDate: String,
-        sex: String,
-        startingPlace: String,
+        startPoint: String,
         destination: String,
-        challengeWord: String,
-        countersignWord: String,
+        departureDate: String,
+        gender: String,
+        passengerNum: String,
+        currentNum: String,
         startLatitude: Double,
         startLongitude: Double,
-        finishLatitude: Double,
-        finishLongitude: Double,
+        destinationLatitude: Double,
+        destinationLongitude: Double
     ): NetworkResult<Reservation>
 
     // 예약 수정
-    suspend fun putReservation(id: Int, title: String): NetworkResult<Reservation>
+    suspend fun patchReservation(
+        reservationId: Int,
+        title: String,
+        startPoint: String,
+        destination: String,
+        departureDate: String,
+        gender: String,
+        passengerNum: String,
+        currentNum: String,
+        startLatitude: Double,
+        startLongitude: Double,
+        destinationLatitude: Double,
+        destinationLongitude: Double
+    ): NetworkResult<Reservation>
 
     // 예약 삭제
-    suspend fun deleteReservation(id: Int): NetworkResult<Unit>
+    suspend fun deleteReservation(reservationId: Int): NetworkResult<Unit>
 
     // 예약 상세정보
-    suspend fun getReservationDetail(id: Int): NetworkResult<ReservationDetail>
+    suspend fun getReservationDetail(reservationId: Int): NetworkResult<Reservation>
 
     // 예약 전체 조회
-    suspend fun getReservation(
-        page: Int, size: Int, sort: String?
-    ): NetworkResult<PagingReservations>
+    suspend fun getReservation(page: Int, size: Int): NetworkResult<PagingReservations>
 
     // 예약 키워드 검색하기
     @GET("/api/v1/storages")
-    suspend fun getReservationKeyword(keyword: String): NetworkResult<ReservationKeyword>
+    suspend fun getReservationKeyword(
+        keyword: String,
+        page: Int,
+        size: Int,
+    ): NetworkResult<ReservationKeyword>
 
     // 예약 검색하기
     @GET("/api/v1/storages")
     suspend fun getReservationSearch(
-        keyword: String, page: Int, size: Int, sort: String?
+        keyword: String, page: Int, size: Int
     ): NetworkResult<PagingReservations>
 
     // 참여하기
-    suspend fun postParticipation(id: Int): NetworkResult<Participation>
+    suspend fun postParticipation(id: Int, seatPosition: String): NetworkResult<Participation>
 
     // 참여 수정하기
-    suspend fun putParticipation(id: Int): NetworkResult<Participation>
+    suspend fun patchParticipation(
+        participationId: Int,
+        seatPosition: String
+    ): NetworkResult<Participation>
 
     // 참여 취소하기
     suspend fun deleteParticipation(id: Int): NetworkResult<Unit>
@@ -88,18 +109,10 @@ interface MainRepository {
     suspend fun getParticipation(id: Int): NetworkResult<Participation>
 
     // 내 예약 글
-    suspend fun getUserReservation(
-        page: Int,
-        size: Int,
-        sort: String?
-    ): NetworkResult<PagingReservations>
+    suspend fun getUserReservation(page: Int, size: Int): NetworkResult<PagingReservations>
 
     // 내가 참여한 예약
-    suspend fun getUserParticipation(
-        page: Int,
-        size: Int,
-        sort: String?
-    ): NetworkResult<PagingReservations>
+    suspend fun getUserParticipation(page: Int, size: Int): NetworkResult<PagingReservations>
 
     // 야간 푸시알림 설정 <- 마이페이지
     suspend fun postOptionNight(): NetworkResult<Unit>
@@ -121,10 +134,7 @@ interface MainRepository {
 
     // 푸쉬 알림 보내기
     suspend fun postNotifications(
-        group_id: Int,
-        title: String,
-        content: String,
-        image_url: String
+        group_id: Int, title: String, content: String, image_url: String
     ): NetworkResult<Unit>
 
     // FCM 토큰 등록
@@ -138,8 +148,8 @@ interface MainRepository {
     // 그룹에서 나가기
     suspend fun deleteLeaveGroup(id: Int): NetworkResult<Group>
 
-    // 추천 메세지 조회
-    suspend fun getRecommendMessage(): NetworkResult<RecommendMessageList>
+    // 추천 키워드 조회
+    suspend fun getRecommendKeyword(): NetworkResult<RecommendKeywordList>
 
     // 앱버젼 체크
     suspend fun getAppVersion(): NetworkResult<AppVersion>
@@ -147,9 +157,6 @@ interface MainRepository {
 
     // 프로필 이미지
     suspend fun getProfiles(): NetworkResult<ProfileList>
-
-    // 프로필 이미지 랜덤
-    suspend fun getProfilesRandom(): NetworkResult<Profile>
 
     // 알림 가져오기
     suspend fun getAlarms(): NetworkResult<AlarmList>

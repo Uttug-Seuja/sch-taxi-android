@@ -2,8 +2,11 @@ package com.sch.domain.model
 
 
 data class UserProfile(
+    val userId: Int,
+    val schoolNum: String,
+    val gender: String,
+    val name: String,
     val email: String,
-    val id: Int,
-    val nickname: String,
-    val profilePath: String
+    val profilePath: String,
+    val currentTemperature: Double,
 )

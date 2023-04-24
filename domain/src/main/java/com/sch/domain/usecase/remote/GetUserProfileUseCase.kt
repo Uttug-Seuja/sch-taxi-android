@@ -9,5 +9,6 @@ import javax.inject.Inject
 class GetUserProfileUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(): NetworkResult<UserProfile> = repository.getUserProfile()
+    suspend operator fun invoke(userId: Int): NetworkResult<UserProfile> =
+        repository.getUserProfile(userId = userId)
 }

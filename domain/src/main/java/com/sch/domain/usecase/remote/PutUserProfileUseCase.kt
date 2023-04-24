@@ -8,9 +8,8 @@ import javax.inject.Inject
 class PutUserProfileUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(nickname: String, profilePath: String): NetworkResult<UserProfile> =
-        repository.putUserProfile(
-            nickname = nickname,
+    suspend operator fun invoke(profilePath: String): NetworkResult<UserProfile> =
+        repository.patchUserProfile(
             profilePath = profilePath
         )
 }
