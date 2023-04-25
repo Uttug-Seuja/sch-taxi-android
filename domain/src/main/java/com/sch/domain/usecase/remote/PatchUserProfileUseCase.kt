@@ -5,7 +5,7 @@ import com.sch.domain.model.UserProfile
 import com.sch.domain.repository.MainRepository
 import javax.inject.Inject
 
-class PutUserProfileUseCase @Inject constructor(
+class PatchUserProfileUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
     suspend operator fun invoke(profilePath: String): NetworkResult<UserProfile> =
