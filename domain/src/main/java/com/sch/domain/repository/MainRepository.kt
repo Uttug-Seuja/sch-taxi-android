@@ -33,7 +33,7 @@ interface MainRepository {
     suspend fun deleteUser(oauthAccessToken: String): NetworkResult<Unit>
 
     // 유저 프로필
-    suspend fun getUserProfile(userId: Int): NetworkResult<UserProfile>
+    suspend fun getUserProfile(): NetworkResult<UserProfile>
 
     // 유저 프로필 변경
     suspend fun patchUserProfile(profilePath: String): NetworkResult<UserProfile>
@@ -153,7 +153,6 @@ interface MainRepository {
 
     // 앱버젼 체크
     suspend fun getAppVersion(): NetworkResult<AppVersion>
-
 
     // 프로필 이미지
     suspend fun getProfiles(): NetworkResult<ProfileList>

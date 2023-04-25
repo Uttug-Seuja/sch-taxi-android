@@ -41,9 +41,7 @@ interface MainAPIService {
 
     // 유저 프로필
     @GET("/api/v1/users/profile")
-    suspend fun getUserProfile(
-        @Path("userId") userId: Int,
-        ): BaseResponse<UserProfileResponse>
+    suspend fun getUserProfile(): BaseResponse<UserProfileResponse>
 
     /***
     PUT : 자원의 전체 교체, 자원교체 시 모든 필드 필요

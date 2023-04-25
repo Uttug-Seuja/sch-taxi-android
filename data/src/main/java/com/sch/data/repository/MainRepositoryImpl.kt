@@ -73,8 +73,8 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.deleteUser(oauthAccessToken = oauthAccessToken) }
     }
 
-    override suspend fun getUserProfile(userId: Int): NetworkResult<UserProfile> {
-        return handleApi { mainAPIService.getUserProfile(userId = userId).data.toDomain() }
+    override suspend fun getUserProfile(): NetworkResult<UserProfile> {
+        return handleApi { mainAPIService.getUserProfile().data.toDomain() }
     }
 
     override suspend fun patchUserProfile(
