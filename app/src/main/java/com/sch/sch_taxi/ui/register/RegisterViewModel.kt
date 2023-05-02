@@ -1,7 +1,14 @@
 package com.sch.sch_taxi.ui.register
 
 import android.util.Log
+import com.sch.domain.onError
+import com.sch.domain.onSuccess
+import com.sch.domain.usecase.remote.GetTokenValidationUseCase
+import com.sch.domain.usecase.remote.PosNotificationTokenUseCase
+import com.sch.domain.usecase.remote.PostLoginUseCase
+import com.sch.domain.usecase.remote.PostRefreshTokenUseCase
 import com.sch.sch_taxi.base.BaseViewModel
+import com.sch.sch_taxi.di.PresentationApplication.Companion.editor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,54 +19,56 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
+    private val getTokenValidationUseCase: GetTokenValidationUseCase,
+    private val postLoginUseCase: PostLoginUseCase,
+    private val postNotificationTokenUseCase: PosNotificationTokenUseCase
 ) : BaseViewModel(), RegisterActionHandler {
 
     private val TAG = "RegisterViewModel"
 
-    private val _navigationHandler: MutableSharedFlow<RegisterNavigationAction> = MutableSharedFlow<RegisterNavigationAction>()
+    private val _navigationHandler: MutableSharedFlow<RegisterNavigationAction> =
+        MutableSharedFlow<RegisterNavigationAction>()
     val navigationHandler: SharedFlow<RegisterNavigationAction> = _navigationHandler.asSharedFlow()
     val notificationAgreed: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
+
     val firebaseToken: MutableStateFlow<String> = MutableStateFlow("")
-
-    init {
-    }
-
-    fun sendNotification() {
-        baseViewModelScope.launch {
-            showLoading()
-            notificationAgreed.value = true
-//            mainRepository.postNotificationExperience(token = firebaseToken.value, content = messageText.value)
-            dismissLoading()
-        }
-    }
+    val deviceId: MutableStateFlow<String> = MutableStateFlow("")
 
     fun oauthLogin(idToken: String, provider: String) {
+        Log.d("ttt idToken", idToken)
+        Log.d("ttt provider", provider)
+
         baseViewModelScope.launch {
             showLoading()
-//            mainRepository.getTokenValidation(idToken = idToken, provider = provider)
-//                .onSuccess {
-//                    editor.putString("id_token", idToken)
-//                    editor.putString("provider", provider)
-//                    editor.putString("fcm_token", firebaseToken.value)
-//                    editor.putString("device_id", deviceId.value)
-//
-//                    if(!it.is_registered) {
-//                        editor.commit()
+            getTokenValidationUseCase(idToken = idToken, provider = provider)
+                .onSuccess {
+                    editor.putString("idToken", idToken)
+                    editor.putString("provider", provider)
+                    editor.putString("fcmToken", firebaseToken.value)
+                    editor.putString("deviceId", deviceId.value)
+
+                    if (!it.isRegistered) {
+                        editor.commit()
                         _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginFirst)
-//                    } else {
-//                        mainRepository.postLogin(idToken = idToken, provider = provider)
-//                            .onSuccess { response ->
-//                                editor.putString("access_token", response.access_token)
-//                                editor.putString("refresh_token", response.refresh_token)
-//                                editor.commit()
-//
-//                                mainRepository.postNotificationToken(token = firebaseToken.value, device_id = deviceId.value)
-//                                    .onSuccess {
-//                                        _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
-//                                    }
-//                            }
-//                    }
-//                }
+                    } else {
+                        postLoginUseCase(idToken = idToken, provider = provider)
+                            .onSuccess { response ->
+                                editor.putString("accessToken", response.accessToken)
+                                editor.putString("refreshToken", response.refreshToken)
+                                editor.commit()
+
+                                postNotificationTokenUseCase(
+                                    token = firebaseToken.value,
+                                    deviceId = deviceId.value
+                                )
+                                    .onSuccess {
+                                        _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
+                                    }
+                            }
+                    }
+                }.onError {
+                    Log.d("ttt it", it.toString())
+                }
             dismissLoading()
         }
     }

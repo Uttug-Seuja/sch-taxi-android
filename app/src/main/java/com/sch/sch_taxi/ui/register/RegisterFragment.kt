@@ -3,6 +3,7 @@ package com.sch.sch_taxi.ui.register
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.provider.Settings.Secure
 import android.os.Build
 import android.util.Log
 import androidx.navigation.fragment.findNavController
@@ -82,7 +83,6 @@ class RegisterFragment :
 //                            pushSettingDialog()
                             toastMessage("푸쉬 알림 전송 권한 없음")
                         } else {
-                            viewModel.sendNotification()
                             toastMessage("푸쉬 알림 전송 완료")
                         }
                     }
@@ -92,7 +92,9 @@ class RegisterFragment :
                     is RegisterNavigationAction.NavigateToLoginFirst -> navigate(
                         RegisterFragmentDirections.actionRegisterFragmentToSetProfileFragment()
                     )
-                    else -> {}
+                    is RegisterNavigationAction.NavigateToLoginAlready -> navigate(
+                        RegisterFragmentDirections.actionRegisterFragmentToHomeFragment()
+                    )
                 }
             }
         }
@@ -106,8 +108,8 @@ class RegisterFragment :
     private fun createNotification() {
         FirebaseMessaging.getInstance().token.addOnSuccessListener {
             viewModel.firebaseToken.value = it
-            Log.d("ttt", it.toString())
-//            viewModel.deviceId.value = Settings.Secure.getString(requireContext().contentResolver, Settings.Secure.ANDROID_ID)
+            viewModel.deviceId.value =
+                Secure.getString(requireContext().contentResolver, Secure.ANDROID_ID)
         }
     }
 
@@ -131,6 +133,8 @@ class RegisterFragment :
                 }
             } else if (token != null) {
                 token.idToken?.let {
+                    Log.d("ttt kakao id token", it)
+
                     viewModel.oauthLogin(idToken = it, provider = "KAKAO")
                 }
             }
@@ -174,7 +178,6 @@ class RegisterFragment :
             .requestEmail()
             .build()
 
-
         val mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
         val account = GoogleSignIn.getLastSignedInAccount(requireContext())
 
@@ -189,7 +192,8 @@ class RegisterFragment :
 
             val idToken = completedTask.getResult(ApiException::class.java).idToken
             idToken?.let { token ->
-                viewModel.oauthLogin(idToken = token,  provider = "GOOGLE")
+                Log.d("ttt google id token", token)
+                viewModel.oauthLogin(idToken = token, provider = "GOOGLE")
             }
         } catch (e: ApiException) {
             toastMessage("구글 로그인에 실패 하였습니다.")
