@@ -1,4 +1,4 @@
-package com.sch.domain.usecase.local
+package com.sch.domain.usecase
 
 import com.sch.domain.NetworkResult
 import com.sch.domain.model.ResultSearchKeyword

@@ -1,4 +1,4 @@
-package com.sch.domain.usecase.remote
+package com.sch.domain.usecase
 
 import com.sch.domain.NetworkResult
 import com.sch.domain.model.Participation
@@ -10,9 +10,9 @@ import com.sch.domain.repository.MainRepository
 import retrofit2.Response
 import javax.inject.Inject
 
-class PostParticipationUseCase @Inject constructor(
+class DeleteParticipationUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(id: Int, seatPosition: String): NetworkResult<Participation> =
-        repository.postParticipation(id = id, seatPosition = seatPosition)
+    suspend operator fun invoke(id: Int): NetworkResult<Unit> =
+        repository.deleteParticipation(id = id)
 }

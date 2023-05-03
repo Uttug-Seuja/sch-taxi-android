@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
-                android:text="@string/setprofile_nickname" />
+                android:text="이름" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,65 +115,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/age_frame"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nickname_frame">
-
-            <TextView
-                android:id="@+id/age_title"
-                style="@style/Theme.AppCompat.TextView.Profile.Username.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:text="@string/setprofile_age" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/custom_backgroundwhite_radius16"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/age_contents"
-                    style="@style/Theme.AppCompat.TextView.Profile.Username.Contents"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:layout_weight="1"
-                    android:background="@color/transparent"
-                    android:hint="@string/setprofile_age_hint"
-                    android:inputType="number"
-                    android:maxLength="8"
-                    android:text="@={viewmodel.ageInputContent}"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/age_edit_text_count"
-                    style="Theme.AppCompat.TextView.Regular.Black.Size16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:text="0/8"
-                    android:textColor="@color/gray05"
-                    app:ageEditTextCount="@{viewmodel.ageEditTextCountEvent}">
-
-                </TextView>
-
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/gender_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -182,7 +123,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/age_frame">
+            app:layout_constraintTop_toBottomOf="@+id/nickname_frame">
 
             <TextView
                 android:id="@+id/gender_title"
@@ -270,6 +211,65 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/age_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gender_frame">
+
+            <TextView
+                android:id="@+id/age_title"
+                style="@style/Theme.AppCompat.TextView.Profile.Username.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:text="학교 이메일" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_backgroundwhite_radius16"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/age_contents"
+                    style="@style/Theme.AppCompat.TextView.Profile.Username.Contents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:hint="학교 이메일을 입력해주세요"
+                    android:text="@={viewmodel.ageInputContent}"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/age_edit_text_count"
+                    style="Theme.AppCompat.TextView.Regular.Black.Size16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="인증하기"
+                    android:textColor="@color/gray05"
+                    app:ageEditTextCount="@{viewmodel.ageEditTextCountEvent}">
+
+                </TextView>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/send_card_view"
             android:layout_width="match_parent"
@@ -277,7 +277,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/green03"
+            android:backgroundTint="@color/blue_50"
             android:onClick="@{() -> viewmodel.onSelectionDoneClicked()}"
             app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"

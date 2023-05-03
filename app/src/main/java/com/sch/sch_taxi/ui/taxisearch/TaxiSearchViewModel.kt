@@ -7,13 +7,11 @@ import com.sch.domain.model.SearchHistoryList
 import com.sch.domain.model.Taxis
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
-import com.sch.domain.usecase.local.CreateSearchHistoryUseCase
-import com.sch.domain.usecase.local.DeleteSearchHistoryListUseCase
-import com.sch.domain.usecase.local.DeleteSearchHistoryUseCase
-import com.sch.domain.usecase.local.GetSearchHistoryUseCase
+import com.sch.domain.usecase.CreateSearchHistoryUseCase
+import com.sch.domain.usecase.DeleteSearchHistoryListUseCase
+import com.sch.domain.usecase.DeleteSearchHistoryUseCase
+import com.sch.domain.usecase.GetSearchHistoryUseCase
 import com.sch.sch_taxi.base.BaseViewModel
-import com.sch.sch_taxi.ui.home.HomeNavigationAction
-import com.sch.sch_taxi.ui.notifications.NotificationsNavigationAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

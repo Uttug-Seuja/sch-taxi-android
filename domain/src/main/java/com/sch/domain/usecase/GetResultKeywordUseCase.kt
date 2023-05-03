@@ -1,4 +1,4 @@
-package com.sch.domain.usecase.remote
+package com.sch.domain.usecase
 
 import com.sch.domain.model.ResultSearchKeyword
 import com.sch.domain.repository.KakaoRepository

@@ -1,21 +1,15 @@
 package com.sch.sch_taxi.ui.taxicreate
 
-import android.database.sqlite.SQLiteException
 import android.util.Log
 import com.sch.domain.model.KakaoLocal
 import com.sch.domain.model.KakaoLocals
-import com.sch.domain.model.Taxis
-import com.sch.domain.onError
-import com.sch.domain.onSuccess
-import com.sch.domain.repository.KakaoRepository
 import com.sch.domain.runCatching
-import com.sch.domain.usecase.remote.GetResultKeywordUseCase
+import com.sch.domain.usecase.GetResultKeywordUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 
 @HiltViewModel
 class TaxiCreateViewModel @Inject constructor(

@@ -3,10 +3,9 @@ package com.sch.sch_taxi.ui.register
 import android.util.Log
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
-import com.sch.domain.usecase.remote.GetTokenValidationUseCase
-import com.sch.domain.usecase.remote.PosNotificationTokenUseCase
-import com.sch.domain.usecase.remote.PostLoginUseCase
-import com.sch.domain.usecase.remote.PostRefreshTokenUseCase
+import com.sch.domain.usecase.GetTokenValidationUseCase
+import com.sch.domain.usecase.PosNotificationTokenUseCase
+import com.sch.domain.usecase.PostLoginUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import com.sch.sch_taxi.di.PresentationApplication.Companion.editor
 import dagger.hilt.android.lifecycle.HiltViewModel

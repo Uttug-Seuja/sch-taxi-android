@@ -1,4 +1,4 @@
-package com.sch.domain.usecase.remote
+package com.sch.domain.usecase
 
 import com.sch.domain.NetworkResult
 import com.sch.domain.repository.MainRepository

@@ -1,4 +1,4 @@
-package com.sch.domain.usecase.remote
+package com.sch.domain.usecase
 
 import com.sch.domain.NetworkResult
 import com.sch.domain.model.ResultSearchKeyword
@@ -8,12 +8,11 @@ import com.sch.domain.repository.MainRepository
 import retrofit2.Response
 import javax.inject.Inject
 
-class PosNotificationTokenUseCase @Inject constructor(
+class PostRefreshTokenUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(deviceId: String, token: String): NetworkResult<Unit> =
-        repository.postNotificationToken(
-            deviceId = deviceId,
-            token = token
+    suspend operator fun invoke(refreshToken: String): NetworkResult<Token> =
+        repository.postRefreshToken(
+            refreshToken = refreshToken
         )
 }
