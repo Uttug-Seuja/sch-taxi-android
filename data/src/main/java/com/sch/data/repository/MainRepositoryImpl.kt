@@ -77,6 +77,10 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getUserProfile().data.toDomain() }
     }
 
+    override suspend fun getOtherProfile(userId: Int): NetworkResult<UserInfo> {
+        return handleApi { mainAPIService.getOtherProfile(userId = userId).data.toDomain() }
+    }
+
     override suspend fun patchUserProfile(
         profilePath: String
     ): NetworkResult<UserInfo> {
@@ -308,11 +312,11 @@ class MainRepositoryImpl @Inject constructor(
 //        TODO("Not yet implemented")
 //    }
 
-    override suspend fun getProfiles(): NetworkResult<ProfileList> {
-        return handleApi { mainAPIService.getProfiles().data.profiles.toDomain() }
-    }
+//    override suspend fun getProfiles(): NetworkResult<ProfileList> {
+//        return handleApi { mainAPIService.getProfiles().data.profiles.toDomain() }
+//    }
 
-    override suspend fun postReportNotification(
+    override suspend fun postReportsParticipation(
         participationId: Int,
         reportReason: String,
         reportType: String
@@ -320,7 +324,7 @@ class MainRepositoryImpl @Inject constructor(
         val body =
             PostReportsNotificationRequest(reportReason = reportReason, reportType = reportType)
         return handleApi {
-            mainAPIService.postReportsNotifications(
+            mainAPIService.postReportsParticipation(
                 participationId = participationId,
                 body = body
             ).data.toDomain()

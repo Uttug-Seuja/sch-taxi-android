@@ -35,6 +35,8 @@ interface MainRepository {
     // 유저 프로필
     suspend fun getUserProfile(): NetworkResult<UserInfo>
 
+    suspend fun getOtherProfile(userId: Int): NetworkResult<UserInfo>
+
     // 유저 프로필 변경
     suspend fun patchUserProfile(profilePath: String): NetworkResult<UserInfo>
 
@@ -155,7 +157,7 @@ interface MainRepository {
 //    suspend fun getAppVersion(): NetworkResult<AppVersion>
 
     // 프로필 이미지
-    suspend fun getProfiles(): NetworkResult<ProfileList>
+//    suspend fun getProfiles(): NetworkResult<ProfileList>
 
     // 알림 가져오기
 //    suspend fun getAlarms(): NetworkResult<AlarmList>
@@ -164,7 +166,7 @@ interface MainRepository {
 //    suspend fun getAlarmsCount(): NetworkResult<AlarmCount>
 
     // 알림 신고하기
-    suspend fun postReportNotification(
+    suspend fun postReportsParticipation(
         participationId: Int, reportReason: String, reportType: String
     ): NetworkResult<ReportNotification>
 

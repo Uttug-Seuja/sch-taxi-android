@@ -58,11 +58,11 @@ interface MainAPIService {
     suspend fun postReservation(@Body body: PostReservationRequest): BaseResponse<ReservationResponse>
 
     // 예약 삭제
-    @DELETE("/api/v1/reservation")
+    @DELETE("/api/v1/reservation/{reservationId}")
     suspend fun deleteReservation(@Path("reservationId") reservationId: Int): Unit
 
     // 예약 수정
-    @PUT("/api/v1/reservation")
+    @PUT("/api/v1/reservation/{reservationId}")
     suspend fun patchReservation(
         @Path("reservationId") reservationId: Int,
         @Body body: PatchReservationRequest
@@ -92,7 +92,7 @@ interface MainAPIService {
     ): BaseResponse<PagingReservationKeywordResponse> // 나중에 해야흠
 
     // 예약 검색하기
-    @GET("/api/v1/search/")
+    @GET("/api/v1/search")
     suspend fun getReservationSearch(
         @Body body: GetReservationWordRequest,
         @Query("page") page: Int,
@@ -104,18 +104,18 @@ interface MainAPIService {
     suspend fun getRecommendKeyword(): BaseResponse<RecommendKeywordListResponse>
 
     // 참여하기
-    @POST("/api/v1/participation/create")
+    @POST("/api/v1/participation/create/{reservationId}")
     suspend fun postParticipation(
         @Path("reservationId") id: Int,
         @Body seatPosition: String
     ): Unit
 
     // 참여 취소하기
-    @DELETE("api/v1/participation/delete")
+    @DELETE("api/v1/participation/delete/{reservationId}")
     suspend fun deleteParticipation(@Path("participationId") id: Int): Unit
 
     // 내가 참여한 게시글의 좌석 변경
-    @PATCH("/api/v1/participation/update")
+    @PATCH("/api/v1/participation/update/{reservationId}")
     suspend fun patchParticipation(
         @Path("participationId") id: Int,
         @Body seatPosition: String
@@ -170,9 +170,9 @@ interface MainAPIService {
 //    @DELETE("/api/v1/groups/{id}/members/leave")
 //    suspend fun deleteLeaveGroup(@Path("id") id: Int): BaseResponse<GroupResponse>
 
-    // 프로필 이미지
-    @GET("/api/v1/asset/profiles")
-    suspend fun getProfiles(): BaseResponse<ProfileListResponse>
+//    // 프로필 이미지
+//    @GET("/api/v1/asset/profiles")
+//    suspend fun getProfiles(): BaseResponse<ProfileListResponse>
 
 //    // 알림 가져오기
 //    @GET("/api/v1/alarms")
@@ -183,8 +183,8 @@ interface MainAPIService {
 //    suspend fun getAlarmsCount(): BaseResponse<AlarmCountResponse>
 
     // 유저 신고하기
-    @POST("/api/v1/reports/notifications/{notification_id}")
-    suspend fun postReportsNotifications(
+    @POST("/api/v1/report/create/{participationId}")
+    suspend fun postReportsParticipation(
         @Path("participationId") participationId: Int,
         @Body body: PostReportsNotificationRequest
     ): BaseResponse<ReportNotificationResponse>
