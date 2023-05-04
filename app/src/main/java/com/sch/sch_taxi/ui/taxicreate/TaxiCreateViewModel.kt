@@ -4,7 +4,7 @@ import android.util.Log
 import com.sch.domain.model.KakaoLocal
 import com.sch.domain.model.KakaoLocals
 import com.sch.domain.runCatching
-import com.sch.domain.usecase.GetResultKeywordUseCase
+import com.sch.domain.usecase.kakao.GetResultKeywordUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

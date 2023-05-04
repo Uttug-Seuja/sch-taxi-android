@@ -1,4 +1,4 @@
-package com.sch.domain.usecase
+package com.sch.domain.usecase.main
 
 import com.sch.domain.NetworkResult
 import com.sch.domain.model.UserInfo

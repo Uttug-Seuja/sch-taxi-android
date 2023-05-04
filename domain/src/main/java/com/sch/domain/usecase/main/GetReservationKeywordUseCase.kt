@@ -1,4 +1,4 @@
-package com.sch.domain.usecase
+package com.sch.domain.usecase.main
 
 import com.sch.domain.NetworkResult
 import com.sch.domain.model.*
@@ -14,7 +14,7 @@ class GetReservationKeywordUseCase @Inject constructor(
         keyword: String,
         page: Int,
         size: Int,
-    ): NetworkResult<ReservationKeyword> =
+    ): NetworkResult<PagingReservationKeyword> =
         repository.getReservationKeyword(
             keyword = keyword,
             page = page,

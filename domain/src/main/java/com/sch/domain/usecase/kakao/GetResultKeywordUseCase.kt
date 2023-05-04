@@ -1,4 +1,4 @@
-package com.sch.domain.usecase
+package com.sch.domain.usecase.kakao
 
 import com.sch.domain.model.ResultSearchKeyword
 import com.sch.domain.repository.KakaoRepository

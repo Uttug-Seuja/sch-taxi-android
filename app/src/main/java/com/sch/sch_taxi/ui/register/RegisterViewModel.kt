@@ -3,9 +3,9 @@ package com.sch.sch_taxi.ui.register
 import android.util.Log
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
-import com.sch.domain.usecase.GetTokenValidationUseCase
-import com.sch.domain.usecase.PosNotificationTokenUseCase
-import com.sch.domain.usecase.PostLoginUseCase
+import com.sch.domain.usecase.main.GetTokenValidationUseCase
+import com.sch.domain.usecase.main.PostNotificationTokenUseCase
+import com.sch.domain.usecase.main.PostLoginUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import com.sch.sch_taxi.di.PresentationApplication.Companion.editor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val getTokenValidationUseCase: GetTokenValidationUseCase,
     private val postLoginUseCase: PostLoginUseCase,
-    private val postNotificationTokenUseCase: PosNotificationTokenUseCase
+    private val postNotificationTokenUseCase: PostNotificationTokenUseCase
 ) : BaseViewModel(), RegisterActionHandler {
 
     private val TAG = "RegisterViewModel"
