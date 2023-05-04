@@ -16,7 +16,7 @@ class PatchParticipationUseCase @Inject constructor(
     suspend operator fun invoke(
         participationId: Int,
         seatPosition: String
-    ): NetworkResult<Participation> =
+    ): NetworkResult<Unit> =
         repository.patchParticipation(
             participationId = participationId,
             seatPosition = seatPosition

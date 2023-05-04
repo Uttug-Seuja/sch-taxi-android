@@ -13,6 +13,6 @@ import javax.inject.Inject
 class PostParticipationUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(id: Int, seatPosition: String): NetworkResult<Participation> =
+    suspend operator fun invoke(id: Int, seatPosition: String): NetworkResult<Unit> =
         repository.postParticipation(id = id, seatPosition = seatPosition)
 }
