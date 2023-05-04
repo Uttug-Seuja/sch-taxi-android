@@ -73,13 +73,13 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.deleteUser(oauthAccessToken = oauthAccessToken) }
     }
 
-    override suspend fun getUserProfile(): NetworkResult<UserProfile> {
+    override suspend fun getUserProfile(): NetworkResult<UserInfo> {
         return handleApi { mainAPIService.getUserProfile().data.toDomain() }
     }
 
     override suspend fun patchUserProfile(
         profilePath: String
-    ): NetworkResult<UserProfile> {
+    ): NetworkResult<UserInfo> {
         val body = PatchUserProfileRequest(profilePath = profilePath)
         return handleApi { mainAPIService.patchUserProfile(body = body).data.toDomain() }
     }

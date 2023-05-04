@@ -1,7 +1,7 @@
 package com.sch.sch_taxi.ui.editprofile.saveprofile
 
 
-import com.sch.domain.model.UserProfile
+import com.sch.domain.model.UserInfo
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,7 +26,7 @@ class SaveProfileViewModel @Inject constructor(
 
     val isGalleryImage: MutableStateFlow<Boolean> = MutableStateFlow<Boolean>(false)
 
-    var beforeProfile: UserProfile? = null
+    var beforeProfile: UserInfo? = null
     val profileImg: MutableStateFlow<String> = MutableStateFlow("")
     val profileName: MutableStateFlow<String> = MutableStateFlow("")
 

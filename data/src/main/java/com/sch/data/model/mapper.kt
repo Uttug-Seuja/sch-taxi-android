@@ -22,8 +22,8 @@ fun IsRegisteredResponse.toDomain(): IsRegistered {
     )
 }
 
-fun UserProfileResponse.toDomain(): UserProfile {
-    return UserProfile(
+fun UserInfoResponse.toDomain(): UserInfo {
+    return UserInfo(
         userId = userId,
         schoolNum = schoolNum,
         gender = gender,

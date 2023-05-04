@@ -33,10 +33,10 @@ interface MainRepository {
     suspend fun deleteUser(oauthAccessToken: String): NetworkResult<Unit>
 
     // 유저 프로필
-    suspend fun getUserProfile(): NetworkResult<UserProfile>
+    suspend fun getUserProfile(): NetworkResult<UserInfo>
 
     // 유저 프로필 변경
-    suspend fun patchUserProfile(profilePath: String): NetworkResult<UserProfile>
+    suspend fun patchUserProfile(profilePath: String): NetworkResult<UserInfo>
 
     // 예약 만들기
     suspend fun postReservation(

@@ -1,7 +1,7 @@
 package com.sch.sch_taxi.ui.profile
 
 
-import com.sch.domain.model.UserProfile
+import com.sch.domain.model.UserInfo
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,7 +20,7 @@ class ProfileViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<ProfileNavigationAction> =
         MutableSharedFlow<ProfileNavigationAction>()
     val navigationEvent: SharedFlow<ProfileNavigationAction> = _navigationEvent.asSharedFlow()
-    val userProfile: MutableStateFlow<UserProfile?> = MutableStateFlow(null)
+    val userProfile: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
     val mannerTemperatureInfoState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val progressPercent: MutableStateFlow<Float> = MutableStateFlow(0F)
 

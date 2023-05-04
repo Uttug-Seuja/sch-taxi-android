@@ -1,6 +1,6 @@
 package com.sch.sch_taxi.ui.editprofile
 
-import com.sch.domain.model.UserProfile
+import com.sch.domain.model.UserInfo
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +19,7 @@ class EditProfileViewModel @Inject constructor(
     private val _navigationEvent: MutableSharedFlow<EditProfileNavigationAction> = MutableSharedFlow<EditProfileNavigationAction>()
     val navigationEvent: SharedFlow<EditProfileNavigationAction> = _navigationEvent.asSharedFlow()
 
-    val userProfile: MutableStateFlow<UserProfile?> = MutableStateFlow(null)
+    val userProfile: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
 
     init {
         baseViewModelScope.launch {

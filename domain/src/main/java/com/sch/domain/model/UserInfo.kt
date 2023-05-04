@@ -1,7 +1,7 @@
 package com.sch.domain.model
 
 
-data class UserProfile(
+data class UserInfo(
     val userId: Int,
     val schoolNum: String,
     val gender: String,
