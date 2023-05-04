@@ -2,5 +2,6 @@ package com.sch.domain.model
 
 
 data class PagingReservation(
-    val pagingReservations: PagingReservations
+    val content: List<Reservation>,
+    val last: Boolean,
 )

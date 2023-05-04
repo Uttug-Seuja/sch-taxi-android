@@ -69,9 +69,9 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteUser(oauthAccessToken: String): NetworkResult<Unit> {
-        return handleApi { mainAPIService.deleteUser(oauthAccessToken = oauthAccessToken) }
-    }
+//    override suspend fun deleteUser(oauthAccessToken: String): NetworkResult<Unit> {
+//        return handleApi { mainAPIService.deleteUser(oauthAccessToken = oauthAccessToken) }
+//    }
 
     override suspend fun getUserProfile(): NetworkResult<UserInfo> {
         return handleApi { mainAPIService.getUserProfile().data.toDomain() }
@@ -155,12 +155,12 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getReservation(
         page: Int,
         size: Int,
-    ): NetworkResult<PagingReservations> {
+    ): NetworkResult<PagingReservation> {
         return handleApi {
             mainAPIService.getReservation(
                 page = page,
                 size = size,
-            ).data.pagingReservationsResponse.toDomain()
+            ).data.toDomain()
         }
     }
 
@@ -168,7 +168,7 @@ class MainRepositoryImpl @Inject constructor(
         keyword: String,
         page: Int,
         size: Int
-    ): NetworkResult<ReservationKeyword> {
+    ): NetworkResult<PagingReservationKeyword> {
         val body = GetReservationKeywordRequest(keyword = keyword)
         return handleApi {
             mainAPIService.getReservationKeyword(
@@ -181,41 +181,41 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getReservationSearch(
-        keyword: String,
+        word: String,
         page: Int,
         size: Int,
-    ): NetworkResult<PagingReservations> {
-        val body = GetReservationKeywordRequest(keyword = keyword)
+    ): NetworkResult<PagingReservation> {
+        val body = GetReservationWordRequest(word = word)
         return handleApi {
             mainAPIService.getReservationSearch(
                 body = body,
                 page = page,
                 size = size,
-            ).data.pagingReservationsResponse.toDomain()
+            ).data.toDomain()
         }
     }
 
     override suspend fun postParticipation(
         id: Int,
         seatPosition: String
-    ): NetworkResult<Participation> {
+    ): NetworkResult<Unit> {
         return handleApi {
             mainAPIService.postParticipation(
                 id = id,
                 seatPosition = seatPosition
-            ).data.toDomain()
+            )
         }
     }
 
     override suspend fun patchParticipation(
         participationId: Int,
         seatPosition: String
-    ): NetworkResult<Participation> {
+    ): NetworkResult<Unit> {
         return handleApi {
             mainAPIService.patchParticipation(
                 id = participationId,
                 seatPosition = seatPosition
-            ).data.toDomain()
+            )
         }
     }
 
@@ -223,91 +223,79 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.deleteParticipation(id = id) }
     }
 
-    override suspend fun getParticipation(id: Int): NetworkResult<Participation> {
-        return handleApi { mainAPIService.getParticipation(id = id).data.toDomain() }
+    override suspend fun getParticipation(id: Int): NetworkResult<ParticipationInfoList> {
+        return handleApi { mainAPIService.getParticipation(id = id).data.participationInfoList.toDomain() }
     }
 
-    override suspend fun getUserReservation(
-        page: Int,
-        size: Int,
-    ): NetworkResult<PagingReservations> {
+    override suspend fun getUserReservation(): NetworkResult<MyReservation> {
         return handleApi {
-            mainAPIService.getUserReservation(
-                page = page,
-                size = size
-            ).data.pagingReservationsResponse.toDomain()
+            mainAPIService.getUserReservation().data.reservation.toDomain()
         }
     }
 
-    override suspend fun getUserParticipation(
-        page: Int,
-        size: Int,
-    ): NetworkResult<PagingReservations> {
+    override suspend fun getUserParticipation(): NetworkResult<MyReservation> {
         return handleApi {
-            mainAPIService.getUserParticipation(
-                page = page,
-                size = size,
-            ).data.pagingReservationsResponse.toDomain()
+            mainAPIService.getUserParticipation().data.reservation.toDomain()
         }
     }
 
-    override suspend fun postOptionNight(): NetworkResult<Unit> {
-        return handleApi { mainAPIService.postOptionNight() }
-    }
+//    override suspend fun postOptionNight(): NetworkResult<Unit> {
+//        return handleApi { mainAPIService.postOptionNight() }
+//    }
+//
+//    override suspend fun deleteOptionNight(): NetworkResult<Unit> {
+//        return handleApi { mainAPIService.deleteOptionNight() }
+//    }
+//
+//    override suspend fun postOptionNew(): NetworkResult<Unit> {
+//        return handleApi { mainAPIService.postOptionNew() }
+//    }
+//
+//    override suspend fun deleteOptionNew(): NetworkResult<Unit> {
+//        return handleApi { mainAPIService.deleteOptionNew() }
+//    }
+//
+//    override suspend fun getOptions(): NetworkResult<Options> {
+//        return handleApi { mainAPIService.getOptions().data.toDomain() }
+//    }
+//
+//    override suspend fun getNotifications(): NetworkResult<NotificationList> {
+//        return handleApi { mainAPIService.getNotifications().data.notifications.toDomain() }
+//    }
 
-    override suspend fun deleteOptionNight(): NetworkResult<Unit> {
-        return handleApi { mainAPIService.deleteOptionNight() }
-    }
-
-    override suspend fun postOptionNew(): NetworkResult<Unit> {
-        return handleApi { mainAPIService.postOptionNew() }
-    }
-
-    override suspend fun deleteOptionNew(): NetworkResult<Unit> {
-        return handleApi { mainAPIService.deleteOptionNew() }
-    }
-
-    override suspend fun getOptions(): NetworkResult<Options> {
-        return handleApi { mainAPIService.getOptions().data.toDomain() }
-    }
-
-    override suspend fun getNotifications(): NetworkResult<NotificationList> {
-        return handleApi { mainAPIService.getNotifications().data.notifications.toDomain() }
-    }
-
-    override suspend fun postNotifications(
-        group_id: Int,
-        title: String,
-        content: String,
-        image_url: String
-    ): NetworkResult<Unit> {
-        val body = PostNotificationRequest(
-            group_id = group_id,
-            title = title,
-            content = content,
-            image_url = image_url
-        )
-        return handleApi { mainAPIService.postNotifications(body = body) }
-
-    }
-
-    override suspend fun postNotificationToken(
-        deviceId: String,
-        token: String
-    ): NetworkResult<Unit> {
-        val body = PostNotificationTokenRequest(deviceId = deviceId, token = token)
-        return handleApi {
-            mainAPIService.postNotificationToken(body = body)
-        }
-    }
+//    override suspend fun postNotifications(
+//        group_id: Int,
+//        title: String,
+//        content: String,
+//        image_url: String
+//    ): NetworkResult<Unit> {
+//        val body = PostNotificationRequest(
+//            group_id = group_id,
+//            title = title,
+//            content = content,
+//            image_url = image_url
+//        )
+//        return handleApi { mainAPIService.postNotifications(body = body) }
+//
+//    }
+//
+//    override suspend fun postNotificationToken(
+//        deviceId: String,
+//        token: String
+//    ): NetworkResult<Unit> {
+//        val body = PostNotificationTokenRequest(deviceId = deviceId, token = token)
+//        return handleApi {
+//            mainAPIService.postNotificationToken(body = body)
+//        }
+//    }
 
     override suspend fun postFileToUrl(file: MultipartBody.Part): NetworkResult<ImageUrl> {
         return handleApi { mainAPIService.postFileToUrl(file = file).data.toDomain() }
     }
 
-    override suspend fun deleteLeaveGroup(id: Int): NetworkResult<Group> {
-        TODO("Not yet implemented")
-    }
+//    override suspend fun deleteLeaveGroup(id: Int): NetworkResult<Group> {
+//        TODO("Not yet implemented")
+//    }
 
     override suspend fun getRecommendKeyword(): NetworkResult<RecommendKeywordList> {
 
@@ -316,36 +304,36 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getAppVersion(): NetworkResult<AppVersion> {
-        TODO("Not yet implemented")
-    }
+//    override suspend fun getAppVersion(): NetworkResult<AppVersion> {
+//        TODO("Not yet implemented")
+//    }
 
     override suspend fun getProfiles(): NetworkResult<ProfileList> {
         return handleApi { mainAPIService.getProfiles().data.profiles.toDomain() }
     }
 
-    override suspend fun getAlarms(): NetworkResult<AlarmList> {
-        return handleApi { mainAPIService.getAlarms().data.list.toDomain() }
-    }
-
-    override suspend fun getAlarmsCount(): NetworkResult<AlarmCount> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun postReportNotification(
-        notification_id: Int,
-        description: String,
-        report_reason: String
+        participationId: Int,
+        reportReason: String,
+        reportType: String
     ): NetworkResult<ReportNotification> {
         val body =
-            PostReportsNotificationRequest(description = description, report_reason = report_reason)
+            PostReportsNotificationRequest(reportReason = reportReason, reportType = reportType)
         return handleApi {
             mainAPIService.postReportsNotifications(
-                notification_id = notification_id,
+                participationId = participationId,
                 body = body
             ).data.toDomain()
         }
     }
+
+//    override suspend fun getAlarms(): NetworkResult<AlarmList> {
+//        return handleApi { mainAPIService.getAlarms().data.list.toDomain() }
+//    }
+
+//    override suspend fun getAlarmsCount(): NetworkResult<AlarmCount> {
+//        TODO("Not yet implemented")
+//    }
 
 
 }

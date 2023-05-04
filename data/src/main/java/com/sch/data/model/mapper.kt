@@ -62,22 +62,54 @@ fun ReservationResponse.toDomain(): Reservation {
         startLongitude = startLongitude,
         destinationLatitude = destinationLatitude,
         destinationLongitude = destinationLongitude,
-        isHost = isHost,
+        iHost = ihost,
         createAt = createdAt,
-        updateAt = updateAt
+        updateAt = updateAt,
+        hostInfo = hostInfo.toDomain(),
+        reservationStatus = reservationStatus
     )
 }
 
-fun PagingReservationsResponse.toDomain(): PagingReservations {
-    return PagingReservations(content = this.content, last = this.last)
+fun PagingReservationResponse.toDomain(): PagingReservation {
+    return PagingReservation(content = this.content, last = this.last)
 }
 
-fun ReservationKeywordResponse.toDomain(): ReservationKeyword {
-    return ReservationKeyword(keywordId = this.keywordId, keywordTitle = this.keywordTitle)
+fun PagingReservationKeywordResponse.toDomain(): PagingReservationKeyword {
+    return PagingReservationKeyword(content = this.content, last = this.last)
 }
 
-fun ParticipationResponse.toDomain(): Participation {
-    return Participation(participationId = participationId)
+fun ParticipationInfoListResponse.toDomain(): ParticipationInfoList {
+    return ParticipationInfoList(
+        seatPosition = this.seatPosition,
+        userInfo = this.userInfo.toDomain(),
+        iparticipation = this.iparticipation
+    )
+}
+
+fun List<ReservationResponse>.toDomain(): MyReservation {
+    return MyReservation(
+        map {
+            Reservation(
+                reservationId = it.reservationId,
+                title = it.title,
+                startPoint = it.startPoint,
+                destination = it.destination,
+                departureDate = it.departureDate,
+                gender = it.gender,
+                passengerNum = it.passengerNum,
+                currentNum = it.currentNum,
+                startLatitude = it.startLatitude,
+                startLongitude = it.startLongitude,
+                destinationLatitude = it.destinationLatitude,
+                destinationLongitude = it.destinationLongitude,
+                iHost = it.ihost,
+                createAt = it.createdAt,
+                updateAt = it.updateAt,
+                hostInfo = it.hostInfo.toDomain(),
+                reservationStatus = it.reservationStatus
+            )
+        }
+    )
 }
 
 fun OptionsResponse.toDomain(): Options {

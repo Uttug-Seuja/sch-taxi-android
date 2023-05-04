@@ -8,14 +8,15 @@ data class Reservation(
     val destination: String,
     val departureDate: String,
     val gender: String,
+    val reservationStatus : String,
     val passengerNum: Int,
     val currentNum: Int,
     val startLatitude: Double,
     val startLongitude: Double,
     val destinationLatitude: Double,
     val destinationLongitude: Double,
-    val isHost: Boolean,
+    val iHost: Boolean,
+    val hostInfo: UserInfo,
     val createAt: String,
     val updateAt: String
-
 )
