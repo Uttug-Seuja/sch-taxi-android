@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">sch_taxi</string>
+    <string name="app_name">오순택</string>
     <!--네비게이션 메뉴-->
     <string name="bottom_home">홈</string>
     <string name="bottom_alarm_room">알림방</string>
