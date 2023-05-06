@@ -4,7 +4,6 @@ import android.util.Log
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetTokenValidationUseCase
-import com.sch.domain.usecase.main.PostNotificationTokenUseCase
 import com.sch.domain.usecase.main.PostLoginUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import com.sch.sch_taxi.di.PresentationApplication.Companion.editor
@@ -20,7 +19,6 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val getTokenValidationUseCase: GetTokenValidationUseCase,
     private val postLoginUseCase: PostLoginUseCase,
-    private val postNotificationTokenUseCase: PostNotificationTokenUseCase
 ) : BaseViewModel(), RegisterActionHandler {
 
     private val TAG = "RegisterViewModel"
@@ -56,13 +54,13 @@ class RegisterViewModel @Inject constructor(
                                 editor.putString("refreshToken", response.refreshToken)
                                 editor.commit()
 
-                                postNotificationTokenUseCase(
-                                    token = firebaseToken.value,
-                                    deviceId = deviceId.value
-                                )
-                                    .onSuccess {
-                                        _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
-                                    }
+//                                postNotificationTokenUseCase(
+//                                    token = firebaseToken.value,
+//                                    deviceId = deviceId.value
+//                                )
+//                                    .onSuccess {
+//                                        _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
+//                                    }
                             }
                     }
                 }.onError {
