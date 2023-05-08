@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.sch.sch_taxi.ui.taxidetail.TaxiDetailViewModel" />
+            type="com.sch.sch_taxi.ui.reservationdetail.ReservationDetailViewModel" />
 
         <import type="android.view.View" />
     </data>

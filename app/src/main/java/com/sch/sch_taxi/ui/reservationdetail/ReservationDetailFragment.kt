@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.taxidetail
+package com.sch.sch_taxi.ui.reservationdetail
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -7,16 +7,16 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.AlertDialogModel
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.base.DefaultRedAlertDialog
-import com.sch.sch_taxi.databinding.FragmentTaxiDetailBinding
-import com.sch.sch_taxi.ui.taxidetail.adapter.CustomBalloonAdapter
-import com.sch.sch_taxi.ui.taxidetail.bottom.BottomTaxiMore
-import com.sch.sch_taxi.ui.taxidetail.bottom.BottomTaxiReport
-import com.sch.sch_taxi.ui.taxidetail.bottom.TaxiMoreType
+import com.sch.sch_taxi.databinding.FragmentReservationDetailBinding
+import com.sch.sch_taxi.ui.reservationcreate.bottom.BottomSelectSeat
+import com.sch.sch_taxi.ui.reservationdetail.adapter.CustomBalloonAdapter
+import com.sch.sch_taxi.ui.reservationdetail.bottom.BottomTaxiMore
+import com.sch.sch_taxi.ui.reservationdetail.bottom.BottomTaxiReport
+import com.sch.sch_taxi.ui.reservationdetail.bottom.TaxiMoreType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import net.daum.mf.map.api.MapPOIItem
@@ -29,18 +29,19 @@ import kotlin.math.sin
 
 
 @AndroidEntryPoint
-class TaxiDetailFragment :
-    BaseFragment<FragmentTaxiDetailBinding, TaxiDetailViewModel>(R.layout.fragment_taxi_detail) {
+class ReservationDetailFragment :
+    BaseFragment<FragmentReservationDetailBinding, ReservationDetailViewModel>(R.layout.fragment_reservation_detail) {
 
-    private val TAG = "TaxiDetailFragment"
+    private val TAG = "ReservationDetailFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_taxi_detail
+        get() = R.layout.fragment_reservation_detail
 
-    override val viewModel: TaxiDetailViewModel by viewModels()
+    override val viewModel: ReservationDetailViewModel by viewModels()
     private val navController by lazy { findNavController() }
-//    private val eventListener = MarkerEventListener(requireActivity())   // 마커 클릭 이벤트 리스너
-    lateinit var mapView : MapView
+
+    //    private val eventListener = MarkerEventListener(requireActivity())   // 마커 클릭 이벤트 리스너
+    lateinit var mapView: MapView
     override fun initStartView() {
         binding.apply {
             this.vm = viewModel
@@ -54,9 +55,9 @@ class TaxiDetailFragment :
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
                 when (it) {
-                    is TaxiDetailNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is TaxiDetailNavigationAction.NavigateToTaxiMoreBottomDialog -> taxiMoreBottomDialog(
-                        taxiId = it.taxiId,
+                    is ReservationDetailNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is ReservationDetailNavigationAction.NavigateToReservationMoreBottomDialog -> reservationMoreBottomDialog(
+                        reservationId = it.reservationId,
                         sendUserId = it.sendUserId
                     )
                 }
@@ -89,6 +90,7 @@ class TaxiDetailFragment :
                     binding.scrollView.requestDisallowInterceptTouchEvent(true)
 
                 }
+
                 MotionEvent.ACTION_UP -> binding.scrollView.requestDisallowInterceptTouchEvent(true)
                 MotionEvent.ACTION_MOVE -> binding.scrollView.requestDisallowInterceptTouchEvent(
                     true
@@ -101,24 +103,34 @@ class TaxiDetailFragment :
     override fun initAfterBinding() {
     }
 
-    private fun taxiMoreBottomDialog(
-        taxiId: Int,
-        sendUserId: Int
-    ) {
-        val dialog: BottomTaxiMore = BottomTaxiMore {
-            when (it) {
-                is TaxiMoreType.Update -> {
-                    viewModel.onClickedTaxiUpdateClicked()
-                }
-                is TaxiMoreType.Delete -> taxiDeleteDialog(taxiId = taxiId)
-                TaxiMoreType.UserDeclare -> usersBlockDialog(sendUserId = sendUserId)
-                TaxiMoreType.Report -> reportDialog(taxiId = taxiId)
+    private fun selectSeatBottomDialog() {
+        val dialog: BottomSelectSeat = BottomSelectSeat(listOf(1)) {
+            lifecycleScope.launchWhenStarted {
+                viewModel.onClickedParticipation(seatPosition = it.toString())
             }
         }
         dialog.show(childFragmentManager, TAG)
     }
 
-    private fun taxiDeleteDialog(taxiId: Int) {
+    private fun reservationMoreBottomDialog(
+        reservationId: Int,
+        sendUserId: Int
+    ) {
+        val dialog: BottomTaxiMore = BottomTaxiMore {
+            when (it) {
+                is TaxiMoreType.Update -> {
+                    viewModel.onClickedReservationUpdateClicked()
+                }
+
+                is TaxiMoreType.Delete -> reservationDeleteDialog(reservationId = reservationId)
+                TaxiMoreType.UserDeclare -> usersBlockDialog(sendUserId = sendUserId)
+                TaxiMoreType.Report -> reportDialog(reservationId = reservationId)
+            }
+        }
+        dialog.show(childFragmentManager, TAG)
+    }
+
+    private fun reservationDeleteDialog(reservationId: Int) {
         val res = AlertDialogModel(
             title = "이 게시글를 삭제할까요?",
             description = "게시글를 삭제하면 볼 수 없어요",
@@ -130,7 +142,7 @@ class TaxiDetailFragment :
             clickToPositive = {
                 toastMessage("게시글를 삭제했습니다")
                 // api
-                viewModel.onTaxiDeleteClicked(taxiId)
+                viewModel.onReservationDeleteClicked(reservationId)
             },
             clickToNegative = {
                 toastMessage("아니요")
@@ -159,11 +171,11 @@ class TaxiDetailFragment :
         dialog.show(childFragmentManager, TAG)
     }
 
-    private fun reportDialog(taxiId: Int) {
+    private fun reportDialog(reservationId: Int) {
         val bottomSheet = BottomTaxiReport(
         ) { reportReason ->
             toastMessage("게시글를 신고했습니다")
-            viewModel.onClickedReport(taxiId = taxiId, reportReason = reportReason)
+            viewModel.onClickedReport(reservationId = reservationId, reportReason = reportReason)
         }
         bottomSheet.show(requireActivity().supportFragmentManager, TAG)
     }

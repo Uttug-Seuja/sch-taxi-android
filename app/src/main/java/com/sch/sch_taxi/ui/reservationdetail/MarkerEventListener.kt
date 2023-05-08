@@ -1,11 +1,9 @@
-package com.sch.sch_taxi.ui.taxidetail
+package com.sch.sch_taxi.ui.reservationdetail
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.startActivity
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView

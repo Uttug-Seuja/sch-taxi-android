@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.taxidetail.bottom
+package com.sch.sch_taxi.ui.reservationdetail.bottom
 
 import android.app.Dialog
 import android.os.Bundle
@@ -16,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sch.sch_taxi.R
-import com.sch.sch_taxi.ui.taxidetail.messageTextOnFocusChangeListener
+import com.sch.sch_taxi.ui.reservationdetail.messageTextOnFocusChangeListener
 import com.sch.sch_taxi.util.hideKeyboard
 import com.sch.sch_taxi.util.showKeyboard
 

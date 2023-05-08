@@ -157,11 +157,11 @@
 
     <fragment
         android:id="@+id/taxiDetailFragment"
-        android:name="com.sch.sch_taxi.ui.taxidetail.TaxiDetailFragment"
+        android:name="com.sch.sch_taxi.ui.reservationdetail.ReservationDetailFragment"
         android:label="TaxiDetailFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"
-        tools:layout="@layout/fragment_taxi_detail">
+        tools:layout="@layout/fragment_reservation_detail">
 
         <action
             android:id="@+id/action_taxiDetailFragment_to_chatFragment"

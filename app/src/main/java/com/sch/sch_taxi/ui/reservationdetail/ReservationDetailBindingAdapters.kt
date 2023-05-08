@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.taxidetail
+package com.sch.sch_taxi.ui.reservationdetail
 
 import android.annotation.SuppressLint
 import android.content.Context

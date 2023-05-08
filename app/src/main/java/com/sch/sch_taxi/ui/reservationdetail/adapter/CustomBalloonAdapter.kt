@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.taxidetail.adapter
+package com.sch.sch_taxi.ui.reservationdetail.adapter
 
 import android.view.LayoutInflater
 import android.view.View
