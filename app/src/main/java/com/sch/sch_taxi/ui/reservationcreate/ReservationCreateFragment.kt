@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.taxicreate
+package com.sch.sch_taxi.ui.reservationcreate
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -7,12 +7,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
-import com.sch.sch_taxi.databinding.FragmentTaxiCreateBinding
-import com.sch.sch_taxi.ui.taxicreate.adapter.KakaoLocalAdapter
-import com.sch.sch_taxi.ui.taxicreate.bottom.BottomSelectGander
-import com.sch.sch_taxi.ui.taxicreate.bottom.BottomSelectSeat
-import com.sch.sch_taxi.ui.taxicreate.bottom.BottomTaxiReservationPicker
-import com.sch.sch_taxi.ui.taxicreate.bottom.GanderType
+import com.sch.sch_taxi.databinding.FragmentReservationCreateBinding
+import com.sch.sch_taxi.ui.reservationcreate.adapter.KakaoLocalAdapter
+import com.sch.sch_taxi.ui.reservationcreate.bottom.BottomSelectGander
+import com.sch.sch_taxi.ui.reservationcreate.bottom.BottomSelectSeat
+import com.sch.sch_taxi.ui.reservationcreate.bottom.BottomTaxiReservationPicker
+import com.sch.sch_taxi.ui.reservationcreate.bottom.GanderType
 import com.sch.sch_taxi.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -20,15 +20,15 @@ import java.time.format.DateTimeFormatter
 
 
 @AndroidEntryPoint
-class TaxiCreateFragment :
-    BaseFragment<FragmentTaxiCreateBinding, TaxiCreateViewModel>(R.layout.fragment_taxi_create) {
+class ReservationCreateFragment :
+    BaseFragment<FragmentReservationCreateBinding, ReservationCreateViewModel>(R.layout.fragment_reservation_create) {
 
     private val TAG = "TaxiCreateFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_taxi_create
+        get() = R.layout.fragment_reservation_create
 
-    override val viewModel: TaxiCreateViewModel by viewModels()
+    override val viewModel: ReservationCreateViewModel by viewModels()
     private val startPlacesAdapter by lazy { KakaoLocalAdapter(viewModel) }
     private val destinationsAdapter by lazy { KakaoLocalAdapter(viewModel) }
 
@@ -47,12 +47,12 @@ class TaxiCreateFragment :
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
                 when (it) {
-                    is TaxiCreateNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is TaxiCreateNavigationAction.NavigateToSelectReservation -> reservationTaxiSend()
-                    is TaxiCreateNavigationAction.NavigateToSelectGender -> selectGanderBottomDialog()
-                    is TaxiCreateNavigationAction.NavigateToSelectSeat -> selectSeatBottomDialog()
-                    is TaxiCreateNavigationAction.NavigateToTaxiDetail -> TODO()
-                    is TaxiCreateNavigationAction.NavigateToKeywordClicked -> { deleteEditTextFocus() }
+                    is ReservationCreateNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is ReservationCreateNavigationAction.NavigateToSelectReservation -> reservationTaxiSend()
+                    is ReservationCreateNavigationAction.NavigateToSelectGender -> selectGanderBottomDialog()
+                    is ReservationCreateNavigationAction.NavigateToSelectSeat -> selectSeatBottomDialog()
+                    is ReservationCreateNavigationAction.NavigateToTaxiDetail -> TODO()
+                    is ReservationCreateNavigationAction.NavigateToKeywordClicked -> { deleteEditTextFocus() }
                 }
             }
         }

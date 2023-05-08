@@ -42,14 +42,11 @@ interface MainRepository {
 
     // 예약 만들기
     suspend fun postReservation(
-        reservationId: Int,
         title: String,
         startPoint: String,
         destination: String,
         departureDate: String,
         gender: String,
-        passengerNum: String,
-        currentNum: String,
         startLatitude: Double,
         startLongitude: Double,
         destinationLatitude: Double,

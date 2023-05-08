@@ -1,21 +1,14 @@
-package com.sch.sch_taxi.ui.taxicreate
+package com.sch.sch_taxi.ui.reservationcreate
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sch.domain.model.KakaoLocal
 import com.sch.domain.model.KakaoLocals
-import com.sch.sch_taxi.ui.taxicreate.adapter.KakaoLocalAdapter
+import com.sch.sch_taxi.ui.reservationcreate.adapter.KakaoLocalAdapter
 import kotlinx.coroutines.flow.MutableStateFlow
 
 

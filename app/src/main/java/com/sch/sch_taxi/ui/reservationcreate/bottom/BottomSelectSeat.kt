@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.taxicreate.bottom
+package com.sch.sch_taxi.ui.reservationcreate.bottom
 
 import android.app.Dialog
 import android.os.Bundle
@@ -12,9 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sch.sch_taxi.R
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
 
 
 class BottomSelectSeat(

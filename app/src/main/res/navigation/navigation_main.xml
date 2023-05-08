@@ -55,11 +55,11 @@
 
     <fragment
         android:id="@+id/taxiCreateFragment"
-        android:name="com.sch.sch_taxi.ui.taxicreate.TaxiCreateFragment"
+        android:name="com.sch.sch_taxi.ui.reservationcreate.ReservationCreateFragment"
         android:label="TaxiCreateFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"
-        tools:layout="@layout/fragment_taxi_create">
+        tools:layout="@layout/fragment_reservation_create">
 
         <action
             android:id="@+id/action_taxiCreateFragment_to_taxiDetailFragment"

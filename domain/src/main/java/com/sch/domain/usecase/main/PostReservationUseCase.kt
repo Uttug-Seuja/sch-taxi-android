@@ -13,28 +13,22 @@ class PostReservationUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
     suspend operator fun invoke(
-        reservationId: Int,
         title: String,
         startPoint: String,
         destination: String,
         departureDate: String,
         gender: String,
-        passengerNum: String,
-        currentNum: String,
         startLatitude: Double,
         startLongitude: Double,
         destinationLatitude: Double,
         destinationLongitude: Double
     ): NetworkResult<Reservation> =
         repository.postReservation(
-            reservationId = reservationId,
             title = title,
             startPoint = startPoint,
             destination = destination,
             departureDate = departureDate,
             gender = gender,
-            passengerNum = passengerNum,
-            currentNum = currentNum,
             startLatitude = startLatitude,
             startLongitude = startLongitude,
             destinationLatitude = destinationLatitude,

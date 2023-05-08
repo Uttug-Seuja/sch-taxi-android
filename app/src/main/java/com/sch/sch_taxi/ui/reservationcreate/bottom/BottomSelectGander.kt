@@ -1,26 +1,16 @@
-package com.sch.sch_taxi.ui.taxicreate.bottom
+package com.sch.sch_taxi.ui.reservationcreate.bottom
 
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
-import android.widget.CalendarView.OnDateChangeListener
 import android.widget.FrameLayout
 import android.widget.TextView
-import android.widget.TimePicker
-import androidx.appcompat.widget.Toolbar
-import androidx.cardview.widget.CardView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sch.sch_taxi.R
-import com.sch.sch_taxi.ui.taxidetail.bottom.TaxiMoreType
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 
 class BottomSelectGander(

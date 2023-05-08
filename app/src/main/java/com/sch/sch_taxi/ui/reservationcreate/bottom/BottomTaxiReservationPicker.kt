@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.taxicreate.bottom
+package com.sch.sch_taxi.ui.reservationcreate.bottom
 
 import android.app.Dialog
 import android.os.Bundle

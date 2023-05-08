@@ -1,9 +1,9 @@
-package com.sch.sch_taxi.ui.taxicreate
+package com.sch.sch_taxi.ui.reservationcreate
 
 import com.sch.domain.model.KakaoLocal
 
 
-interface TaxiCreateActionHandler {
+interface ReservationCreateActionHandler {
     fun onClickedBack()
     fun onClickedTaxiCreate()
     fun onClickedSelectGander()

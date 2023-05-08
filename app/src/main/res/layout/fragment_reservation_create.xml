@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.sch.sch_taxi.ui.taxicreate.TaxiCreateViewModel" />
+            type="com.sch.sch_taxi.ui.reservationcreate.ReservationCreateViewModel" />
     </data>
 
     <LinearLayout
