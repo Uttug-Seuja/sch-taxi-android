@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
-import com.sch.sch_taxi.databinding.FragmentTaxiSearchBinding
+import com.sch.sch_taxi.databinding.FragmentReservationSearchBinding
 import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationKeywordAdapter
 import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationSearchHistoryAdapter
 import com.sch.sch_taxi.util.hideKeyboard
@@ -17,12 +17,12 @@ import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class ReservationSearchFragment : BaseFragment<FragmentTaxiSearchBinding, ReservationSearchViewModel>(R.layout.fragment_taxi_search) {
+class ReservationSearchFragment : BaseFragment<FragmentReservationSearchBinding, ReservationSearchViewModel>(R.layout.fragment_reservation_search) {
 
     private val TAG = "TaxiSearchFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_taxi_search
+        get() = R.layout.fragment_reservation_search
 
     override val viewModel: ReservationSearchViewModel by viewModels()
     private val reservationKeywordAdapter by lazy { ReservationKeywordAdapter(viewModel) }

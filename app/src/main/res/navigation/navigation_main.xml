@@ -131,7 +131,7 @@
         android:label="TaxiSearchFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"
-        tools:layout="@layout/fragment_taxi_search">
+        tools:layout="@layout/fragment_reservation_search">
 
         <action
             android:id="@+id/action_taxiSearchFragment_to_taxiSearchResultFragment"
