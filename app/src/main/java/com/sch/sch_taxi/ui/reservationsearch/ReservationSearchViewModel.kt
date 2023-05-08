@@ -1,7 +1,11 @@
-package com.sch.sch_taxi.ui.taxisearch
+package com.sch.sch_taxi.ui.reservationsearch
 
 import android.database.sqlite.SQLiteException
 import android.util.Log
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.sch.domain.model.Keyword
+import com.sch.domain.model.Reservation
 import com.sch.domain.model.SearchHistory
 import com.sch.domain.model.SearchHistoryList
 import com.sch.domain.model.Taxis
@@ -10,25 +14,30 @@ import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.CreateSearchHistoryUseCase
 import com.sch.domain.usecase.main.DeleteSearchHistoryListUseCase
 import com.sch.domain.usecase.main.DeleteSearchHistoryUseCase
+import com.sch.domain.usecase.main.GetReservationKeywordUseCase
+import com.sch.domain.usecase.main.GetReservationSearchUseCase
 import com.sch.domain.usecase.main.GetSearchHistoryUseCase
 import com.sch.sch_taxi.base.BaseViewModel
+import com.sch.sch_taxi.ui.home.adapter.createReservationPager
+import com.sch.sch_taxi.ui.reservationsearch.adapter.createReservationKeywordPager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TaxiSearchViewModel @Inject constructor(
+class ReservationSearchViewModel @Inject constructor(
     private val getSearchHistoryUseCase: GetSearchHistoryUseCase,
     private val createSearchHistoryUseCase: CreateSearchHistoryUseCase,
     private val deleteSearchHistoryUseCase: DeleteSearchHistoryUseCase,
-    private val deleteSearchHistoryListUseCase: DeleteSearchHistoryListUseCase
-) : BaseViewModel(), TaxiSearchActionHandler {
+    private val deleteSearchHistoryListUseCase: DeleteSearchHistoryListUseCase,
+    private val getReservationKeywordUseCase: GetReservationKeywordUseCase
+) : BaseViewModel(), ReservationSearchActionHandler {
 
-    private val TAG = "TaxiSearchViewModel"
-    private val _navigationHandler: MutableSharedFlow<TaxiSearchNavigationAction> =
-        MutableSharedFlow<TaxiSearchNavigationAction>()
-    val navigationHandler: SharedFlow<TaxiSearchNavigationAction> =
+    private val TAG = "ReservationSearchViewModel"
+    private val _navigationHandler: MutableSharedFlow<ReservationSearchNavigationAction> =
+        MutableSharedFlow<ReservationSearchNavigationAction>()
+    val navigationHandler: SharedFlow<ReservationSearchNavigationAction> =
         _navigationHandler.asSharedFlow()
 
     var searchTitleEvent: MutableStateFlow<String> = MutableStateFlow("")
@@ -44,6 +53,27 @@ class TaxiSearchViewModel @Inject constructor(
     )
     val taxiSearchHistoryEvent: StateFlow<SearchHistoryList> = _taxiSearchHistoryEvent
     val taxiSearchHistoryIdxEvent = MutableStateFlow<Int>(0)
+
+    var reservationSearchEvent: Flow<PagingData<Keyword>> = emptyFlow()
+
+    init {
+        getReservationKeywordList()
+    }
+
+    fun getReservationKeywordList() {
+        baseViewModelScope.launch {
+            showLoading()
+            searchTitleEvent.debounce(200).collectLatest { keyword ->
+                reservationSearchEvent = createReservationKeywordPager(
+                    getReservationKeywordUseCase = getReservationKeywordUseCase,
+                    keyword = keyword
+                ).flow.cachedIn(
+                    baseViewModelScope
+                )
+            }
+            dismissLoading()
+        }
+    }
 
     fun getSearchHistoryList() {
         showLoading()
@@ -116,20 +146,24 @@ class TaxiSearchViewModel @Inject constructor(
 
     override fun onClickedDeleteSearchTitle() {
         Log.d("ttt", "??")
-        baseViewModelScope.launch{
+        baseViewModelScope.launch {
             searchTitleEvent.value = ""
         }
     }
 
     override fun onClickedBack() {
         baseViewModelScope.launch {
-            _navigationHandler.emit(TaxiSearchNavigationAction.NavigateToBack)
+            _navigationHandler.emit(ReservationSearchNavigationAction.NavigateToBack)
         }
     }
 
-    override fun onClickedTaxiSearchResult(searchTitle : String) {
+    override fun onClickedTaxiSearchResult(searchTitle: String) {
         baseViewModelScope.launch {
-            _navigationHandler.emit(TaxiSearchNavigationAction.NavigateToTaxiSearchResult(searchTitle = searchTitle))
+            _navigationHandler.emit(
+                ReservationSearchNavigationAction.NavigateToTaxiSearchResult(
+                    searchTitle = searchTitle
+                )
+            )
         }
     }
 

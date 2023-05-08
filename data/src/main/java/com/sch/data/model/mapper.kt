@@ -185,7 +185,7 @@ fun ReportNotificationResponse.toDomain(): ReportNotification {
 fun List<RecommendKeywordResponse>.toDomain(): RecommendKeywordList {
     return RecommendKeywordList(
         map {
-            RecommendKeyword(
+            Keyword(
                 keyword = it.keyword
             )
         }

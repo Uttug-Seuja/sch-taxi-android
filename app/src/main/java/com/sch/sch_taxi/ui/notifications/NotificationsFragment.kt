@@ -5,12 +5,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
-import com.sch.sch_taxi.databinding.FragmentHomeBinding
 import com.sch.sch_taxi.databinding.FragmentNotificationsBinding
-import com.sch.sch_taxi.ui.home.HomeFragmentDirections
-import com.sch.sch_taxi.ui.home.HomeViewModel
 import com.sch.sch_taxi.ui.notifications.adapter.NotificationsAdapter
-import com.sch.sch_taxi.ui.taxisearch.TaxiSearchNavigationAction
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 

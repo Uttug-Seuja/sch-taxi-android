@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Taxi
 import com.sch.sch_taxi.databinding.HolderTaxiSearchBinding
-import com.sch.sch_taxi.ui.home.HomeActionHandler
-import com.sch.sch_taxi.ui.taxisearch.TaxiSearchActionHandler
+import com.sch.sch_taxi.ui.reservationsearch.ReservationSearchActionHandler
 
 class TaxiSearchResultAdapter(
-    private val eventListener: TaxiSearchActionHandler,
+    private val eventListener: ReservationSearchActionHandler,
 ) : ListAdapter<Taxi, TaxiSearchResultAdapter.TaxiSearchViewHolder>(TaxiSearchItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaxiSearchViewHolder {

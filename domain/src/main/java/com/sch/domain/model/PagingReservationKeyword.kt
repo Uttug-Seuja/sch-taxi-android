@@ -2,6 +2,6 @@ package com.sch.domain.model
 
 
 data class PagingReservationKeyword(
-    val content: List<String>,
+    val content: List<Keyword>,
     val last: Boolean,
 )

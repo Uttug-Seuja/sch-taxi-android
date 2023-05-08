@@ -127,7 +127,7 @@
 
     <fragment
         android:id="@+id/taxiSearchFragment"
-        android:name="com.sch.sch_taxi.ui.taxisearch.TaxiSearchFragment"
+        android:name="com.sch.sch_taxi.ui.reservationsearch.ReservationSearchFragment"
         android:label="TaxiSearchFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"

@@ -1,20 +1,15 @@
-package com.sch.sch_taxi.ui.taxisearch
+package com.sch.sch_taxi.ui.reservationsearch
 
-import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
-import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
-import com.sch.sch_taxi.databinding.FragmentTaxiDetailBinding
 import com.sch.sch_taxi.databinding.FragmentTaxiSearchBinding
-import com.sch.sch_taxi.ui.home.HomeFragmentDirections
-import com.sch.sch_taxi.ui.home.HomeNavigationAction
-import com.sch.sch_taxi.ui.taxisearch.adapter.TaxiSearchAdapter
-import com.sch.sch_taxi.ui.taxisearch.adapter.TaxiSearchHistoryAdapter
+import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationKeywordAdapter
+import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationSearchHistoryAdapter
 import com.sch.sch_taxi.util.hideKeyboard
 import com.sch.sch_taxi.util.showKeyboard
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,16 +17,16 @@ import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class TaxiSearchFragment : BaseFragment<FragmentTaxiSearchBinding, TaxiSearchViewModel>(R.layout.fragment_taxi_search) {
+class ReservationSearchFragment : BaseFragment<FragmentTaxiSearchBinding, ReservationSearchViewModel>(R.layout.fragment_taxi_search) {
 
     private val TAG = "TaxiSearchFragment"
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_taxi_search
 
-    override val viewModel: TaxiSearchViewModel by viewModels()
-    private val taxiSearchAdapter by lazy { TaxiSearchAdapter(viewModel) }
-    private val taxiSearchHistoryAdapter by lazy { TaxiSearchHistoryAdapter(viewModel) }
+    override val viewModel: ReservationSearchViewModel by viewModels()
+    private val reservationKeywordAdapter by lazy { ReservationKeywordAdapter(viewModel) }
+    private val taxiSearchHistoryAdapter by lazy { ReservationSearchHistoryAdapter(viewModel) }
     private val navController by lazy { findNavController() }
 
     override fun initStartView() {
@@ -50,12 +45,18 @@ class TaxiSearchFragment : BaseFragment<FragmentTaxiSearchBinding, TaxiSearchVie
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
                 when(it) {
-                    is TaxiSearchNavigationAction.NavigateToTaxiSearchResult -> {
+                    is ReservationSearchNavigationAction.NavigateToTaxiSearchResult -> {
 //                        requireActivity().hideKeyboard()
-                        navigate(TaxiSearchFragmentDirections.actionTaxiSearchFragmentToTaxiSearchResultFragment(it.searchTitle))
+                        navigate(ReservationSearchFragmentDirections.actionTaxiSearchFragmentToTaxiSearchResultFragment(it.searchTitle))
                     }
-                    is TaxiSearchNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is ReservationSearchNavigationAction.NavigateToBack -> navController.popBackStack()
                 }
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.reservationSearchEvent.collectLatest {
+                reservationKeywordAdapter.submitData(it)
             }
         }
     }
@@ -73,7 +74,7 @@ class TaxiSearchFragment : BaseFragment<FragmentTaxiSearchBinding, TaxiSearchVie
     }
 
     private fun initAdapter() {
-        binding.rvTaxiSearch.adapter = taxiSearchAdapter
+        binding.rvReservationSearch.adapter = reservationKeywordAdapter
         binding.rvTaxiSearchHistory.adapter = taxiSearchHistoryAdapter
     }
 

@@ -8,16 +8,16 @@
 
         <variable
             name="holder"
-            type="com.sch.domain.model.Taxi" />
+            type="com.sch.domain.model.Keyword" />
 
         <variable
             name="eventListener"
-            type="com.sch.sch_taxi.ui.taxisearch.TaxiSearchActionHandler" />
+            type="com.sch.sch_taxi.ui.reservationsearch.ReservationSearchActionHandler" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/searchViewLayout"
-        onSingleClick="@{() -> eventListener.onClickedTaxiSearchResult(holder.title)}"
+        onSingleClick="@{() -> eventListener.onClickedTaxiSearchResult(holder.keyword)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
@@ -43,7 +43,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="롯데리아"
+                android:text="@{holder.keyword}"
                 android:textSize="14sp" />
 
         </LinearLayout>

@@ -1,7 +1,7 @@
-package com.sch.sch_taxi.ui.taxisearch
+package com.sch.sch_taxi.ui.reservationsearch
 
 
-interface TaxiSearchActionHandler {
+interface ReservationSearchActionHandler {
     fun onClickedBack()
     fun onClickedTaxiSearchResult(searchTitle : String)
     fun onClickedDeleteSearchHistory(searchHistoryIdx: Int)

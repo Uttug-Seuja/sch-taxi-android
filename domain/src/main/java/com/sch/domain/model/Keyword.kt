@@ -1,5 +1,5 @@
 package com.sch.domain.model
 
-data class RecommendKeyword(
+data class Keyword(
     val keyword: String
 )

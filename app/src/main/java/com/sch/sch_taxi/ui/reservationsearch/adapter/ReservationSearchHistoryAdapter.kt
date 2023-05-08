@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.taxisearch.adapter
+package com.sch.sch_taxi.ui.reservationsearch.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,18 +6,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.SearchHistory
-import com.sch.sch_taxi.databinding.HolderTaxiSearchHistoryBinding
-import com.sch.sch_taxi.ui.taxisearch.TaxiSearchActionHandler
+import com.sch.sch_taxi.databinding.HolderReservationSearchHistoryBinding
+import com.sch.sch_taxi.ui.reservationsearch.ReservationSearchActionHandler
 
-class TaxiSearchHistoryAdapter(
-    private val eventListener: TaxiSearchActionHandler,
-) : ListAdapter<SearchHistory, TaxiSearchHistoryAdapter.TaxiSearchHistoryViewHolder>(TaxiSearchHistoryItemDiffCallback) {
+class ReservationSearchHistoryAdapter(
+    private val eventListener: ReservationSearchActionHandler,
+) : ListAdapter<SearchHistory, ReservationSearchHistoryAdapter.TaxiSearchHistoryViewHolder>(TaxiSearchHistoryItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaxiSearchHistoryViewHolder {
         return TaxiSearchHistoryViewHolder(
-            HolderTaxiSearchHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HolderReservationSearchHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 .apply {
-                    eventListener = this@TaxiSearchHistoryAdapter.eventListener
+                    eventListener = this@ReservationSearchHistoryAdapter.eventListener
                 }
         )
     }
@@ -29,7 +29,7 @@ class TaxiSearchHistoryAdapter(
     }
 
     class TaxiSearchHistoryViewHolder(
-        private val binding: HolderTaxiSearchHistoryBinding
+        private val binding: HolderReservationSearchHistoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: SearchHistory) {

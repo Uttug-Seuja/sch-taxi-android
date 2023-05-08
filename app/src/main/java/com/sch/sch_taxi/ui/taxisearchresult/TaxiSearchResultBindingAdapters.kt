@@ -13,7 +13,6 @@ import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Taxis
-import com.sch.sch_taxi.ui.taxisearch.adapter.TaxiSearchAdapter
 
 @BindingAdapter("addImageCardViewVisible")
 fun CardView.bindAddImageCardViewVisible(uri: String) {
