@@ -140,11 +140,11 @@
 
     <fragment
         android:id="@+id/taxiSearchResultFragment"
-        android:name="com.sch.sch_taxi.ui.taxisearchresult.TaxiSearchResultFragment"
+        android:name="com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultFragment"
         android:label="TaxiSearchResultFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"
-        tools:layout="@layout/fragment_taxi_search_result">
+        tools:layout="@layout/fragment_reservation_search_result">
 
         <argument
             android:name="search_result_title"

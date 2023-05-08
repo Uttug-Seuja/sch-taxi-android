@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.sch.sch_taxi.ui.taxisearchresult.TaxiSearchResultViewModel" />
+            type="com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -100,7 +100,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_taxi_search"
+            android:id="@+id/rv_reservation_search"
             taxiSearchAdapter="@{vm.taxiSearchEvent}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -110,7 +110,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mainToolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_taxi_search_result"
+            android:id="@+id/rv_reservation_search_result"
             taxiSearchAdapter="@{vm.taxiSearchEvent}"
             android:layout_width="match_parent"
             android:layout_height="0dp"

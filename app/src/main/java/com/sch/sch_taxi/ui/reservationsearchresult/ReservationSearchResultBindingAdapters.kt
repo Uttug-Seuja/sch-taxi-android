@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.taxisearchresult
+package com.sch.sch_taxi.ui.reservationsearchresult
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -45,14 +45,6 @@ fun TextView.bindEditTextVisible(textLength: Int) {
     } else {
         this.setTextColor(Color.parseColor("#FFD260"))
         this.isClickable = true
-    }
-}
-
-@BindingAdapter("taxiSearchAdapter")
-fun RecyclerView.bindTaxiSearchAdapter(itemList: Taxis) {
-    val boundAdapter = this.adapter
-    if (boundAdapter is TaxiSearchAdapter) {
-        boundAdapter.submitList(itemList.Taxi)
     }
 }
 

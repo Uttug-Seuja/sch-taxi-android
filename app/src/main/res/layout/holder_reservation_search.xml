@@ -13,6 +13,10 @@
         <variable
             name="eventListener"
             type="com.sch.sch_taxi.ui.reservationsearch.ReservationSearchActionHandler" />
+
+        <variable
+            name="result_eventListener"
+            type="com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultActionHandler" />
     </data>
 
     <androidx.cardview.widget.CardView
