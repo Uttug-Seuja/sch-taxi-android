@@ -114,9 +114,9 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_taxi"
-            taxiAdapter="@{vm.taxiEvent}"
+            android:id="@+id/rv_reservation"
             android:layout_width="match_parent"
+            tools:listitem="@layout/holder_reservation"
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:nestedScrollingEnabled="false"

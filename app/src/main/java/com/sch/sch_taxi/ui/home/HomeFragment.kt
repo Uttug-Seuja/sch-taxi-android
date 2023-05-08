@@ -5,8 +5,7 @@ import androidx.lifecycle.lifecycleScope
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentHomeBinding
-import com.sch.sch_taxi.ui.home.HomeViewModel
-import com.sch.sch_taxi.ui.home.adapter.TaxiAdapter
+import com.sch.sch_taxi.ui.home.adapter.ReservationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -20,7 +19,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         get() = R.layout.fragment_home
 
     override val viewModel: HomeViewModel by viewModels()
-    private val taxiAdapter by lazy { TaxiAdapter(viewModel) }
+    private val reservationAdapter by lazy { ReservationAdapter(viewModel) }
 
     override fun initStartView() {
         binding.apply {
@@ -42,9 +41,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
                 }
             }
         }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.reservationEvent.collectLatest {
+                reservationAdapter.submitData(it)
+            }
+        }
     }
     private fun initAdapter() {
-        binding.rvTaxi.adapter = taxiAdapter
+        binding.rvReservation.adapter = reservationAdapter
     }
 
     override fun initAfterBinding() {
