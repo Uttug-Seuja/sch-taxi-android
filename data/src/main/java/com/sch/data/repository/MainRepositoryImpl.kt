@@ -328,6 +328,16 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun postEmail(email: String): NetworkResult<Unit> {
+        val body = EmailRequest(email = email)
+        return handleApi { mainAPIService.postEmail(body) }
+    }
+
+    override suspend fun postEmailCode(email: String, code: String): NetworkResult<Unit> {
+        val body = EmailCodeRequest(email = email, code = code)
+        return handleApi { mainAPIService.postEmailCode(body) }
+    }
+
 //    override suspend fun getAlarms(): NetworkResult<AlarmList> {
 //        return handleApi { mainAPIService.getAlarms().data.list.toDomain() }
 //    }

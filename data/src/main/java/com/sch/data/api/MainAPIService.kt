@@ -190,5 +190,16 @@ interface MainAPIService {
     ): BaseResponse<ReportNotificationResponse>
 //    ): BaseResponse<Unit>
 
+    @POST("/api/v1/email")
+    suspend fun postEmail(
+        @Body body: EmailRequest
+    ): BaseResponse<Unit>
+
+    @POST("/api/v1/email/code")
+    suspend fun postEmailCode(
+        @Body body: EmailCodeRequest
+    ): BaseResponse<Unit>
+
+
 
 }

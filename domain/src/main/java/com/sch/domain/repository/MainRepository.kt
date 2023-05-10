@@ -167,5 +167,13 @@ interface MainRepository {
         participationId: Int, reportReason: String, reportType: String
     ): NetworkResult<ReportNotification>
 
+    suspend fun postEmail(
+        email : String
+    ) : NetworkResult<Unit>
+
+    suspend fun postEmailCode(
+        email : String,
+        code : String
+    ) : NetworkResult<Unit>
 
 }
