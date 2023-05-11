@@ -1,18 +1,40 @@
 package com.sch.sch_taxi.util
 
-import java.text.SimpleDateFormat
-import java.util.*
+import android.os.Build
+import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.databinding.BindingAdapter
+import java.time.format.DateTimeFormatter
 
+//    yyyy-MM-dd	“2019-07-04”
+//    dd-MMM-yyyy	“04-July-2019”
+//    dd/MM/yyyy	“04/07/2019”
+//    yyyy-MM-dd'T'HH:mm:ssZ	“2019-07-04T12:30:30+0530”
+//    h:mm a	“12:00 PM”
+//    yyyy년 MM월 dd일	"2019년 01월 10일"
 
-object DateUtil {
-    fun formatTime(timeInMillis: Long): String {
-        val dateFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-        return dateFormat.format(timeInMillis)
-    }
+@RequiresApi(Build.VERSION_CODES.O)
+fun String.toDay(): String {
+    val date = this
+    return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+}
 
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("dateToDay")
+fun TextView.bindDateToDay(str: String) {
+    this.text = str.toDay()
+}
 
-    fun formatDate(timeInMillis: Long): String {
-        val dateFormat = SimpleDateFormat("MMMM dd", Locale.getDefault())
-        return dateFormat.format(timeInMillis)
-    }
+@RequiresApi(Build.VERSION_CODES.O)
+fun String.toDayAndTime(): String {
+    val date = this
+    val day = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+    val time = date.format(DateTimeFormatter.ofPattern("h:mm a"))
+    return "$day $time"
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+@BindingAdapter("dateToDayAndTime")
+fun TextView.bindDateToDayAndTime(str: String) {
+    this.text = str.toDayAndTime()
 }
