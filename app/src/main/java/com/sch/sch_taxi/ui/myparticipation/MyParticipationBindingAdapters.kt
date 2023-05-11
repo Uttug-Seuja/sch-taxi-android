@@ -49,14 +49,6 @@ fun TextView.bindEditTextVisible(textLength: Int) {
     }
 }
 
-@BindingAdapter("notificationsAdapter")
-fun RecyclerView.bindNotificationsAdapter(itemList: Taxis) {
-    val boundAdapter = this.adapter
-    if (boundAdapter is MyParticipationAdapter) {
-        boundAdapter.submitList(itemList.Taxi)
-    }
-}
-
 @BindingAdapter("textVisible")
 fun TextView.bindTextVisible(text: String) {
     if (text != "") this.visibility = View.VISIBLE

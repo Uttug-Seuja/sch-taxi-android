@@ -50,7 +50,7 @@
 
             <ImageView
                 android:id="@+id/edit_btn"
-                onSingleClick="@{() -> vm.onClickedTaxiMoreBottomDialog()}"
+                onSingleClick="@{() -> vm.onClickedReservationMoreBottomDialog()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"

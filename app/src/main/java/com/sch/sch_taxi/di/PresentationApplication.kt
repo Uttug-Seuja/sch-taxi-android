@@ -35,7 +35,7 @@ class PresentationApplication :Application(){
         sSharedPreferences = DataApplication.sSharedPreferences
         editor = sSharedPreferences.edit()
 
-        Log.d("access_token", sSharedPreferences.getString("access_token", "").toString())
+        Log.d("accessToken", sSharedPreferences.getString("accessToken", "").toString())
 
     }
 }

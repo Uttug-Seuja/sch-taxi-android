@@ -44,6 +44,8 @@ class RegisterViewModel @Inject constructor(
                     editor.putString("fcmToken", firebaseToken.value)
                     editor.putString("deviceId", deviceId.value)
 
+                    Log.d("ttt isRegistered", it.toString())
+
                     if (!it.isRegistered) {
                         editor.commit()
                         _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginFirst)
@@ -59,7 +61,7 @@ class RegisterViewModel @Inject constructor(
 //                                    deviceId = deviceId.value
 //                                )
 //                                    .onSuccess {
-//                                        _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
+                                        _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
 //                                    }
                             }
                     }
