@@ -15,7 +15,6 @@ class PostRegisterUseCase @Inject constructor(
         idToken: String,
         provider: String,
         name: String,
-        schoolNum: String,
         gender: String,
         profilePath: String
     ): NetworkResult<Token> =
@@ -23,7 +22,6 @@ class PostRegisterUseCase @Inject constructor(
             idToken = idToken,
             provider = provider,
             name = name,
-            schoolNum = schoolNum,
             gender = gender,
             profilePath = profilePath
         )

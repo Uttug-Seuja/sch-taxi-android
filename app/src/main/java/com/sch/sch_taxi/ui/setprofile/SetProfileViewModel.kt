@@ -2,8 +2,12 @@ package com.sch.sch_taxi.ui.setprofile
 
 import android.util.Log
 import com.sch.domain.model.Profile
+import com.sch.domain.model.UserInfo
+import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetUserProfileUseCase
+import com.sch.domain.usecase.main.PostEmailCodeUseCase
+import com.sch.domain.usecase.main.PostEmailUseCase
 import com.sch.domain.usecase.main.PostFileToImageUseCase
 import com.sch.domain.usecase.main.PostRegisterUseCase
 import com.sch.sch_taxi.base.BaseViewModel
@@ -19,7 +23,9 @@ import okhttp3.MultipartBody
 class SetProfileViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val postRegisterUseCase: PostRegisterUseCase,
-    private val postFileToImageUseCase: PostFileToImageUseCase
+    private val postFileToImageUseCase: PostFileToImageUseCase,
+    private val postEmailUseCase: PostEmailUseCase,
+    private val postEmailCodeUseCase: PostEmailCodeUseCase
 ) : BaseViewModel(), SetProfileActionHandler {
 
     private val TAG = "SetProfileViewModel"
@@ -29,31 +35,33 @@ class SetProfileViewModel @Inject constructor(
     val navigationHandler: SharedFlow<SetProfileNavigationAction> =
         _navigationHandler.asSharedFlow()
 
-    var inputContent = MutableStateFlow<String>("")
-    var editTextMessageCountEvent = MutableStateFlow<Int>(0)
-
     var nicknameInputContent = MutableStateFlow<String>("")
     var nicknameEditTextCountEvent = MutableStateFlow<Int>(0)
 
-    var ageInputContent = MutableStateFlow<String>("")
-    var ageEditTextCountEvent = MutableStateFlow<Int>(0)
+    var schoolEmailInputContent = MutableStateFlow<String>("")
+
+    var schoolEmailCodeInputContent = MutableStateFlow<String>("")
 
     var isManEvent = MutableStateFlow<Boolean?>(null)
 
-    val profileImg: MutableStateFlow<Profile?> = MutableStateFlow(null)
+    var isAuthEvent = MutableStateFlow<Boolean>(false)
+
+    var isSchoolEmailAuth = MutableStateFlow<Boolean>(false)
+
+    val profileImg: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
 
     init {
         baseViewModelScope.launch {
             showLoading()
             getUserProfileUseCase()
-                .onSuccess { profile ->
+                .onSuccess { userInFo ->
+                    Log.d("Ttt", userInFo.profilePath.toString())
                     profileImg.emit(
-                        Profile(
-                            1,
-                            "ddd",
-                            "https://cdn-icons-png.flaticon.com/512/10089/10089718.png"
-                        )
+                        userInFo
                     )
+                }
+                .onError {
+                    Log.d("ttt error", it.toString())
                 }
             dismissLoading()
         }
@@ -63,24 +71,12 @@ class SetProfileViewModel @Inject constructor(
                 onEditTextCount(it.length)
             }
         }
-
-        baseViewModelScope.launch {
-            ageInputContent.debounce(0).collectLatest {
-                onAgeEditTextCount(it.length)
-            }
-        }
     }
 
 
     private fun onEditTextCount(count: Int) {
         baseViewModelScope.launch {
             nicknameEditTextCountEvent.value = count
-        }
-    }
-
-    private fun onAgeEditTextCount(count: Int) {
-        baseViewModelScope.launch {
-            ageEditTextCountEvent.value = count
         }
     }
 
@@ -95,6 +91,46 @@ class SetProfileViewModel @Inject constructor(
         baseViewModelScope.launch {
             Log.d("ttt", "누름")
             isManEvent.value = false
+        }
+    }
+
+    override fun onSchoolEmailAuthClicked() {
+        isAuthEvent.value = true
+        baseViewModelScope.launch {
+            postEmailUseCase(email = schoolEmailInputContent.value)
+                .onSuccess {
+                    isAuthEvent.value = true
+                    SetProfileNavigationAction.NavigateToToastMessage("인증 메일을 보냈습니다")
+
+                    Log.d("ttt onSuccess", it.toString())
+
+                }
+                .onError {
+                    isAuthEvent.value = false
+                    Log.d("ttt onError", it.toString())
+
+                }
+
+        }
+    }
+
+    override fun onSchoolEmailCodeAuthClicked() {
+        baseViewModelScope.launch {
+            postEmailCodeUseCase(
+                email = schoolEmailInputContent.value,
+                code = schoolEmailCodeInputContent.value
+            ).onSuccess {
+                Log.d("ttt onSuccess", it.toString())
+                SetProfileNavigationAction.NavigateToToastMessage("인증되었습니다")
+
+                isSchoolEmailAuth.value = true
+            }.onError {
+                isSchoolEmailAuth.value = false
+                SetProfileNavigationAction.NavigateToToastMessage("인증 코드가 틀립니다")
+                Log.d("ttt onError", it.toString())
+
+            }
+
         }
     }
 
@@ -128,17 +164,37 @@ class SetProfileViewModel @Inject constructor(
             showLoading()
             val idToken = sSharedPreferences.getString("idToken", null)
             val provider = sSharedPreferences.getString("provider", null)
-            if (inputContent.value == "") {
-                _navigationHandler.emit(SetProfileNavigationAction.NavigateToEmpty)
-            } else {
+            if (nicknameInputContent.value == "") _navigationHandler.emit(
+                SetProfileNavigationAction.NavigateToToastMessage(
+                    "이름을 입력해주세요"
+                )
+            )
+            else if (isManEvent.value == null) _navigationHandler.emit(
+                SetProfileNavigationAction.NavigateToToastMessage(
+                    "성별을 선택해주세요"
+                )
+            )
+            else if (schoolEmailInputContent.value == "") _navigationHandler.emit(
+                SetProfileNavigationAction.NavigateToToastMessage("학교 이메일을 입력주세요")
+            )
+            else if (schoolEmailCodeInputContent.value == "") _navigationHandler.emit(
+                SetProfileNavigationAction.NavigateToToastMessage("인증 코드를 입력해주세요")
+            )
+            else if (!isSchoolEmailAuth.value) _navigationHandler.emit(
+                SetProfileNavigationAction.NavigateToToastMessage("인증 코드가 틀립니다.")
+            )
+            else {
                 if (idToken != null && provider != null) {
+
                     postRegisterUseCase(
                         idToken = idToken,
                         provider = provider,
-                        name = inputContent.value,
-                        schoolNum = inputContent.value,
-                        gender = inputContent.value,
-                        profilePath = profileImg.value!!.url,
+                        name = nicknameInputContent.value,
+                        gender = when (isManEvent.value!!) {
+                            true -> "MAN"
+                            false -> "WOMAN"
+                        },
+                        profilePath = "profileImg.value!!.profilePath",
                     ).onSuccess {
                         editor.putString("accessToken", it.accessToken)
                         editor.putString("refreshToken", it.refreshToken)
@@ -147,9 +203,12 @@ class SetProfileViewModel @Inject constructor(
                         val fcmToken = sSharedPreferences.getString("fcmToken", null)
 //                        postNotificationTokenUseCase(deviceId = deviceId!!, token = fcmToken!!)
 //                            .onSuccess {
-//                                _navigationHandler.emit(SetProfileNavigationAction.NavigateToHome)
+                        _navigationHandler.emit(SetProfileNavigationAction.NavigateToHome)
 //                            }
                     }
+                        .onError {
+                            Log.d("ttt error", it.toString())
+                        }
                 }
             }
             dismissLoading()

@@ -6,4 +6,6 @@ interface SetProfileActionHandler {
     fun onAgeSetClicked()
     fun onGenderManClicked()
     fun onGenderWomanClicked()
+    fun onSchoolEmailAuthClicked()
+    fun onSchoolEmailCodeAuthClicked()
 }

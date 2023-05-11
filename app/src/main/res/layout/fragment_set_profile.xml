@@ -43,7 +43,7 @@
                 android:id="@+id/user_profile_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:glide10000="@{viewmodel.profileImg.url}"
+                app:glide10000="@{viewmodel.profileImg.profilePath}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -149,10 +149,10 @@
                     android:layout_marginEnd="12.5dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
+                    android:onClick="@{() -> viewmodel.onGenderManClicked()}"
                     android:visibility="visible"
                     app:cardCornerRadius="15dp"
                     app:manBtnClicked="@{viewmodel.isManEvent}"
-                    android:onClick="@{() -> viewmodel.onGenderManClicked()}"
                     app:strokeColor="#d9d9d9"
                     app:strokeWidth="3dp">
 
@@ -180,9 +180,9 @@
                     android:layout_marginTop="1dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
+                    android:onClick="@{() -> viewmodel.onGenderWomanClicked()}"
                     android:visibility="visible"
                     app:cardCornerRadius="15dp"
-                    android:onClick="@{() -> viewmodel.onGenderWomanClicked()}"
                     app:strokeColor="#d9d9d9"
                     app:strokeWidth="3dp"
                     app:womanBtnClicked="@{viewmodel.isManEvent}"
@@ -247,27 +247,67 @@
                     android:layout_weight="1"
                     android:background="@color/transparent"
                     android:hint="학교 이메일을 입력해주세요"
-                    android:text="@={viewmodel.ageInputContent}"
+                    android:text="@={viewmodel.schoolEmailInputContent}"
                     app:layout_constraintStart_toStartOf="parent" />
 
 
                 <TextView
                     android:id="@+id/age_edit_text_count"
                     style="Theme.AppCompat.TextView.Regular.Black.Size16"
+                    authTimer="@{viewmodel.isAuthEvent()}"
+                    onSingleClick="@{() -> viewmodel.onSchoolEmailAuthClicked()}"
+                    textChangeColor="@{viewmodel.schoolEmailInputContent.length()}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
-                    android:text="인증하기"
-                    android:textColor="@color/gray05"
-                    app:ageEditTextCount="@{viewmodel.ageEditTextCountEvent}">
+                    android:text="메일 보내기"
+                    android:textColor="@color/gray05">
 
                 </TextView>
 
 
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_backgroundwhite_radius16"
+                android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/school_email_code_contents"
+                    style="@style/Theme.AppCompat.TextView.Profile.Username.Contents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:hint="인증 코드를 입력해주세요"
+                    android:text="@={viewmodel.schoolEmailCodeInputContent}"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/school_email_code_btn"
+                    style="Theme.AppCompat.TextView.Regular.Black.Size16"
+                    onSingleClick="@{() -> viewmodel.onSchoolEmailCodeAuthClicked()}"
+                    textChangeColor="@{viewmodel.schoolEmailCodeInputContent.length()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="인증하기"
+                    android:textColor="@color/gray05">
+
+                </TextView>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
 
         <com.google.android.material.card.MaterialCardView

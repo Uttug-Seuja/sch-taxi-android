@@ -39,7 +39,7 @@ class SetProfileFragment : BaseFragment<FragmentSetProfileBinding, SetProfileVie
             viewModel.navigationHandler.collectLatest {
                 when(it) {
                     is SetProfileNavigationAction.NavigateToHome -> navigate(SetProfileFragmentDirections.actionSetProfileFragmentToHomeFragment())
-                    is SetProfileNavigationAction.NavigateToEmpty -> toastMessage("닉네임이 비어 있습니다!")
+                    is SetProfileNavigationAction.NavigateToToastMessage -> toastMessage(it.message)
                     else -> {}
                 }
             }
@@ -64,7 +64,7 @@ class SetProfileFragment : BaseFragment<FragmentSetProfileBinding, SetProfileVie
 
     private fun countEditTextMessage() {
         lifecycleScope.launchWhenStarted {
-            viewModel.editTextMessageCountEvent.collectLatest {
+            viewModel.nicknameEditTextCountEvent.collectLatest {
                 binding.editTextCount.text = "$it/15"
 
                 if (it != 0) {

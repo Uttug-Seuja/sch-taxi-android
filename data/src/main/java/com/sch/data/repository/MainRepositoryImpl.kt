@@ -20,13 +20,11 @@ class MainRepositoryImpl @Inject constructor(
         idToken: String,
         provider: String,
         name: String,
-        schoolNum: String,
         gender: String,
         profilePath: String
     ): NetworkResult<Token> {
         val body = PostRegisterRequest(
             name = name,
-            schoolNum = schoolNum,
             gender = gender,
             profilePath = profilePath
         )

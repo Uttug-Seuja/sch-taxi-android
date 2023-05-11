@@ -6,7 +6,7 @@ sealed class SetProfileNavigationAction {
 //    class NavigateToSetProfileImage(val profile: Profile): SetProfileNavigationAction()
     object NavigateToSetProfileImage: SetProfileNavigationAction()
     object NavigateToHome: SetProfileNavigationAction()
-    object NavigateToEmpty: SetProfileNavigationAction()
+    class NavigateToToastMessage(val message: String): SetProfileNavigationAction()
     object NavigateToAgeNumberPicker: SetProfileNavigationAction()
 
 }

@@ -1,12 +1,17 @@
 package com.sch.sch_taxi.ui.setprofile
 
 import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.card.MaterialCardView
+import java.util.Timer
+import java.util.TimerTask
 
 fun textChangeColor(
     text: TextView,
@@ -25,6 +30,48 @@ fun textChangeColor(
 
     return builder
 }
+
+@BindingAdapter("authTimer")
+fun TextView.bindAuthTimer(isAuth: Boolean) {
+
+//    var mSecond: Long = 3000
+//    val mTimer = Timer()
+//    // 반복적으로 사용할 TimerTask
+//    val mTimerTask = object : TimerTask() {
+//        override fun run() {
+//            val mHandler = Handler(Looper.getMainLooper())
+//            mHandler.postDelayed({
+//                // 반복실행할 구문
+//                mSecond--
+//                if (mSecond <= 0) {
+//                    mTimer.cancel()
+//                }
+//                this@bindAuthTimer.text = "$mSecond 초"
+//            }, 0)
+//        }
+//    }
+//
+//    if (isAuth) {
+//        this.isEnabled = false
+//        mTimerTask.run()
+//    } else {
+//        this.isEnabled = true
+////        mTimerTask.cancel()
+//    }
+
+}
+
+@BindingAdapter("textChangeColor")
+fun TextView.bindTextChangeColor(textLength: Int) {
+    if (textLength > 0) {
+        this.isEnabled = true
+        this.setTextColor(Color.parseColor("#000000"))
+    } else {
+        this.setTextColor(Color.parseColor("#BDBDBD"))
+        this.isEnabled = false
+    }
+}
+
 
 @BindingAdapter("nicknameEditTextCount")
 fun TextView.bindNicknameEditTextCount(textLength: Int) {
