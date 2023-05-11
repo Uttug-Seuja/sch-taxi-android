@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentReservationSearchBinding
+import com.sch.sch_taxi.ui.reservationsearch.adapter.RecommendKeywordAdapter
 import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationKeywordAdapter
 import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationSearchHistoryAdapter
 import com.sch.sch_taxi.util.hideKeyboard
@@ -27,6 +28,7 @@ class ReservationSearchFragment : BaseFragment<FragmentReservationSearchBinding,
     override val viewModel: ReservationSearchViewModel by viewModels()
     private val reservationKeywordAdapter by lazy { ReservationKeywordAdapter(viewModel) }
     private val taxiSearchHistoryAdapter by lazy { ReservationSearchHistoryAdapter(viewModel) }
+    private val recommendKeywordAdapter by lazy { RecommendKeywordAdapter(viewModel) }
     private val navController by lazy { findNavController() }
 
     override fun initStartView() {
@@ -76,6 +78,7 @@ class ReservationSearchFragment : BaseFragment<FragmentReservationSearchBinding,
     private fun initAdapter() {
         binding.rvReservationSearch.adapter = reservationKeywordAdapter
         binding.rvTaxiSearchHistory.adapter = taxiSearchHistoryAdapter
+        binding.rvRecommendKeyword.adapter = recommendKeywordAdapter
     }
 
     override fun initAfterBinding() {

@@ -75,7 +75,13 @@ fun PagingReservationResponse.toDomain(): PagingReservation {
 }
 
 fun PagingReservationKeywordResponse.toDomain(): PagingReservationKeyword {
-    return PagingReservationKeyword(content = this.content, last = this.last)
+    return PagingReservationKeyword(content = this.content.toDomain(), last = this.last)
+}
+
+fun List<KeywordResponse>.toDomain(): List<Keyword> {
+    return map {
+        Keyword(it.keyword)
+    }
 }
 
 fun ParticipationInfoListResponse.toDomain(): ParticipationInfoList {

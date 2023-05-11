@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sch.domain.model.Keyword
+import com.sch.domain.model.RecommendKeywordList
 import com.sch.domain.model.Reservation
 import com.sch.domain.model.SearchHistory
 import com.sch.domain.model.SearchHistoryList
@@ -14,6 +15,7 @@ import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.CreateSearchHistoryUseCase
 import com.sch.domain.usecase.main.DeleteSearchHistoryListUseCase
 import com.sch.domain.usecase.main.DeleteSearchHistoryUseCase
+import com.sch.domain.usecase.main.GetRecommendKeywordUseCase
 import com.sch.domain.usecase.main.GetReservationKeywordUseCase
 import com.sch.domain.usecase.main.GetReservationSearchUseCase
 import com.sch.domain.usecase.main.GetSearchHistoryUseCase
@@ -31,7 +33,8 @@ class ReservationSearchViewModel @Inject constructor(
     private val createSearchHistoryUseCase: CreateSearchHistoryUseCase,
     private val deleteSearchHistoryUseCase: DeleteSearchHistoryUseCase,
     private val deleteSearchHistoryListUseCase: DeleteSearchHistoryListUseCase,
-    private val getReservationKeywordUseCase: GetReservationKeywordUseCase
+    private val getReservationKeywordUseCase: GetReservationKeywordUseCase,
+    private val getRecommendKeywordUseCase: GetRecommendKeywordUseCase
 ) : BaseViewModel(), ReservationSearchActionHandler {
 
     private val TAG = "ReservationSearchViewModel"
@@ -55,9 +58,12 @@ class ReservationSearchViewModel @Inject constructor(
     val taxiSearchHistoryIdxEvent = MutableStateFlow<Int>(0)
 
     var reservationSearchEvent: Flow<PagingData<Keyword>> = emptyFlow()
+    var recommendKeywordEvent = MutableStateFlow(RecommendKeywordList(emptyList()))
+
 
     init {
         getReservationKeywordList()
+        getRecommendKeyword()
     }
 
     fun getReservationKeywordList() {
@@ -73,6 +79,18 @@ class ReservationSearchViewModel @Inject constructor(
             }
             dismissLoading()
         }
+    }
+
+    fun getRecommendKeyword(){
+        showLoading()
+        baseViewModelScope.launch {
+            getRecommendKeywordUseCase()
+                .onSuccess {
+                    recommendKeywordEvent.value = it
+                }
+                .onError {  }
+        }
+        dismissLoading()
     }
 
     fun getSearchHistoryList() {
