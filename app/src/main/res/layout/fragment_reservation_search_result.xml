@@ -101,7 +101,6 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_reservation_search"
-            taxiSearchAdapter="@{vm.taxiSearchEvent}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="gone"
@@ -111,7 +110,6 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_reservation_search_result"
-            taxiSearchAdapter="@{vm.taxiSearchEvent}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="visible"
