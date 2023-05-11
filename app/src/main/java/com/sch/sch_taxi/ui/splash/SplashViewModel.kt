@@ -1,5 +1,6 @@
 package com.sch.sch_taxi.ui.splash
 
+import android.util.Log
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.PostRefreshTokenUseCase
@@ -25,6 +26,9 @@ class SplashViewModel @Inject constructor(
         baseViewModelScope.launch {
             val accessToken = sSharedPreferences.getString("accessToken", null)
             val refreshToken = sSharedPreferences.getString("refreshToken", null)
+            Log.d("ttt accessToken", accessToken.toString())
+            Log.d("ttt refreshToken", refreshToken.toString())
+
             if (accessToken == null) {
                 _navigationHandler.value = 1
             }
@@ -34,9 +38,12 @@ class SplashViewModel @Inject constructor(
                         editor.putString("accessToken", it.accessToken)
                         editor.putString("refreshToken", it.refreshToken)
                         editor.commit()
+                        Log.d("ttt accessToken", accessToken.toString())
+                        Log.d("ttt refreshToken", refreshToken.toString())
                         _navigationHandler.value = 2
                     }
                     .onError { exception ->
+                        Log.d("ttt error", exception.toString())
                         catchError(e = exception)
                     }
             }

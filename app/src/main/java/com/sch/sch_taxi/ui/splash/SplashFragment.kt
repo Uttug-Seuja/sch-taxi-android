@@ -39,7 +39,7 @@ class SplashFragment :
                 delay(1000)
                 when (it) {
                     1 -> navigate(SplashFragmentDirections.actionSplashFragmentToRegisterFragment())
-                    2 -> navigate(SplashFragmentDirections.actionMainFragment())
+                    2 -> navigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
                 }
             }
         }
