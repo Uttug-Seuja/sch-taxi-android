@@ -5,10 +5,12 @@ import com.sch.domain.model.Taxis
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.DeleteReservationUseCase
+import com.sch.domain.usecase.main.GetOtherProfileUseCase
 import com.sch.domain.usecase.main.GetParticipationUseCase
 import com.sch.domain.usecase.main.GetReservationDetailUseCase
 import com.sch.domain.usecase.main.GetUserParticipationUseCase
 import com.sch.domain.usecase.main.PostParticipationUseCase
+import com.sch.domain.usecase.main.PostReportsParticipationUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -20,7 +22,9 @@ class ReservationDetailViewModel @Inject constructor(
     private val getReservationDetailUseCase: GetReservationDetailUseCase,
     private val postParticipationUseCase: PostParticipationUseCase,
     private val getParticipationUseCase: GetParticipationUseCase,
-    private val deleteReservationUseCase: DeleteReservationUseCase
+    private val deleteReservationUseCase: DeleteReservationUseCase,
+    private val getOtherProfileUseCase: GetOtherProfileUseCase,
+    private val postReportsParticipationUseCase: PostReportsParticipationUseCase
 ) : BaseViewModel(), ReservationDetailActionHandler {
 
     private val TAG = "ReservationDetailViewModel"
