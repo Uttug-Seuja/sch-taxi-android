@@ -1,6 +1,7 @@
 package com.sch.sch_taxi.ui.mypost
 
 import com.sch.domain.model.Taxis
+import com.sch.domain.usecase.main.GetUserReservationUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -9,6 +10,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPostViewModel @Inject constructor(
+    private val getUserReservationUseCase: GetUserReservationUseCase
 ) : BaseViewModel(), MyPostActionHandler {
 
     private val TAG = "MyPostViewModel"
