@@ -9,6 +9,7 @@ import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.runCatching
 import com.sch.domain.usecase.kakao.GetResultKeywordUseCase
+import com.sch.domain.usecase.main.PatchReservationUseCase
 import com.sch.domain.usecase.main.PostReservationUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ReservationCreateViewModel @Inject constructor(
     private val getResultKeywordUseCase: GetResultKeywordUseCase,
-    private val postReservationUseCase: PostReservationUseCase
+    private val postReservationUseCase: PostReservationUseCase,
+    private val patchReservationUseCase: PatchReservationUseCase
 ) : BaseViewModel(), ReservationCreateActionHandler {
 
     private val TAG = "TaxiCreateViewModel"
