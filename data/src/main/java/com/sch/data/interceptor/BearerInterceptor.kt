@@ -2,6 +2,7 @@ package com.sch.data.interceptor
 
 
 
+import android.util.Log
 import com.sch.data.model.remote.request.PostRefreshTokenRequest
 import com.sch.data.model.remote.error.ErrorResponseImpl
 import com.sch.data.DataApplication.Companion.editor
@@ -26,16 +27,25 @@ class BearerInterceptor : Interceptor {
     //todo 조건 분기로 인터셉터 구조 변경
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
+        Log.d("ttt BearerInterceptor", "BearerInterceptor 들어옴" )
         val request = chain.request()
+        Log.d("ttt request", request.toString() )
+
         val response = chain.proceed(request)
+        Log.d("ttt response", response.toString() )
+
         val baseResponse = response.toBaseResponse()
 
         var accessToken = ""
         var isRefreshable = false
+
+        Log.d("ttt baseResponse?.status  ", baseResponse?.status.toString() )
+        Log.d("ttt isRefreshable ", isRefreshable.toString() )
+
         if(baseResponse?.status == 401) {
             runBlocking {
                 //토큰 갱신 api 호출
-                sSharedPreferences.getString("refresh_token", null)?.let {
+                sSharedPreferences.getString("refreshToken", null)?.let {
                     val result = Retrofit.Builder()
                         .baseUrl(BASE_URL)
                         .addConverterFactory(GsonConverterFactory.create())
@@ -43,8 +53,8 @@ class BearerInterceptor : Interceptor {
                         .create(MainAPIService::class.java).postRefreshToken(PostRefreshTokenRequest(it))
 
                     if(result.success) {
-                        editor.putString("access_token", result.data.accessToken)
-                        editor.putString("refresh_token", result.data.refreshToken)
+                        editor.putString("accessToken", result.data.accessToken)
+                        editor.putString("refreshToken", result.data.refreshToken)
                         editor.commit()
                         accessToken = result.data.accessToken
                         isRefreshable = true

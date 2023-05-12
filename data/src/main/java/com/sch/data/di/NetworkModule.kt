@@ -7,6 +7,7 @@ import com.sch.data.interceptor.XAccessTokenInterceptor
 import com.sch.data.BuildConfig
 import com.sch.data.api.ApiClient.BASE_URL
 import com.sch.data.api.MainAPIService
+import com.sch.data.interceptor.BearerInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +34,7 @@ object NetworkModule {
             .addInterceptor(loggingInterceptor)
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addInterceptor(EmptyBodyInterceptor())
-//            .addInterceptor(BearerInterceptor()) // Refresh Token
+            .addInterceptor(BearerInterceptor()) // Refresh Token
             .addInterceptor(ErrorResponseInterceptor()) // Error Response
             .build()
     } else {
@@ -42,7 +43,7 @@ object NetworkModule {
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addInterceptor(EmptyBodyInterceptor())
-//            .addInterceptor(BearerInterceptor()) // Refresh Token
+            .addInterceptor(BearerInterceptor()) // Refresh Token
             .addInterceptor(ErrorResponseInterceptor()) // Error Response
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
