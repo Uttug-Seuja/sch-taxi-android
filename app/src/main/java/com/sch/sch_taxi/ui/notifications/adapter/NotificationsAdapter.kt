@@ -5,17 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sch.domain.model.Taxi
-import com.sch.sch_taxi.databinding.HolderNotificationBinding
+import com.sch.domain.model.Alarm
+import com.sch.sch_taxi.databinding.HolderNotificationAlarmBinding
 import com.sch.sch_taxi.ui.notifications.NotificationsActionHandler
 
 class NotificationsAdapter(
     private val eventListener: NotificationsActionHandler,
-) : ListAdapter<Taxi, NotificationsAdapter.NotificationsViewHolder>(TaxiSearchItemDiffCallback) {
+) : ListAdapter<Alarm, NotificationsAdapter.NotificationsViewHolder>(TaxiSearchItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationsViewHolder {
         return NotificationsViewHolder(
-            HolderNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HolderNotificationAlarmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 .apply {
                     eventListener = this@NotificationsAdapter.eventListener
                 }
@@ -29,10 +29,10 @@ class NotificationsAdapter(
     }
 
     class NotificationsViewHolder(
-        private val binding: HolderNotificationBinding
+        private val binding: HolderNotificationAlarmBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Taxi) {
+        fun bind(item: Alarm) {
             binding.apply {
                 holder = item
                 executePendingBindings()
@@ -42,11 +42,11 @@ class NotificationsAdapter(
 
 
 
-    internal object TaxiSearchItemDiffCallback : DiffUtil.ItemCallback<Taxi>() {
-        override fun areItemsTheSame(oldItem: Taxi, newItem: Taxi) =
+    internal object TaxiSearchItemDiffCallback : DiffUtil.ItemCallback<Alarm>() {
+        override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: Taxi, newItem: Taxi) =
+        override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm) =
             oldItem.equals(newItem)
     }
 }

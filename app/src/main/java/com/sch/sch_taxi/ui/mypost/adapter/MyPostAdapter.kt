@@ -5,34 +5,34 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sch.domain.model.Taxi
-import com.sch.sch_taxi.databinding.HolderNotificationBinding
+import com.sch.domain.model.Reservation
+import com.sch.sch_taxi.databinding.HolderReservationBinding
 import com.sch.sch_taxi.ui.mypost.MyPostActionHandler
 
 class MyPostAdapter(
     private val eventListener: MyPostActionHandler,
-) : ListAdapter<Taxi, MyPostAdapter.NotificationsViewHolder>(TaxiSearchItemDiffCallback) {
+) : ListAdapter<Reservation, MyPostAdapter.ViewHolder>(TaxiSearchItemDiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationsViewHolder {
-        return NotificationsViewHolder(
-            HolderNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            HolderReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 .apply {
 //                    eventListener = this@MyPostAdapter.eventListener
                 }
         )
     }
 
-    override fun onBindViewHolder(holder: NotificationsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position)?.let { item ->
             holder.bind(item)
         }
     }
 
-    class NotificationsViewHolder(
-        private val binding: HolderNotificationBinding
+    class ViewHolder(
+        private val binding: HolderReservationBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Taxi) {
+        fun bind(item: Reservation) {
             binding.apply {
                 holder = item
                 executePendingBindings()
@@ -42,11 +42,11 @@ class MyPostAdapter(
 
 
 
-    internal object TaxiSearchItemDiffCallback : DiffUtil.ItemCallback<Taxi>() {
-        override fun areItemsTheSame(oldItem: Taxi, newItem: Taxi) =
+    internal object TaxiSearchItemDiffCallback : DiffUtil.ItemCallback<Reservation>() {
+        override fun areItemsTheSame(oldItem: Reservation, newItem: Reservation) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: Taxi, newItem: Taxi) =
+        override fun areContentsTheSame(oldItem: Reservation, newItem: Reservation) =
             oldItem.equals(newItem)
     }
 }
