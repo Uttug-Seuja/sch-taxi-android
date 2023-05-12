@@ -2,6 +2,7 @@ package com.sch.sch_taxi.ui.editprofile.saveprofile
 
 
 import com.sch.domain.model.UserInfo
+import com.sch.domain.usecase.main.PatchUserProfileUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,6 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SaveProfileViewModel @Inject constructor(
+    private val patchUserProfileUseCase: PatchUserProfileUseCase
 ) : BaseViewModel(), SaveProfileActionHandler {
 
     private val TAG = "SaveProfileViewModel"
