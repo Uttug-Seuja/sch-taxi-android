@@ -2,6 +2,9 @@ package com.sch.sch_taxi.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sch.data.model.remote.error.InvalidAccessTokenException
+import com.sch.data.model.remote.error.InvalidAccessTokenExpire
+import com.sch.sch_taxi.di.PresentationApplication.Companion.editor
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -32,26 +35,26 @@ abstract class BaseViewModel : ViewModel() {
     val needLoginEvent: SharedFlow<Boolean> = _needLoginEvent
 
     fun catchError(e: Throwable?) {
-//        viewModelScope.launch(errorHandler) {
-//            e?.let {
-//                when(it) {
-//                    is InvalidAccessTokenException -> {
-//                        editor.remove("access_token")
-//                        editor.remove("refresh_token")
-//                        editor.commit()
-//                        _needLoginEvent.emit(true)
-//                    }
-//                    is InvalidAccessTokenExpire -> {
-//                        editor.remove("access_token")
-//                        editor.remove("refresh_token")
-//                        editor.commit()
-//                        _needLoginEvent.emit(true)
-//                    }
-//                    else -> _errorEvent.emit(it)
-//                }
-//            }
-//            dismissLoading()
-//        }
+        viewModelScope.launch(errorHandler) {
+            e?.let {
+                when(it) {
+                    is InvalidAccessTokenException -> {
+                        editor.remove("accessToken")
+                        editor.remove("refreshToken")
+                        editor.commit()
+                        _needLoginEvent.emit(true)
+                    }
+                    is InvalidAccessTokenExpire -> {
+                        editor.remove("accessToken")
+                        editor.remove("refreshToken")
+                        editor.commit()
+                        _needLoginEvent.emit(true)
+                    }
+                    else -> _errorEvent.emit(it)
+                }
+            }
+            dismissLoading()
+        }
     }
 
     fun showLoading() {

@@ -32,18 +32,18 @@ object NetworkModule {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
+//            .addInterceptor(BearerInterceptor()) // Refresh Token
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addInterceptor(EmptyBodyInterceptor())
-            .addInterceptor(BearerInterceptor()) // Refresh Token
             .addInterceptor(ErrorResponseInterceptor()) // Error Response
             .build()
     } else {
         OkHttpClient.Builder()
             .readTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
+//            .addInterceptor(BearerInterceptor()) // Refresh Token
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addInterceptor(EmptyBodyInterceptor())
-            .addInterceptor(BearerInterceptor()) // Refresh Token
             .addInterceptor(ErrorResponseInterceptor()) // Error Response
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
