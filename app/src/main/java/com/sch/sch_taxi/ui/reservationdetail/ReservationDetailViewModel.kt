@@ -1,5 +1,7 @@
 package com.sch.sch_taxi.ui.reservationdetail
 
+import android.util.Log
+import com.sch.domain.model.Reservation
 import com.sch.domain.model.ReservationDetail
 import com.sch.domain.model.Taxis
 import com.sch.domain.onError
@@ -34,20 +36,28 @@ class ReservationDetailViewModel @Inject constructor(
     val navigationHandler: SharedFlow<ReservationDetailNavigationAction> =
         _navigationHandler.asSharedFlow()
 
-    var reservationId = MutableStateFlow<Int>(0)
+    var reservationId = MutableStateFlow<Int>(-1)
     private val _notificationsEvent: MutableStateFlow<Taxis> =
         MutableStateFlow(Taxis(emptyList()))
     val notificationsEvent: StateFlow<Taxis> = _notificationsEvent
     var editTextReportEvent = MutableStateFlow<String>("")
 
-    init {
+    val reservesEvent: MutableStateFlow<ReservationDetail?> = MutableStateFlow(null)
+
+    fun getReservationDetail() {
         baseViewModelScope.launch {
             getReservationDetailUseCase(reservationId = reservationId.value)
-                .onSuccess { }
-                .onError { }
+                .onSuccess {
+                    reservesEvent.value = it
+                }
+                .onError {
+
+                }
 
         }
+    }
 
+    fun getParticipation() {
         baseViewModelScope.launch {
             getParticipationUseCase(id = reservationId.value)
                 .onSuccess { }

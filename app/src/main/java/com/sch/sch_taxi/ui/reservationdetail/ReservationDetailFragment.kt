@@ -7,6 +7,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.AlertDialogModel
 import com.sch.sch_taxi.base.BaseFragment
@@ -17,6 +18,7 @@ import com.sch.sch_taxi.ui.reservationdetail.adapter.CustomBalloonAdapter
 import com.sch.sch_taxi.ui.reservationdetail.bottom.BottomTaxiMore
 import com.sch.sch_taxi.ui.reservationdetail.bottom.BottomTaxiReport
 import com.sch.sch_taxi.ui.reservationdetail.bottom.TaxiMoreType
+import com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import net.daum.mf.map.api.MapPOIItem
@@ -39,10 +41,15 @@ class ReservationDetailFragment :
 
     override val viewModel: ReservationDetailViewModel by viewModels()
     private val navController by lazy { findNavController() }
+    private val args: ReservationDetailFragmentArgs by navArgs()
 
     //    private val eventListener = MarkerEventListener(requireActivity())   // 마커 클릭 이벤트 리스너
     lateinit var mapView: MapView
     override fun initStartView() {
+        viewModel.reservationId.value = args.reservationId
+        viewModel.getReservationDetail()
+        viewModel.getParticipation()
+
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner

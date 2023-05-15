@@ -184,6 +184,10 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_reservation_detail">
 
+        <argument
+            android:name="reservation_id"
+            app:argType="integer" />
+
         <action
             android:id="@+id/action_taxiDetailFragment_to_chatFragment"
             app:destination="@id/chatFragment" />

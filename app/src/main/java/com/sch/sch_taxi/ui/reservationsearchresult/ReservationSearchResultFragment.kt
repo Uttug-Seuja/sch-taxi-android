@@ -9,6 +9,7 @@ import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentReservationSearchResultBinding
 import com.sch.sch_taxi.ui.home.HomeFragmentDirections
 import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationKeywordAdapter
+import com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultFragmentDirections.actionTaxiSearchResultFragmentToTaxiDetailFragment
 import com.sch.sch_taxi.ui.reservationsearchresult.adapter.ReservationSearchResultAdapter
 import com.sch.sch_taxi.ui.reservationsearchresult.adapter.ReservationSearchResultKeywordAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +45,9 @@ class ReservationSearchResultFragment : BaseFragment<FragmentReservationSearchRe
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
                 when(it) {
-                    is ReservationSearchResultNavigationAction.NavigateToTaxiSearchResult -> navigate(HomeFragmentDirections.actionHomeFragmentToTaxiDetailFragment())
+                    is ReservationSearchResultNavigationAction.NavigateToTaxiSearchResult -> navigate(
+                        actionTaxiSearchResultFragmentToTaxiDetailFragment(0)
+                    )
                     is ReservationSearchResultNavigationAction.NavigateToBack -> navController.popBackStack()
                 }
             }
