@@ -4,5 +4,5 @@ sealed class HomeNavigationAction {
     object NavigateToSearch: HomeNavigationAction()
     object NavigateToNotifications: HomeNavigationAction()
     object NavigateToTaxiCreate: HomeNavigationAction()
-    object NavigateToTaxiDetail: HomeNavigationAction()
+    class NavigateToTaxiDetail(val reservationId: Int): HomeNavigationAction()
 }

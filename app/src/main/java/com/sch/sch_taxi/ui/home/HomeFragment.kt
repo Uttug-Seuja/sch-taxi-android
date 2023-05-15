@@ -34,7 +34,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
                 when(it) {
-                    is HomeNavigationAction.NavigateToTaxiDetail -> navigate(HomeFragmentDirections.actionHomeFragmentToTaxiDetailFragment())
+                    is HomeNavigationAction.NavigateToTaxiDetail -> navigate(HomeFragmentDirections.actionHomeFragmentToTaxiDetailFragment(it.reservationId))
                     is HomeNavigationAction.NavigateToSearch -> navigate(HomeFragmentDirections.actionHomeFragmentToTaxiSearchFragment())
                     is HomeNavigationAction.NavigateToTaxiCreate -> navigate(HomeFragmentDirections.actionHomeFragmentToTaxiCreateFragment())
                     is HomeNavigationAction.NavigateToNotifications -> navigate(HomeFragmentDirections.actionHomeFragmentToNotificationFragment())

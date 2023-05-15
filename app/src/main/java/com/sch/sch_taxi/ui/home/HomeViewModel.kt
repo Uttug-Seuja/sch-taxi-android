@@ -47,9 +47,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onClickedTaxiDetail() {
+    override fun onClickedTaxiDetail(reservationId : Int) {
         baseViewModelScope.launch {
-            _navigationHandler.emit(HomeNavigationAction.NavigateToTaxiDetail)
+            _navigationHandler.emit(HomeNavigationAction.NavigateToTaxiDetail(reservationId= reservationId))
         }
     }
 
