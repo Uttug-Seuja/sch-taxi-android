@@ -69,8 +69,8 @@ interface MainAPIService {
     ): BaseResponse<ReservationResponse>
 
     // 예약 상세정보
-    @GET("/api/v1/reservation")
-    suspend fun getReservationDetail(@Path("reservationId") reservationId: Int): BaseResponse<ReservationResponse>
+    @GET("/api/v1/reservation/{reservationId}")
+    suspend fun getReservationDetail(@Path("reservationId") reservationId: Int): BaseResponse<ReservationDetailResponse>
 
     // 예약 전체 조회
     @GET("/api/v1/reservation/list")

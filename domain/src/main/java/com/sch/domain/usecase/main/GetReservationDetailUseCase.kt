@@ -2,13 +2,14 @@ package com.sch.domain.usecase.main
 
 import com.sch.domain.NetworkResult
 import com.sch.domain.model.Reservation
+import com.sch.domain.model.ReservationDetail
 import com.sch.domain.repository.MainRepository
 import javax.inject.Inject
 
 class GetReservationDetailUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(reservationId: Int): NetworkResult<Reservation> =
+    suspend operator fun invoke(reservationId: Int): NetworkResult<ReservationDetail> =
         repository.getReservationDetail(
             reservationId = reservationId
         )

@@ -4,6 +4,7 @@ package com.sch.data.repository
 import com.sch.data.api.MainAPIService
 import com.sch.data.api.handleApi
 import com.sch.data.model.remote.request.*
+import com.sch.data.model.remote.response.ReservationDetailResponse
 import com.sch.data.model.toDomain
 import com.sch.domain.NetworkResult
 import com.sch.domain.model.*
@@ -147,7 +148,7 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.deleteReservation(reservationId = reservationId) }
     }
 
-    override suspend fun getReservationDetail(reservationId: Int): NetworkResult<Reservation> {
+    override suspend fun getReservationDetail(reservationId: Int): NetworkResult<ReservationDetail> {
         return handleApi { mainAPIService.getReservationDetail(reservationId = reservationId).data.toDomain() }
     }
 

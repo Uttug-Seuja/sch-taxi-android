@@ -72,7 +72,7 @@ interface MainRepository {
     suspend fun deleteReservation(reservationId: Int): NetworkResult<Unit>
 
     // 예약 상세정보
-    suspend fun getReservationDetail(reservationId: Int): NetworkResult<Reservation>
+    suspend fun getReservationDetail(reservationId: Int): NetworkResult<ReservationDetail>
 
     // 예약 전체 조회
     suspend fun getReservation(page: Int, size: Int): NetworkResult<PagingReservation>
