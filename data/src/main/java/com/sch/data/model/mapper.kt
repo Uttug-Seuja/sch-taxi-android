@@ -25,7 +25,6 @@ fun IsRegisteredResponse.toDomain(): IsRegistered {
 fun UserInfoResponse.toDomain(): UserInfo {
     return UserInfo(
         userId = userId,
-        schoolNum = schoolNum,
         gender = gender,
         name = name,
         email = email,
@@ -65,6 +64,26 @@ fun ReservationResponse.toDomain(): Reservation {
         iHost = ihost,
         createAt = createdAt,
         updateAt = updateAt,
+        hostInfo = hostInfo.toDomain(),
+        reservationStatus = reservationStatus
+    )
+}
+
+fun ReservationDetailResponse.toDomain(): ReservationDetail {
+    return ReservationDetail(
+        reservationId = reservationId,
+        title = title,
+        startPoint = startPoint,
+        destination = destination,
+        departureDate = departureDate,
+        gender = gender,
+        passengerNum = passengerNum,
+        currentNum = currentNum,
+        startLatitude = startLatitude,
+        startLongitude = startLongitude,
+        destinationLatitude = destinationLatitude,
+        destinationLongitude = destinationLongitude,
+        iHost = ihost,
         hostInfo = hostInfo.toDomain(),
         reservationStatus = reservationStatus
     )
