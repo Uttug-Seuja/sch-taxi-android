@@ -13,49 +13,67 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
+import com.google.android.material.card.MaterialCardView
 import com.sch.sch_taxi.R
+import org.w3c.dom.Text
 
-@BindingAdapter("addImageCardViewVisible")
-fun CardView.bindAddImageCardViewVisible(uri: String) {
-    if (uri != "") this.visibility = View.GONE
-    else this.visibility = View.VISIBLE
-}
+private val sex =
+    hashMapOf<String, String>("MAN" to "남자", "WOMAN" to "여자")
 
-@BindingAdapter("imgLoadVisible")
-fun CardView.bindImgLoadVisible(uri: String) {
-    if (uri != "") this.visibility = View.VISIBLE
-    else this.visibility = View.GONE
-}
+private val gender =
+    hashMapOf<String, String>("ALL" to "남녀모두", "MAN" to "남자만", "WOMAN" to "여자만")
+private val reserveStatus =
+    hashMapOf<String, String>("POSSIBLE" to "좌석선택", "IMMINENT" to "좌석선택", "DEADLINE" to "신청 마감")
+private val stateTextColor = hashMapOf<String, String>(
+    "POSSIBLE" to "#FFFFFF",
+    "IMMINENT" to "#FFFFFF",
+    "DEADLINE" to "#cccccc"
+)
+private val stateBtnColor = hashMapOf<String, String>(
+    "POSSIBLE" to "#1570ff",
+    "IMMINENT" to "#1570ff",
+    "DEADLINE" to "#EEEEEE"
+)
 
-@BindingAdapter("deleteTextVisible")
-fun TextView.bindDeleteTextVisible(text: Int) {
-    if (text == 0) {
-        this.setTextColor(Color.parseColor("#BDBDBD"))
-        this.isClickable = false
-    } else {
-        this.setTextColor(Color.parseColor("#212121"))
-        this.isClickable = true
+private val reserveStatusText =
+    hashMapOf<String, String>("POSSIBLE" to "지금 신청하면\n진행확정이 빨라져요!", "IMMINENT" to "곧 마감됩니다!\n지금 신청하세요", "DEADLINE" to "다른 예약을 신청하세요")
+
+
+@BindingAdapter("sexText")
+fun TextView.bindSexText(sexEnum : String?) {
+    sexEnum?.let {
+        this.text = sex[it]
     }
 }
 
-@BindingAdapter("editTextVisible")
-fun TextView.bindEditTextVisible(textLength: Int) {
-    if (textLength == 0) {
-        this.setTextColor(Color.parseColor("#BDBDBD"))
-        this.isClickable = false
-    } else {
-        this.setTextColor(Color.parseColor("#FFD260"))
-        this.isClickable = true
+@BindingAdapter("genderText")
+fun TextView.bindGenderText(genderEnum : String?){
+    genderEnum?.let{
+        this.text = gender[it]
     }
 }
 
-//@BindingAdapter("bookCoverStackAdapter")
-//fun RecyclerView.bindBookCoverStackAdapter(itemList: BookCoverStacks) {
-//    val boundAdapter = this.adapter
-//    if (boundAdapter is BookCoverStack2Adapter) {
-//        boundAdapter.submitList(itemList.bookCoverStacks)
-//    }
-//}
+@BindingAdapter("applyText")
+fun TextView.bindApplyText(reservationStatus: String?){
+    reservationStatus?.let {
+        this.text = reserveStatus[it]
+        this.setTextColor(Color.parseColor(stateTextColor[it]))
+    }
+}
+
+@BindingAdapter("applyBtn")
+fun MaterialCardView.bindApplyBtn(reservationStatus: String?){
+    reservationStatus?.let {
+        this.setCardBackgroundColor(Color.parseColor(stateBtnColor[it]))
+    }
+}
+
+@BindingAdapter("reserveStatusText")
+fun TextView.bindReserveStatusText(reservationStatus: String?){
+    reservationStatus?.let {
+        this.text = reserveStatusText[it]
+    }
+}
 
 @SuppressLint("UseCompatLoadingForDrawables")
 fun EditText.messageTextOnFocusChangeListener(context: Context, linearLayout: LinearLayout) {
@@ -63,50 +81,5 @@ fun EditText.messageTextOnFocusChangeListener(context: Context, linearLayout: Li
         //포커스가 주어졌을 때
         if (gainFocus) linearLayout.background = context.getDrawable(R.drawable.custom_backgroundgray03_radius10_line_gray08)
         else linearLayout.background = context.getDrawable(R.drawable.custom_backgroundgray03_radius10)
-    }
-}
-
-@BindingAdapter("textVisible")
-fun TextView.bindTextVisible(text: String) {
-    if (text != "") this.visibility = View.VISIBLE
-    else this.visibility = View.GONE
-}
-
-@BindingAdapter("editTextCountColorChange")
-fun TextView.bindEditTextCountColorChange(textLength: Int) {
-    this.text = "$textLength/200"
-    if (textLength == 0) this.text = this.textChangeColor( "#ff0000", 0, 1)
-    else this.text = this.textChangeColor( "#616161", 0, textLength.toString().length)
-}
-
-fun TextView.textChangeColor(
-    color: String,
-    start: Int,
-    end: Int
-): SpannableStringBuilder {
-    val builder = SpannableStringBuilder(this.text.toString())
-
-    builder.setSpan(
-        ForegroundColorSpan(Color.parseColor(color)),
-        start,
-        end,
-        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-    )
-
-    return builder
-}
-
-@SuppressLint("UseCompatLoadingForDrawables")
-fun EditText.titleTextOnFocusChangeListener(imageView: ImageView) {
-    this.onFocusChangeListener = View.OnFocusChangeListener { view, gainFocus ->
-        //포커스가 주어졌을 때
-        if (gainFocus) {
-            this.setTextColor(Color.parseColor("#757575"))
-            imageView.visibility = View.GONE
-        }
-        else {
-            this.setTextColor(Color.parseColor("#212121"))
-            imageView.visibility = View.VISIBLE
-        }
     }
 }

@@ -17,7 +17,11 @@ import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.lang.Math.acos
+import java.lang.Math.cos
+import java.lang.Math.sin
 import javax.inject.Inject
+import kotlin.math.roundToLong
 
 @HiltViewModel
 class ReservationDetailViewModel @Inject constructor(
@@ -43,12 +47,24 @@ class ReservationDetailViewModel @Inject constructor(
     var editTextReportEvent = MutableStateFlow<String>("")
 
     val reservesEvent: MutableStateFlow<ReservationDetail?> = MutableStateFlow(null)
+    var startLatitude = MutableStateFlow<Double>(0.0)
+    var startLongitude = MutableStateFlow<Double>(0.0)
+    var destinationLatitude = MutableStateFlow<Double>(0.0)
+    var destinationLongitude = MutableStateFlow<Double>(0.0)
+
+
 
     fun getReservationDetail() {
         baseViewModelScope.launch {
             getReservationDetailUseCase(reservationId = reservationId.value)
                 .onSuccess {
                     reservesEvent.value = it
+                    startLatitude.value = it.startLatitude
+                    startLongitude.value = it.startLongitude
+                    destinationLatitude.value = it.destinationLatitude
+                    destinationLongitude.value = it.destinationLongitude
+
+
                 }
                 .onError {
 
@@ -118,6 +134,21 @@ class ReservationDetailViewModel @Inject constructor(
         baseViewModelScope.launch {
 
         }
+    }
+
+    // 좌표로 거리구하기
+    private fun calDist(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Long {
+        val EARTH_R = 6371000.0
+        val rad = Math.PI / 180
+        val radLat1 = rad * lat1
+        val radLat2 = rad * lat2
+        val radDist = rad * (lon1 - lon2)
+
+        var distance = sin(radLat1) * sin(radLat2)
+        distance += cos(radLat1) * cos(radLat2) * cos(radDist)
+        val ret = EARTH_R * acos(distance)
+
+        return ret.roundToLong() // 미터 단위
     }
 
 

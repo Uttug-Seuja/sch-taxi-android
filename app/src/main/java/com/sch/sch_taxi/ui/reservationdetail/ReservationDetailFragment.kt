@@ -55,7 +55,16 @@ class ReservationDetailFragment :
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-        initAdapter()
+
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.reservesEvent.collectLatest {
+                when (it) {
+                    null -> {}
+                    else -> initAdapter()
+                }
+            }
+        }
+
     }
 
     override fun initDataBinding() {
@@ -85,8 +94,8 @@ class ReservationDetailFragment :
         mapView.currentLocationTrackingMode =
             MapView.CurrentLocationTrackingMode.TrackingModeOff
         val mapPoint = MapPoint.mapPointWithGeoCoord(
-            (36.77319581029296 + 36.77319581029296) / 2,
-            (126.93359085592283 + 126.951393082675) / 2
+            (viewModel.reservesEvent.value!!.startLatitude + viewModel.reservesEvent.value!!.destinationLatitude) / 2,
+            (viewModel.reservesEvent.value!!.startLongitude + viewModel.reservesEvent.value!!.destinationLongitude) / 2
         )
         mapView.setMapCenterPointAndZoomLevel(mapPoint, 6, true)
         addItemsAndMarkers()
@@ -197,10 +206,10 @@ class ReservationDetailFragment :
         // 지도에 마커 추가
         var point = MapPOIItem()
         point.apply {
-            itemName = "순천향대학교 후문"// 마커 이름
+            itemName = viewModel.reservesEvent.value!!.startPoint// 마커 이름
             mapPoint = MapPoint.mapPointWithGeoCoord( // 좌표
-                36.77319581029296,
-                126.93359085592283
+                viewModel.reservesEvent.value!!.startLatitude,
+                viewModel.reservesEvent.value!!.startLongitude
 
             )
             markerType = MapPOIItem.MarkerType.BluePin // 마커 모양
@@ -211,10 +220,10 @@ class ReservationDetailFragment :
 
         point = MapPOIItem()
         point.apply {
-            itemName = "신창역"// 마커 이름
+            itemName = viewModel.reservesEvent.value!!.destination// 마커 이름
             mapPoint = MapPoint.mapPointWithGeoCoord( // 좌표
-                36.7696422998843,
-                126.951393082675
+                viewModel.reservesEvent.value!!.destinationLatitude,
+                viewModel.reservesEvent.value!!.destinationLongitude
 
             )
             markerType = MapPOIItem.MarkerType.BluePin // 마커 모양
@@ -222,7 +231,12 @@ class ReservationDetailFragment :
         }
 
         var distance =
-            calDist(36.77319581029296, 126.93359085592283, 36.7696422998843, 126.951393082675)
+            calDist(
+                viewModel.reservesEvent.value!!.startLatitude,
+                viewModel.reservesEvent.value!!.startLongitude,
+                viewModel.reservesEvent.value!!.destinationLatitude,
+                viewModel.reservesEvent.value!!.destinationLongitude
+            )
 
 
         // http://www.taxi.or.kr/02/01.php <= 기역별 택시 요금안내
@@ -239,17 +253,9 @@ class ReservationDetailFragment :
 
         }
 
-        binding.paymentFeeText.text = "약 ${fee / 3}원"
+        if (viewModel.reservesEvent.value!!.currentNum == 0) binding.paymentFeeText.text = "약 ${fee}원"
+        else binding.paymentFeeText.text = "약 ${fee / viewModel.reservesEvent.value!!.currentNum}원"
 
-        Log.d(
-            "ttt",
-            calDist(
-                36.77319581029296,
-                126.93359085592283,
-                36.7696422998843,
-                126.951393082675
-            ).toString()
-        )
         mapView.addPOIItem(point)
 
 
@@ -262,8 +268,8 @@ class ReservationDetailFragment :
         val radLat1 = rad * lat1
         val radLat2 = rad * lat2
         val radDist = rad * (lon1 - lon2)
-
         var distance = sin(radLat1) * sin(radLat2)
+
         distance += cos(radLat1) * cos(radLat2) * cos(radDist)
         val ret = EARTH_R * acos(distance)
 
