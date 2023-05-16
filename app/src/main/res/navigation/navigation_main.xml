@@ -115,7 +115,7 @@
             app:destination="@id/myParticipationFragment" />
         <action
             android:id="@+id/action_myPageFragment_to_myPostFragment"
-            app:destination="@id/myPostFragment" />
+            app:destination="@id/myReservationFragment" />
     </fragment>
 
     <fragment
@@ -139,9 +139,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/myPostFragment"
+        android:id="@+id/myReservationFragment"
         android:name="com.sch.sch_taxi.ui.mypost.MyPostFragment"
-        android:label="myPostFragment"
+        android:label="myReservationFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_my_post">

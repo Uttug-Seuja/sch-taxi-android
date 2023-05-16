@@ -32,17 +32,24 @@ class MyPageFragment :
     private fun setupEvent() {
         lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
-//                when (it) {
-//                    is MyPageNavigationAction.NavigateToEditProfile -> navigate(
-//                        MyPageFragmentDirections.actionMyPageFragmentToEditProfileFragment()
-//                    )
-//                    is MyPageNavigationAction.NavigateToAlarmSetting -> navigate(
-//                        MyPageFragmentDirections.actionMyPageFragmentToAlarmSettingFragment()
-//                    )
-//                    is MyPageNavigationAction.NavigateToMyFavorite -> navigate(
-//                        MyPageFragmentDirections.actionMyPageFragmentToMyFavoriteFragment()
-//                    )
-//                }
+                when (it) {
+                    is MyPageNavigationAction.NavigateToProfile -> navigate(
+                        MyPageFragmentDirections.actionMyPageFragmentToProfileFragment()
+                    )
+
+                    is MyPageNavigationAction.NavigateToMyReservation -> navigate(
+                        MyPageFragmentDirections.actionMyPageFragmentToMyPostFragment()
+                    )
+
+                    is MyPageNavigationAction.NavigateToMyParticipation -> navigate(
+                        MyPageFragmentDirections.actionMyPageFragmentToMyParticipationFragment()
+                    )
+
+                    is MyPageNavigationAction.NavigateToAlarmSetting -> navigate(
+                        MyPageFragmentDirections.actionMyPageFragmentToAlarmSettingFragment()
+                    )
+
+                }
             }
         }
 

@@ -38,23 +38,31 @@ class MyPageViewModel @Inject constructor(
             showLoading()
             getUserProfileUseCase()
                 .onSuccess { profile ->
-                    userProfile.emit(profile) }
+                    userProfile.emit(profile)
+                }
             dismissLoading()
         }
     }
 
-    override fun onEditProfileClicked() {
+    override fun onClickedProfile() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(MyPageNavigationAction.NavigateToEditProfile)
+            _navigationEvent.emit(MyPageNavigationAction.NavigateToProfile)
         }
     }
 
-    override fun onMyFavoriteClicked() {
+    override fun onClickedMyReservation() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(MyPageNavigationAction.NavigateToMyFavorite)
-        }    }
+            _navigationEvent.emit(MyPageNavigationAction.NavigateToMyReservation)
+        }
+    }
 
-    override fun onAlarmSettingClicked() {
+    override fun onClickedMyParticipation() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(MyPageNavigationAction.NavigateToMyParticipation)
+        }
+    }
+
+    override fun onClickedAlarmSetting() {
         baseViewModelScope.launch {
             _navigationEvent.emit(MyPageNavigationAction.NavigateToAlarmSetting)
         }
