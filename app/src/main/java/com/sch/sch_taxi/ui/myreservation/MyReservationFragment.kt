@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.mypost
+package com.sch.sch_taxi.ui.myreservation
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -6,22 +6,21 @@ import androidx.navigation.fragment.findNavController
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentMyPostBinding
-import com.sch.sch_taxi.databinding.FragmentNotificationsBinding
-import com.sch.sch_taxi.ui.mypost.adapter.MyPostAdapter
+import com.sch.sch_taxi.ui.myreservation.adapter.MyReservationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class MyPostFragment : BaseFragment<FragmentMyPostBinding, MyPostViewModel>(R.layout.fragment_my_post) {
+class MyReservationFragment : BaseFragment<FragmentMyPostBinding, MyReservationViewModel>(R.layout.fragment_my_post) {
 
     private val TAG = "MyPostFragment"
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_my_post
 
-    override val viewModel: MyPostViewModel by viewModels()
-    private val notificationsAdapter by lazy { MyPostAdapter(viewModel) }
+    override val viewModel: MyReservationViewModel by viewModels()
+    private val notificationsAdapter by lazy { MyReservationAdapter(viewModel) }
     private val navController by lazy { findNavController() }
 
     override fun initStartView() {
@@ -37,9 +36,9 @@ class MyPostFragment : BaseFragment<FragmentMyPostBinding, MyPostViewModel>(R.la
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
                 when(it) {
-                    is MyPostNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is MyPostNavigationAction.NavigateToChatting -> TODO()
-                    is MyPostNavigationAction.NavigateToTaxiRoom -> TODO()
+                    is MyReservationNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is MyReservationNavigationAction.NavigateToChatting -> TODO()
+                    is MyReservationNavigationAction.NavigateToTaxiRoom -> TODO()
                 }
             }
         }

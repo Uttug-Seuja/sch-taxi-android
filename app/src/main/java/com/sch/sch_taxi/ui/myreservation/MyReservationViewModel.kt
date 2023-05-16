@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.mypost
+package com.sch.sch_taxi.ui.myreservation
 
 import com.sch.domain.model.Taxis
 import com.sch.domain.usecase.main.GetUserReservationUseCase
@@ -9,15 +9,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPostViewModel @Inject constructor(
+class MyReservationViewModel @Inject constructor(
     private val getUserReservationUseCase: GetUserReservationUseCase
-) : BaseViewModel(), MyPostActionHandler {
+) : BaseViewModel(), MyReservationActionHandler {
 
-    private val TAG = "MyPostViewModel"
+    private val TAG = "MyReservationViewModel"
 
-    private val _navigationHandler: MutableSharedFlow<MyPostNavigationAction> =
-        MutableSharedFlow<MyPostNavigationAction>()
-    val navigationHandler: SharedFlow<MyPostNavigationAction> =
+    private val _navigationHandler: MutableSharedFlow<MyReservationNavigationAction> =
+        MutableSharedFlow<MyReservationNavigationAction>()
+    val navigationHandler: SharedFlow<MyReservationNavigationAction> =
         _navigationHandler.asSharedFlow()
 
     private val _notificationsEvent: MutableStateFlow<Taxis> =
@@ -26,13 +26,13 @@ class MyPostViewModel @Inject constructor(
 
     override fun onClickedBack() {
         baseViewModelScope.launch {
-            _navigationHandler.emit(MyPostNavigationAction.NavigateToBack)
+            _navigationHandler.emit(MyReservationNavigationAction.NavigateToBack)
         }
     }
 
     override fun onClickedNotification() {
         baseViewModelScope.launch {
-            _navigationHandler.emit(MyPostNavigationAction.NavigateToBack)
+            _navigationHandler.emit(MyReservationNavigationAction.NavigateToBack)
         }
     }
 }

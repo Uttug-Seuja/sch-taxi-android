@@ -140,7 +140,7 @@
 
     <fragment
         android:id="@+id/myReservationFragment"
-        android:name="com.sch.sch_taxi.ui.mypost.MyPostFragment"
+        android:name="com.sch.sch_taxi.ui.myreservation.MyReservationFragment"
         android:label="myReservationFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"

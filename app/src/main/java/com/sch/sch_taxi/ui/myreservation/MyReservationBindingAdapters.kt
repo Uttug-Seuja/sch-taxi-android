@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.mypost
+package com.sch.sch_taxi.ui.myreservation
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -11,9 +11,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.sch.domain.model.Taxis
-import com.sch.sch_taxi.ui.mypost.adapter.MyPostAdapter
 
 @BindingAdapter("addImageCardViewVisible")
 fun CardView.bindAddImageCardViewVisible(uri: String) {

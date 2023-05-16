@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.sch.sch_taxi.ui.mypost.MyPostViewModel" />
+            type="com.sch.sch_taxi.ui.myreservation.MyReservationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
