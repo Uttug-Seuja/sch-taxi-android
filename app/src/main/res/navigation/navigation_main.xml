@@ -70,7 +70,7 @@
             android:id="@+id/action_homeFragment_to_taxiSearchFragment"
             app:destination="@id/taxiSearchFragment"
             app:enterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right"/>
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
 
     <fragment
@@ -107,7 +107,48 @@
         <action
             android:id="@+id/action_myPageFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_alarmSettingFragment"
+            app:destination="@id/alarmSettingFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_myParticipationFragment"
+            app:destination="@id/myParticipationFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_myPostFragment"
+            app:destination="@id/myPostFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/alarmSettingFragment"
+        android:name="com.sch.sch_taxi.ui.alarmsetting.AlarmSettingFragment"
+        android:label="alarmSettingFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_alarm_setting">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/myParticipationFragment"
+        android:name="com.sch.sch_taxi.ui.myparticipation.MyParticipationFragment"
+        android:label="myParticipationFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_my_participation">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPostFragment"
+        android:name="com.sch.sch_taxi.ui.mypost.MyPostFragment"
+        android:label="myPostFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_my_post">
+
+    </fragment>
+
+
 
     <fragment
         android:id="@+id/chatFragment"
@@ -157,7 +198,7 @@
             android:id="@+id/action_taxiSearchFragment_to_taxiSearchResultFragment"
             app:destination="@id/taxiSearchResultFragment"
             app:enterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right"/>
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
 
     <fragment
