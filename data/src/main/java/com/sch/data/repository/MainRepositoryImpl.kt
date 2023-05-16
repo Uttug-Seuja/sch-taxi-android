@@ -196,13 +196,14 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postParticipation(
-        id: Int,
+        reservationId: Int,
         seatPosition: String
     ): NetworkResult<Unit> {
+        val body = SeatPositionRequest(seatPosition)
         return handleApi {
             mainAPIService.postParticipation(
-                id = id,
-                seatPosition = seatPosition
+                reservationId = reservationId,
+                body = body
             )
         }
     }

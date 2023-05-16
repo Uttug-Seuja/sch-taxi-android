@@ -106,8 +106,8 @@ interface MainAPIService {
     // 참여하기
     @POST("/api/v1/participation/create/{reservationId}")
     suspend fun postParticipation(
-        @Path("reservationId") id: Int,
-        @Body seatPosition: String
+        @Path("reservationId") reservationId: Int,
+        @Body body: SeatPositionRequest
     ): Unit
 
     // 참여 취소하기
