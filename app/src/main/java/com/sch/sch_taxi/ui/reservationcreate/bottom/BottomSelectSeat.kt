@@ -11,11 +11,13 @@ import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.sch.domain.model.ParticipationInfo
+import com.sch.domain.model.ParticipationInfoList
 import com.sch.sch_taxi.R
 
 
 class BottomSelectSeat(
-    val isCheckedSeat: List<Int>,
+    private val isCheckedSeat: List<ParticipationInfo>,
     val callback: (clickId: Int) -> Unit
 ) : BottomSheetDialogFragment(
 
@@ -61,10 +63,39 @@ class BottomSelectSeat(
         val seat4 = requireView().findViewById<TextView>(R.id.seat4_select_btn)
         val seatAnswer = requireView().findViewById<TextView>(R.id.seat_answer_btn)
         val seatList = listOf<TextView>(seat1, seat2, seat3, seat4)
+        val seatHash =
+            hashMapOf<String, Int>("SEAT_1" to 0, "SEAT_2" to 1, "SEAT_3" to 2, "SEAT_4" to 3)
+        val sex =
+            hashMapOf<String, String>("MAN" to "남자", "WOMAN" to "여자")
+
 
         isCheckedSeat.forEach {
-            seatList[it].isSelected = true
-            seatList[it].isEnabled = false
+            when (it.seatPosition) {
+                "SEAT_1" -> {
+                    seatList[0].isSelected = true
+                    seatList[0].isEnabled = false
+                    seat1.text = "${it.userInfo.name}\n(${sex[it.userInfo.gender]})"
+                }
+
+                "SEAT_2" -> {
+                    seatList[1].isSelected = true
+                    seatList[1].isEnabled = false
+                    seat2.text = "${it.userInfo.name}\n(${sex[it.userInfo.gender]})"
+                }
+
+                "SEAT_3" -> {
+                    seatList[2].isSelected = true
+                    seatList[2].isEnabled = false
+                    seat3.text = "${it.userInfo.name}\n(${sex[it.userInfo.gender]})"
+                }
+
+                "SEAT_4" -> {
+                    seatList[3].isSelected = true
+                    seatList[3].isEnabled = false
+                    seat4.text = "${it.userInfo.name}\n(${sex[it.userInfo.gender]})"
+                }
+
+            }
         }
 
         seat1.setOnClickListener {
@@ -79,12 +110,11 @@ class BottomSelectSeat(
             }
 
             isCheckedSeat.forEach {
-                seatList[it].isSelected = true
+                seatList[seatHash[it.seatPosition]!!].isSelected = true
             }
         }
 
         seat2.setOnClickListener {
-            Log.d("ttt", "눌림")
             seatList.isSelected()
 
             if (clicked != 2) {
@@ -96,7 +126,7 @@ class BottomSelectSeat(
             }
 
             isCheckedSeat.forEach {
-                seatList[it].isSelected = true
+                seatList[seatHash[it.seatPosition]!!].isSelected = true
             }
         }
 
@@ -112,7 +142,7 @@ class BottomSelectSeat(
             }
 
             isCheckedSeat.forEach {
-                seatList[it].isSelected = true
+                seatList[seatHash[it.seatPosition]!!].isSelected = true
             }
         }
 
@@ -128,7 +158,7 @@ class BottomSelectSeat(
             }
 
             isCheckedSeat.forEach {
-                seatList[it].isSelected = true
+                seatList[seatHash[it.seatPosition]!!].isSelected = true
             }
         }
 

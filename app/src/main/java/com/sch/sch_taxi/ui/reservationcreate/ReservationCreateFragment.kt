@@ -112,7 +112,7 @@ class ReservationCreateFragment :
     }
 
     private fun selectSeatBottomDialog() {
-        val dialog: BottomSelectSeat = BottomSelectSeat(listOf(1)) {
+        val dialog: BottomSelectSeat = BottomSelectSeat(emptyList()) {
             lifecycleScope.launchWhenStarted {
                 viewModel.seatEvent.emit("${it}번 자리")
             }

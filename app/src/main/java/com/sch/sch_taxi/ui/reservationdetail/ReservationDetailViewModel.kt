@@ -58,8 +58,6 @@ class ReservationDetailViewModel @Inject constructor(
     var destinationLongitude = MutableStateFlow<Double>(0.0)
 
     val participationEvent: MutableStateFlow<Participation?> = MutableStateFlow(null)
-    var participationSeatEvent = MutableStateFlow<List<Int>>(emptyList())
-
 
     fun getReservationDetail() {
         baseViewModelScope.launch {
@@ -85,18 +83,6 @@ class ReservationDetailViewModel @Inject constructor(
             getParticipationUseCase(id = reservationId.value)
                 .onSuccess {
                     participationEvent.value = it
-                    participationSeatEvent.value =
-                        it.participationInfoList.ParticipationInfo.map { ParticipationInfo ->
-                            when (ParticipationInfo.seatPosition) {
-                                "SEAT_1" -> 0
-                                "SEAT_2" -> 1
-                                "SEAT_3" -> 2
-                                "SEAT_4" -> 3
-                                else -> {
-                                    0
-                                }
-                            }
-                        }
 
                 }
                 .onError {
@@ -216,12 +202,12 @@ class ReservationDetailViewModel @Inject constructor(
                 reportReason = reportReason,
                 reportType = reportReason
 
-            ).onSuccess {  }.onError {  }
+            ).onSuccess { }.onError { }
 
         }
     }
 
-    override fun onClickedUserProfile(userId: Int){
+    override fun onClickedUserProfile(userId: Int) {
         baseViewModelScope.launch {
             _navigationHandler.emit(ReservationDetailNavigationAction.NavigateToUserProfile(userId))
 

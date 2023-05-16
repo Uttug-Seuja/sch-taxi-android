@@ -125,7 +125,7 @@ class ReservationDetailFragment :
     }
 
     private fun selectSeatBottomDialog() {
-        val dialog: BottomSelectSeat = BottomSelectSeat(viewModel.participationSeatEvent.value) {
+        val dialog: BottomSelectSeat = BottomSelectSeat((viewModel.participationEvent.value!!.participationInfoList.ParticipationInfo)) {
             lifecycleScope.launchWhenStarted {
                 val seatPosition = when (it) {
                     0 -> "SEAT_1"
