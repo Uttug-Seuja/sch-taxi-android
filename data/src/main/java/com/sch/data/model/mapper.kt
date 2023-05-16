@@ -103,13 +103,25 @@ fun List<KeywordResponse>.toDomain(): List<Keyword> {
     }
 }
 
-fun ParticipationInfoListResponse.toDomain(): ParticipationInfoList {
-    return ParticipationInfoList(
-        seatPosition = this.seatPosition,
-        userInfo = this.userInfo.toDomain(),
+fun ParticipationResponse.toDomain(): Participation {
+    return Participation(
+        participationInfoList = this.participationInfoList.toDomain(),
         iparticipation = this.iparticipation
     )
 }
+
+fun List<ParticipationInfoListResponse>.toDomain(): ParticipationInfoList {
+    return ParticipationInfoList(
+        map {
+            ParticipationInfo(
+                seatPosition = it.seatPosition,
+                userInfo = it.userInfo.toDomain()
+            )
+        }
+
+    )
+}
+
 
 fun List<ReservationResponse>.toDomain(): MyReservation {
     return MyReservation(

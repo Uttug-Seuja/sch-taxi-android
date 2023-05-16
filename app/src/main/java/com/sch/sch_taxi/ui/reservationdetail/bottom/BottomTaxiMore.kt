@@ -13,23 +13,25 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sch.sch_taxi.R
 
 class BottomTaxiMore(
+    val isHost: Boolean,
     val callback: (type: TaxiMoreType) -> Unit
-) : BottomSheetDialogFragment(){
-    private lateinit var dlg : BottomSheetDialog
+) : BottomSheetDialogFragment() {
+    private lateinit var dlg: BottomSheetDialog
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // 이 코드를 실행하지 않으면 XML에서 round 처리를 했어도 적용되지 않는다.
-        dlg = ( super.onCreateDialog(savedInstanceState).apply {
+        dlg = (super.onCreateDialog(savedInstanceState).apply {
             // window?.setDimAmount(0.2f) // Set dim amount here
             setOnShowListener {
-                val bottomSheet = findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
+                val bottomSheet =
+                    findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
                 bottomSheet.setBackgroundResource(android.R.color.transparent)
 
                 val behavior = BottomSheetBehavior.from(bottomSheet)
                 behavior.isDraggable = true
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED
             }
-        } ) as BottomSheetDialog
+        }) as BottomSheetDialog
         return dlg
     }
 
@@ -50,6 +52,11 @@ class BottomTaxiMore(
         val userDeclare = requireView().findViewById<TextView>(R.id.user_declare_btn)
         val report = requireView().findViewById<TextView>(R.id.report_btn)
         val close = requireView().findViewById<TextView>(R.id.close_btn)
+
+        if (!isHost) {
+            update.visibility = View.GONE
+            delete.visibility = View.GONE
+        }
 
 
         update.setOnClickListener {
@@ -75,10 +82,10 @@ class BottomTaxiMore(
 }
 
 sealed class TaxiMoreType {
-    object Update: TaxiMoreType()
-    object Delete: TaxiMoreType()
-    object UserDeclare: TaxiMoreType()
-    object Report: TaxiMoreType()
+    object Update : TaxiMoreType()
+    object Delete : TaxiMoreType()
+    object UserDeclare : TaxiMoreType()
+    object Report : TaxiMoreType()
 
 }
 

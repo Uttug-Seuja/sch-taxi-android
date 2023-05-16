@@ -5,4 +5,7 @@ sealed class ReservationDetailNavigationAction {
     class NavigateToReservationMoreBottomDialog(val reservationId: Int, val sendUserId: Int) :
         ReservationDetailNavigationAction()
 
+    object NavigateToSelectSeatBottomDialog : ReservationDetailNavigationAction()
+    class NavigateToUserProfile(val userId: Int) : ReservationDetailNavigationAction()
+
 }

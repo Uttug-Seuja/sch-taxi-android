@@ -83,6 +83,7 @@
 
                 <RelativeLayout
                     android:id="@+id/asdasdasdasd"
+                    onSingleClick="@{() -> vm.onClickedUserProfile(vm.reservesEvent.hostInfo.userId)}"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="20dp"
@@ -616,6 +617,7 @@
 
             <TextView
                 android:id="@+id/apply_explanation_text"
+                reserveStatusText="@{vm.reservesEvent.reservationStatus}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -623,7 +625,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
-                reserveStatusText = "@{vm.reservesEvent.reservationStatus}"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="normal" />
@@ -632,6 +633,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/apply_btn"
                 applyBtn="@{vm.reservesEvent.reservationStatus}"
+                onSingleClick="@{() -> vm.onClickedSelectSeatBottomDialog()}"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

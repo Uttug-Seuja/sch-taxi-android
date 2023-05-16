@@ -2,8 +2,6 @@ package com.sch.domain.model
 
 
 data class ParticipationInfoList(
+    val ParticipationInfo: List<ParticipationInfo>
 
-    val seatPosition: String,
-    val userInfo: UserInfo,
-    val iparticipation: Boolean
 )

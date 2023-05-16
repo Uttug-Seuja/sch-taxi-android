@@ -122,7 +122,7 @@ interface MainAPIService {
     ): Unit
 
     // 해당 게시글의 참여자 리스트 조회 및 내가 참여했는지 확인
-    @GET("/api/v1/participation/getParticipationList")
+    @GET("/api/v1/participation/getParticipationList/{id}")
     suspend fun getParticipation(@Path("id") id: Int): BaseResponse<ParticipationResponse>
 
     // 내가 참여한 예약글

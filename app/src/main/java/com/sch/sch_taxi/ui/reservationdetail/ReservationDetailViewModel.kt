@@ -1,6 +1,9 @@
 package com.sch.sch_taxi.ui.reservationdetail
 
 import android.util.Log
+import com.sch.data.model.remote.error.BadRequestException
+import com.sch.domain.model.Participation
+import com.sch.domain.model.ParticipationInfo
 import com.sch.domain.model.Reservation
 import com.sch.domain.model.ReservationDetail
 import com.sch.domain.model.Taxis
@@ -11,6 +14,7 @@ import com.sch.domain.usecase.main.GetOtherProfileUseCase
 import com.sch.domain.usecase.main.GetParticipationUseCase
 import com.sch.domain.usecase.main.GetReservationDetailUseCase
 import com.sch.domain.usecase.main.GetUserParticipationUseCase
+import com.sch.domain.usecase.main.PatchParticipationUseCase
 import com.sch.domain.usecase.main.PostParticipationUseCase
 import com.sch.domain.usecase.main.PostReportsParticipationUseCase
 import com.sch.sch_taxi.base.BaseViewModel
@@ -22,14 +26,15 @@ import java.lang.Math.cos
 import java.lang.Math.sin
 import javax.inject.Inject
 import kotlin.math.roundToLong
+import kotlin.reflect.typeOf
 
 @HiltViewModel
 class ReservationDetailViewModel @Inject constructor(
     private val getReservationDetailUseCase: GetReservationDetailUseCase,
     private val postParticipationUseCase: PostParticipationUseCase,
     private val getParticipationUseCase: GetParticipationUseCase,
+    private val patchParticipationUseCase: PatchParticipationUseCase,
     private val deleteReservationUseCase: DeleteReservationUseCase,
-    private val getOtherProfileUseCase: GetOtherProfileUseCase,
     private val postReportsParticipationUseCase: PostReportsParticipationUseCase
 ) : BaseViewModel(), ReservationDetailActionHandler {
 
@@ -52,6 +57,8 @@ class ReservationDetailViewModel @Inject constructor(
     var destinationLatitude = MutableStateFlow<Double>(0.0)
     var destinationLongitude = MutableStateFlow<Double>(0.0)
 
+    val participationEvent: MutableStateFlow<Participation?> = MutableStateFlow(null)
+    var participationSeatEvent = MutableStateFlow<List<Int>>(emptyList())
 
 
     fun getReservationDetail() {
@@ -76,8 +83,26 @@ class ReservationDetailViewModel @Inject constructor(
     fun getParticipation() {
         baseViewModelScope.launch {
             getParticipationUseCase(id = reservationId.value)
-                .onSuccess { }
-                .onError { }
+                .onSuccess {
+                    participationEvent.value = it
+                    participationSeatEvent.value =
+                        it.participationInfoList.ParticipationInfo.map { ParticipationInfo ->
+                            when (ParticipationInfo.seatPosition) {
+                                "SEAT_1" -> 0
+                                "SEAT_2" -> 1
+                                "SEAT_3" -> 2
+                                "SEAT_4" -> 3
+                                else -> {
+                                    0
+                                }
+                            }
+                        }
+
+                }
+                .onError {
+                    Log.d("ttt onError", it.toString())
+
+                }
 
         }
     }
@@ -85,9 +110,53 @@ class ReservationDetailViewModel @Inject constructor(
     fun onClickedParticipation(seatPosition: String) {
         showLoading()
         baseViewModelScope.launch {
-            postParticipationUseCase(id = reservationId.value, seatPosition = seatPosition)
-                .onSuccess { }
-                .onError { }
+            postParticipationUseCase(
+                reservationId = reservationId.value,
+                seatPosition = seatPosition
+            )
+                .onSuccess {
+                    Log.d("ttt onSuccess", it.toString())
+                    _toastMessage.emit("신청되었습니다")
+
+                }
+                .onError {
+                    when (it) {
+                        is BadRequestException -> baseViewModelScope.launch {
+                            _toastMessage.emit("잘못된 성별입니다")
+                        }
+
+                        else -> {
+                            _toastMessage.emit("시스템 에러가 발생 하였습니다")
+                        }
+                    }
+                }
+        }
+        dismissLoading()
+    }
+
+    fun onClickedPatchParticipation(seatPosition: String) {
+        showLoading()
+        baseViewModelScope.launch {
+            patchParticipationUseCase(
+                participationId = reservationId.value,
+                seatPosition = seatPosition
+            )
+                .onSuccess {
+                    Log.d("ttt onSuccess", it.toString())
+                    _toastMessage.emit("수정되었습니다")
+
+                }
+                .onError {
+                    when (it) {
+                        is BadRequestException -> baseViewModelScope.launch {
+                            _toastMessage.emit("잘못된 성별입니다")
+                        }
+
+                        else -> {
+                            _toastMessage.emit("시스템 에러가 발생 하였습니다")
+                        }
+                    }
+                }
         }
         dismissLoading()
     }
@@ -102,8 +171,16 @@ class ReservationDetailViewModel @Inject constructor(
         baseViewModelScope.launch {
             _navigationHandler.emit(
                 ReservationDetailNavigationAction.NavigateToReservationMoreBottomDialog(
-                    0, 1
+                    reservationId = reservationId.value, reservesEvent.value!!.hostInfo.userId
                 )
+            )
+        }
+    }
+
+    override fun onClickedSelectSeatBottomDialog() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(
+                ReservationDetailNavigationAction.NavigateToSelectSeatBottomDialog
             )
         }
     }
@@ -114,6 +191,7 @@ class ReservationDetailViewModel @Inject constructor(
     }
 
     fun onReservationDeleteClicked(reservationId: Int) {
+        showLoading()
         baseViewModelScope.launch {
             deleteReservationUseCase(reservationId = reservationId)
                 .onSuccess {
@@ -122,6 +200,7 @@ class ReservationDetailViewModel @Inject constructor(
                 .onError { }
 
         }
+        dismissLoading()
     }
 
     fun onClickedUserReport(sendUserId: Int) {
@@ -132,24 +211,20 @@ class ReservationDetailViewModel @Inject constructor(
 
     fun onClickedReport(reservationId: Int, reportReason: String) {
         baseViewModelScope.launch {
+            postReportsParticipationUseCase(
+                participationId = reservationId,
+                reportReason = reportReason,
+                reportType = reportReason
+
+            ).onSuccess {  }.onError {  }
 
         }
     }
 
-    // 좌표로 거리구하기
-    private fun calDist(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Long {
-        val EARTH_R = 6371000.0
-        val rad = Math.PI / 180
-        val radLat1 = rad * lat1
-        val radLat2 = rad * lat2
-        val radDist = rad * (lon1 - lon2)
+    override fun onClickedUserProfile(userId: Int){
+        baseViewModelScope.launch {
+            _navigationHandler.emit(ReservationDetailNavigationAction.NavigateToUserProfile(userId))
 
-        var distance = sin(radLat1) * sin(radLat2)
-        distance += cos(radLat1) * cos(radLat2) * cos(radDist)
-        val ret = EARTH_R * acos(distance)
-
-        return ret.roundToLong() // 미터 단위
+        }
     }
-
-
 }

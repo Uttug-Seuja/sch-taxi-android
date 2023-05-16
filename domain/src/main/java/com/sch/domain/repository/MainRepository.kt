@@ -92,7 +92,7 @@ interface MainRepository {
     ): NetworkResult<PagingReservation>
 
     // 참여하기
-    suspend fun postParticipation(id: Int, seatPosition: String): NetworkResult<Unit>
+    suspend fun postParticipation(reservationId: Int, seatPosition: String): NetworkResult<Unit>
 
     // 참여 수정하기
     suspend fun patchParticipation(
@@ -104,7 +104,7 @@ interface MainRepository {
     suspend fun deleteParticipation(id: Int): NetworkResult<Unit>
 
     // 내가 예약 했는지 확인
-    suspend fun getParticipation(id: Int): NetworkResult<ParticipationInfoList>
+    suspend fun getParticipation(id: Int): NetworkResult<Participation>
 
     // 내 예약 글
     suspend fun getUserReservation(): NetworkResult<MyReservation>

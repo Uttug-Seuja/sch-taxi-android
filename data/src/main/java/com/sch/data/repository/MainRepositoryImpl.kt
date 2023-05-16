@@ -224,8 +224,8 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.deleteParticipation(id = id) }
     }
 
-    override suspend fun getParticipation(id: Int): NetworkResult<ParticipationInfoList> {
-        return handleApi { mainAPIService.getParticipation(id = id).data.participationInfoList.toDomain() }
+    override suspend fun getParticipation(id: Int): NetworkResult<Participation> {
+        return handleApi { mainAPIService.getParticipation(id = id).data.toDomain() }
     }
 
     override suspend fun getUserReservation(): NetworkResult<MyReservation> {

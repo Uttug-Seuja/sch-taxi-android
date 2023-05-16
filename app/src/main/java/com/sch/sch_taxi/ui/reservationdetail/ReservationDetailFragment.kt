@@ -55,6 +55,7 @@ class ReservationDetailFragment :
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
+        toastMessage = viewModel.toastMessage
 
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.reservesEvent.collectLatest {
@@ -76,6 +77,10 @@ class ReservationDetailFragment :
                         reservationId = it.reservationId,
                         sendUserId = it.sendUserId
                     )
+                    is ReservationDetailNavigationAction.NavigateToSelectSeatBottomDialog -> selectSeatBottomDialog()
+                    is ReservationDetailNavigationAction.NavigateToUserProfile -> {
+                        navigate(ReservationDetailFragmentDirections.actionTaxiDetailFragmentToProfileFragment())
+                    }
                 }
             }
         }
@@ -120,9 +125,19 @@ class ReservationDetailFragment :
     }
 
     private fun selectSeatBottomDialog() {
-        val dialog: BottomSelectSeat = BottomSelectSeat(listOf(1)) {
+        val dialog: BottomSelectSeat = BottomSelectSeat(viewModel.participationSeatEvent.value) {
             lifecycleScope.launchWhenStarted {
-                viewModel.onClickedParticipation(seatPosition = it.toString())
+                val seatPosition = when (it) {
+                    0 -> "SEAT_1"
+                    1 -> "SEAT_2"
+                    2 -> "SEAT_3"
+                    3 -> "SEAT_4"
+                    else -> "SEAT_1"
+
+                }
+                if (viewModel.participationEvent.value!!.iparticipation) viewModel.onClickedPatchParticipation(seatPosition = seatPosition)
+                else viewModel.onClickedParticipation(seatPosition = seatPosition)
+
             }
         }
         dialog.show(childFragmentManager, TAG)
@@ -132,7 +147,7 @@ class ReservationDetailFragment :
         reservationId: Int,
         sendUserId: Int
     ) {
-        val dialog: BottomTaxiMore = BottomTaxiMore {
+        val dialog: BottomTaxiMore = BottomTaxiMore(viewModel.reservesEvent.value!!.iHost) {
             when (it) {
                 is TaxiMoreType.Update -> {
                     viewModel.onClickedReservationUpdateClicked()
@@ -253,7 +268,8 @@ class ReservationDetailFragment :
 
         }
 
-        if (viewModel.reservesEvent.value!!.currentNum == 0) binding.paymentFeeText.text = "약 ${fee}원"
+        if (viewModel.reservesEvent.value!!.currentNum == 0) binding.paymentFeeText.text =
+            "약 ${fee}원"
         else binding.paymentFeeText.text = "약 ${fee / viewModel.reservesEvent.value!!.currentNum}원"
 
         mapView.addPOIItem(point)
