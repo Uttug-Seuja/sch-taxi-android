@@ -78,7 +78,6 @@ interface MainRepository {
     suspend fun getReservation(page: Int, size: Int): NetworkResult<PagingReservation>
 
     // 예약 키워드 검색하기
-    @GET("/api/v1/storages")
     suspend fun getReservationKeyword(
         keyword: String,
         page: Int,
@@ -86,7 +85,6 @@ interface MainRepository {
     ): NetworkResult<PagingReservationKeyword>
 
     // 예약 검색하기
-    @GET("/api/v1/storages")
     suspend fun getReservationSearch(
         keyword: String, page: Int, size: Int
     ): NetworkResult<PagingReservation>
