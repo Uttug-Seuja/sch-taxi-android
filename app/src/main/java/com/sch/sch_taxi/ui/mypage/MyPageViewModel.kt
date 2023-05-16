@@ -2,6 +2,8 @@ package com.sch.sch_taxi.ui.mypage
 
 
 import com.sch.domain.model.UserInfo
+import com.sch.domain.onSuccess
+import com.sch.domain.usecase.main.GetUserProfileUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-//    private val mainRepository: MainRepository
+    private val getUserProfileUseCase: GetUserProfileUseCase
 ) : BaseViewModel(), MyPageActionHandler {
 
     private val TAG = "MyPageViewModel"
@@ -25,9 +27,19 @@ class MyPageViewModel @Inject constructor(
 
     init {
         baseViewModelScope.launch {
-//            mainRepository.getUserProfile().onSuccess {
-//                userProfile.emit(it)
-//            }
+            getUserProfileUseCase().onSuccess {
+                userProfile.emit(it)
+            }
+        }
+    }
+
+    fun getProfile() {
+        baseViewModelScope.launch {
+            showLoading()
+            getUserProfileUseCase()
+                .onSuccess { profile ->
+                    userProfile.emit(profile) }
+            dismissLoading()
         }
     }
 
