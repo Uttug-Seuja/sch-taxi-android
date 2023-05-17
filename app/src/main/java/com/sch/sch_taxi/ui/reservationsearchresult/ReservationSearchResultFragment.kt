@@ -8,6 +8,8 @@ import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentReservationSearchResultBinding
 import com.sch.sch_taxi.ui.home.HomeFragmentDirections
+import com.sch.sch_taxi.ui.myreservation.MyReservationFragmentDirections
+import com.sch.sch_taxi.ui.myreservation.MyReservationNavigationAction
 import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationKeywordAdapter
 import com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultFragmentDirections.actionTaxiSearchResultFragmentToTaxiDetailFragment
 import com.sch.sch_taxi.ui.reservationsearchresult.adapter.ReservationSearchResultAdapter
@@ -17,7 +19,8 @@ import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class ReservationSearchResultFragment : BaseFragment<FragmentReservationSearchResultBinding, ReservationSearchResultViewModel>(R.layout.fragment_reservation_search_result) {
+class ReservationSearchResultFragment :
+    BaseFragment<FragmentReservationSearchResultBinding, ReservationSearchResultViewModel>(R.layout.fragment_reservation_search_result) {
 
     private val TAG = "ReservationSearchResultFragment"
 
@@ -29,7 +32,11 @@ class ReservationSearchResultFragment : BaseFragment<FragmentReservationSearchRe
     private val args: ReservationSearchResultFragmentArgs by navArgs()
 
     private val reservationSearchResultAdapter by lazy { ReservationSearchResultAdapter(viewModel) }
-    private val reservationSearchResultKeywordAdapter by lazy { ReservationSearchResultKeywordAdapter(viewModel) }
+    private val reservationSearchResultKeywordAdapter by lazy {
+        ReservationSearchResultKeywordAdapter(
+            viewModel
+        )
+    }
 
     override fun initStartView() {
         binding.apply {
@@ -44,11 +51,17 @@ class ReservationSearchResultFragment : BaseFragment<FragmentReservationSearchRe
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
-                when(it) {
+                when (it) {
                     is ReservationSearchResultNavigationAction.NavigateToTaxiSearchResult -> navigate(
                         actionTaxiSearchResultFragmentToTaxiDetailFragment(0)
                     )
+
                     is ReservationSearchResultNavigationAction.NavigateToBack -> navController.popBackStack()
+                    is ReservationSearchResultNavigationAction.NavigateToTaxiDetail -> navigate(
+                        actionTaxiSearchResultFragmentToTaxiDetailFragment(
+                            it.reservationId
+                        )
+                    )
                 }
             }
         }

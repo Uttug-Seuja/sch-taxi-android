@@ -6,8 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Reservation
-import com.sch.sch_taxi.databinding.HolderReservationBinding
-import com.sch.sch_taxi.ui.home.HomeActionHandler
+import com.sch.sch_taxi.databinding.HolderSearchReservationBinding
 import com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultActionHandler
 
 class ReservationSearchResultAdapter(
@@ -16,9 +15,9 @@ class ReservationSearchResultAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            HolderReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HolderSearchReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 .apply {
-                    resultEventListener = this@ReservationSearchResultAdapter.eventListener
+                    eventListener = this@ReservationSearchResultAdapter.eventListener
                 }
         )
     }
@@ -30,7 +29,7 @@ class ReservationSearchResultAdapter(
     }
 
     class ViewHolder(
-        private val binding: HolderReservationBinding
+        private val binding: HolderSearchReservationBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Reservation) {
