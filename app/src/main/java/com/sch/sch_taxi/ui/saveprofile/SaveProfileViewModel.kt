@@ -2,7 +2,10 @@ package com.sch.sch_taxi.ui.saveprofile
 
 
 import com.sch.domain.model.UserInfo
+import com.sch.domain.onSuccess
+import com.sch.domain.usecase.main.GetUserProfileUseCase
 import com.sch.domain.usecase.main.PatchUserProfileUseCase
+import com.sch.domain.usecase.main.PostFileToImageUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -15,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SaveProfileViewModel @Inject constructor(
-    private val patchUserProfileUseCase: PatchUserProfileUseCase
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val patchUserProfileUseCase: PatchUserProfileUseCase,
+    private val postFileToImageUseCase: PostFileToImageUseCase
 ) : BaseViewModel(), SaveProfileActionHandler {
 
     private val TAG = "SaveProfileViewModel"
@@ -35,12 +40,12 @@ class SaveProfileViewModel @Inject constructor(
     init {
         baseViewModelScope.launch {
             showLoading()
-//            mainRepository.getUserProfile()
-//                .onSuccess {
-//                    beforeProfile = it
-//                    profileImg.emit(it.profile_path)
-//                    profileName.emit(it.nickname)
-//                }
+            getUserProfileUseCase()
+                .onSuccess {
+                    beforeProfile = it
+                    profileImg.emit(it.profilePath)
+                    profileName.emit(it.name)
+                }
             dismissLoading()
         }
     }
@@ -48,10 +53,10 @@ class SaveProfileViewModel @Inject constructor(
     fun setFileToUri(file: MultipartBody.Part) {
         baseViewModelScope.launch {
             showLoading()
-//            mainRepository.postFileToUrl(file = file)
-//                .onSuccess {
-//                    profileImg.value = it.image_url
-//                }
+            postFileToImageUseCase(file = file)
+                .onSuccess {
+                    profileImg.value = it.image_url
+                }
             dismissLoading()
         }
     }
@@ -66,15 +71,14 @@ class SaveProfileViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             if (beforeProfile!!.profilePath != profileImg.value) {
-//                mainRepository.postUserProfile(
-//                    nickname = profileName.value,
-//                    profile_path = profileImg.value
-//                )
-//                    .onSuccess {
-//                        _navigationEvent.emit(SaveProfileNavigationAction.NavigateToSuccess)
-//                        dismissLoading()
-//                        return@launch
-//                    }
+                patchUserProfileUseCase(
+                    profilePath = profileImg.value
+                )
+                    .onSuccess {
+                        _navigationEvent.emit(SaveProfileNavigationAction.NavigateToSuccess)
+                        dismissLoading()
+                        return@launch
+                    }
             }
         }
     }
