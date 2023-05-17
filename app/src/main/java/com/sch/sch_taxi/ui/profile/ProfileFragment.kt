@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentProfileBinding
+import com.sch.sch_taxi.ui.reservationdetail.ReservationDetailFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -22,6 +24,7 @@ class ProfileFragment :
 
     override val viewModel: ProfileViewModel by viewModels()
     private val navController by lazy { findNavController() }
+    private val args: ProfileFragmentArgs by navArgs()
 
     override fun initStartView() {
         binding.apply {
@@ -29,6 +32,8 @@ class ProfileFragment :
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
+        viewModel.userId.value = args.userId
+        viewModel.getProfile()
         setupEvent()
     }
 

@@ -75,7 +75,8 @@
                         android:id="@+id/asdasd"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/user" />
+                        android:scaleType="centerCrop"
+                        app:glide10000="@{vm.userProfile.profilePath}" />
 
                     <LinearLayout
                         android:id="@+id/asd"
@@ -90,7 +91,7 @@
                             android:id="@+id/title_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="조준장"
+                            android:text='@{vm.userProfile.name}'
                             android:textColor="@color/black"
                             android:textSize="20dp"
                             android:textStyle="bold" />
@@ -99,7 +100,7 @@
                             android:id="@+id/sub_title_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="20181566"
+                            android:text="@{vm.userProfile.email}"
                             android:textSize="16dp" />
 
 
@@ -200,7 +201,7 @@
 
                     <ProgressBar
                         android:id="@+id/progressBar1"
-                        app:progressPercent ="@{vm.progressPercent}"
+                        app:progressPercent ="@{vm.userProfile.currentTemperature}"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
@@ -210,7 +211,6 @@
                         android:layout_marginEnd="16dp"
                         android:indeterminate="false"
                         android:max="100"
-                        android:progress="36"
                         android:progressDrawable="@drawable/curved_progress_bar"
                         app:layout_constraintTop_toBottomOf="@+id/tv_manner_temperature"
                         tools:layout_editor_absoluteX="0dp" />
@@ -244,7 +244,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:text="40.3℃"
+                        android:text='@{Double.toString(vm.userProfile.currentTemperature) + "℃"}'
                         android:textColor="#81ff76"
                         android:textSize="16dp"
                         android:textStyle="bold"
@@ -286,7 +286,7 @@
                     android:layout_marginTop="20dp"
                     android:background="#eeeeee"
                     android:padding="16dp"
-                    android:text="· 순천향대학교 스마트자동차학과 20181566학번 남자 인증"
+                    android:text="· 순천향대학교 인증"
                     android:textSize="12dp" />
 
                 <!--                <View-->
@@ -312,7 +312,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="20dp"
-                        android:text="작성 내역 3개"
+                        android:text="작성 내역"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -346,7 +346,7 @@
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="20dp"
-                        android:text="이용 내역 4개"
+                        android:text="이용 내역"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />

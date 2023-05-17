@@ -2,6 +2,10 @@ package com.sch.sch_taxi.ui.profile
 
 
 import com.sch.domain.model.UserInfo
+import com.sch.domain.onError
+import com.sch.domain.onSuccess
+import com.sch.domain.usecase.main.GetOtherProfileUseCase
+import com.sch.domain.usecase.main.GetUserProfileUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -13,6 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val getOtherProfileUseCase: GetOtherProfileUseCase
 ) : BaseViewModel(), ProfileActionHandler {
 
     private val TAG = "ProfileViewModel"
@@ -22,12 +28,21 @@ class ProfileViewModel @Inject constructor(
     val navigationEvent: SharedFlow<ProfileNavigationAction> = _navigationEvent.asSharedFlow()
     val userProfile: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
     val mannerTemperatureInfoState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val progressPercent: MutableStateFlow<Float> = MutableStateFlow(0F)
+    val userId: MutableStateFlow<Int> = MutableStateFlow(-1)
 
-
-    init {
-        baseViewModelScope.launch {
-
+    fun getProfile() {
+        if (userId.value != -1) {
+            baseViewModelScope.launch {
+                getOtherProfileUseCase(userId = userId.value)
+                    .onSuccess { userProfile.value = it }
+                    .onError { }
+            }
+        } else {
+            baseViewModelScope.launch {
+                getUserProfileUseCase()
+                    .onSuccess { userProfile.value = it }
+                    .onError { }
+            }
         }
     }
 
