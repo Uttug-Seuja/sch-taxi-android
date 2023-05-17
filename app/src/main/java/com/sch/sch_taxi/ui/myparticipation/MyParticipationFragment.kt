@@ -6,14 +6,15 @@ import androidx.navigation.fragment.findNavController
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentMyParticipationBinding
-import com.sch.sch_taxi.databinding.FragmentMyPostBinding
 import com.sch.sch_taxi.ui.myparticipation.adapter.MyParticipationAdapter
+import com.sch.sch_taxi.ui.myreservation.MyReservationFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class MyParticipationFragment : BaseFragment<FragmentMyParticipationBinding, MyParticipationViewModel>(R.layout.fragment_my_participation) {
+class MyParticipationFragment :
+    BaseFragment<FragmentMyParticipationBinding, MyParticipationViewModel>(R.layout.fragment_my_participation) {
 
     private val TAG = "MyParticipationFragment"
 
@@ -21,7 +22,7 @@ class MyParticipationFragment : BaseFragment<FragmentMyParticipationBinding, MyP
         get() = R.layout.fragment_my_participation
 
     override val viewModel: MyParticipationViewModel by viewModels()
-    private val notificationsAdapter by lazy { MyParticipationAdapter(viewModel) }
+    private val myParticipationAdapter by lazy { MyParticipationAdapter(viewModel) }
     private val navController by lazy { findNavController() }
 
     override fun initStartView() {
@@ -36,17 +37,20 @@ class MyParticipationFragment : BaseFragment<FragmentMyParticipationBinding, MyP
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
-                when(it) {
+                when (it) {
                     is MyParticipationNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is MyParticipationNavigationAction.NavigateToChatting -> TODO()
-                    is MyParticipationNavigationAction.NavigateToTaxiRoom -> TODO()
+                    is MyParticipationNavigationAction.NavigateToTaxiDetail -> navigate(
+                        MyParticipationFragmentDirections.actionMyParticipationFragmentToTaxiDetailFragment(
+                            it.reservationId
+                        )
+                    )
                 }
             }
         }
     }
 
     private fun initAdapter() {
-        binding.rvMyPost.adapter = notificationsAdapter
+        binding.rvMyParticipation.adapter = myParticipationAdapter
     }
 
     override fun initAfterBinding() {
