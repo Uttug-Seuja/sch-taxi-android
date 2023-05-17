@@ -136,6 +136,9 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_my_participation">
 
+        <action
+            android:id="@+id/action_myParticipationFragment_to_taxiDetailFragment"
+            app:destination="@id/taxiDetailFragment" />
     </fragment>
 
     <fragment
@@ -144,8 +147,11 @@
         android:label="myReservationFragment"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"
-        tools:layout="@layout/fragment_my_post">
+        tools:layout="@layout/fragment_my_reservation">
 
+        <action
+            android:id="@+id/action_myReservationFragment_to_taxiDetailFragment"
+            app:destination="@id/taxiDetailFragment" />
     </fragment>
 
 

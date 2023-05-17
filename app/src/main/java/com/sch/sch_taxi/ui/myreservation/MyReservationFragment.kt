@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MyReservationFragment : BaseFragment<FragmentMyPostBinding, MyReservationViewModel>(R.layout.fragment_my_post) {
+class MyReservationFragment :
+    BaseFragment<FragmentMyPostBinding, MyReservationViewModel>(R.layout.fragment_my_reservation) {
 
     private val TAG = "MyPostFragment"
 
