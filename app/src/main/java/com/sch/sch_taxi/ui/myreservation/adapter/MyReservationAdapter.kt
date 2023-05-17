@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Reservation
-import com.sch.sch_taxi.databinding.HolderReservationBinding
+import com.sch.sch_taxi.databinding.HolderMyReservationBinding
 import com.sch.sch_taxi.ui.myreservation.MyReservationActionHandler
 
 class MyReservationAdapter(
@@ -15,9 +15,9 @@ class MyReservationAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            HolderReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HolderMyReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
                 .apply {
-//                    eventListener = this@MyPostAdapter.eventListener
+                    eventListener = this@MyReservationAdapter.eventListener
                 }
         )
     }
@@ -29,7 +29,7 @@ class MyReservationAdapter(
     }
 
     class ViewHolder(
-        private val binding: HolderReservationBinding
+        private val binding: HolderMyReservationBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Reservation) {

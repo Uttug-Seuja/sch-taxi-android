@@ -14,9 +14,6 @@
             name="eventListener"
             type="com.sch.sch_taxi.ui.home.HomeActionHandler" />
 
-        <variable
-            name="result_eventListener"
-            type="com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultActionHandler" />
     </data>
 
     <LinearLayout
