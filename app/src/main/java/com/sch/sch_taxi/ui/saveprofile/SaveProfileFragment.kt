@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.editprofile.saveprofile
+package com.sch.sch_taxi.ui.saveprofile
 
 import android.Manifest
 import android.annotation.SuppressLint

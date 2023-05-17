@@ -249,7 +249,7 @@
 
     <fragment
         android:id="@+id/saveProfile"
-        android:name="com.sch.sch_taxi.ui.editprofile.saveprofile.SaveProfileFragment"
+        android:name="com.sch.sch_taxi.ui.saveprofile.SaveProfileFragment"
         android:label="SaveProfile"
         app:popUpTo="@id/navigation_graph"
         app:popUpToInclusive="true"

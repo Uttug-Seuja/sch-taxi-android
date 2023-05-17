@@ -1,4 +1,4 @@
-package com.sch.sch_taxi.ui.editprofile.saveprofile
+package com.sch.sch_taxi.ui.saveprofile
 
 
 import com.sch.domain.model.UserInfo

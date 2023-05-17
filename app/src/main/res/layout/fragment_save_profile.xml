@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.sch.sch_taxi.ui.editprofile.saveprofile.SaveProfileViewModel" />
+            type="com.sch.sch_taxi.ui.saveprofile.SaveProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
