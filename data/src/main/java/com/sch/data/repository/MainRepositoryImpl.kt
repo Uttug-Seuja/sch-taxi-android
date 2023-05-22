@@ -80,6 +80,10 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getOtherProfile(userId = userId).data.toDomain() }
     }
 
+    override suspend fun getAssetRandom(): NetworkResult<AssetRandom> {
+        return handleApi { mainAPIService.getAssetRandom().data.toDomain() }
+    }
+
     override suspend fun patchUserProfile(
         profilePath: String
     ): NetworkResult<UserInfo> {

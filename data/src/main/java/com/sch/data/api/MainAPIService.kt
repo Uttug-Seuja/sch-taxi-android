@@ -39,6 +39,10 @@ interface MainAPIService {
 //    @DELETE("/api/v1/credentials/me")
 //    suspend fun deleteUser(@Query("oauthAccessToken") oauthAccessToken: String): Unit
 
+    @GET("/api/v1/asset/random")
+    suspend fun getAssetRandom(): BaseResponse<AssetRandomResponse>
+
+
     // 내 프로필 가져오기
     @GET("/api/v1/user/profile")
     suspend fun getUserProfile(): BaseResponse<UserInfoResponse>

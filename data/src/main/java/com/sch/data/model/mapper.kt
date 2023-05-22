@@ -33,6 +33,12 @@ fun UserInfoResponse.toDomain(): UserInfo {
     )
 }
 
+fun AssetRandomResponse.toDomain(): AssetRandom {
+    return AssetRandom(
+        url = url
+    )
+}
+
 fun List<SearchHistoryEntity>.toDomain(): SearchHistoryList {
     return SearchHistoryList(map {
         SearchHistory(

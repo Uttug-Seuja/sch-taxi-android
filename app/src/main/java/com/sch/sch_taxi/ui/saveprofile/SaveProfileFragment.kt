@@ -141,7 +141,7 @@ class SaveProfileFragment : BaseFragment<FragmentSaveProfileBinding, SaveProfile
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initEditText() {
-        binding.userNameContents.customOnFocusChangeListener(requireContext())
+//        binding.userNameContents.customOnFocusChangeListener(requireContext())
         binding.profileEditMain.setOnTouchListener { _, _ ->
             requireActivity().hideKeyboard()
             binding.userNameContents.clearFocus()

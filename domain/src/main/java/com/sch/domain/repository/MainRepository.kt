@@ -36,6 +36,9 @@ interface MainRepository {
 
     suspend fun getOtherProfile(userId: Int): NetworkResult<UserInfo>
 
+    suspend fun getAssetRandom(): NetworkResult<AssetRandom>
+
+
     // 유저 프로필 변경
     suspend fun patchUserProfile(profilePath: String): NetworkResult<UserInfo>
 
