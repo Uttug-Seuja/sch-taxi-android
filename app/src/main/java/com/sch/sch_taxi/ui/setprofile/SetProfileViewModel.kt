@@ -1,10 +1,12 @@
 package com.sch.sch_taxi.ui.setprofile
 
 import android.util.Log
+import com.sch.domain.model.AssetRandom
 import com.sch.domain.model.Profile
 import com.sch.domain.model.UserInfo
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
+import com.sch.domain.usecase.main.GetAssetRandomUseCase
 import com.sch.domain.usecase.main.GetUserProfileUseCase
 import com.sch.domain.usecase.main.PostEmailCodeUseCase
 import com.sch.domain.usecase.main.PostEmailUseCase
@@ -25,7 +27,8 @@ class SetProfileViewModel @Inject constructor(
     private val postRegisterUseCase: PostRegisterUseCase,
     private val postFileToImageUseCase: PostFileToImageUseCase,
     private val postEmailUseCase: PostEmailUseCase,
-    private val postEmailCodeUseCase: PostEmailCodeUseCase
+    private val postEmailCodeUseCase: PostEmailCodeUseCase,
+    private val getAssetRandomUseCase: GetAssetRandomUseCase
 ) : BaseViewModel(), SetProfileActionHandler {
 
     private val TAG = "SetProfileViewModel"
@@ -48,16 +51,15 @@ class SetProfileViewModel @Inject constructor(
 
     var isSchoolEmailAuth = MutableStateFlow<Boolean>(false)
 
-    val profileImg: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
+    val profileImgPath: MutableStateFlow<String?> = MutableStateFlow(null)
 
     init {
         baseViewModelScope.launch {
             showLoading()
-            getUserProfileUseCase()
+            getAssetRandomUseCase()
                 .onSuccess { userInFo ->
-                    Log.d("Ttt", userInFo.profilePath.toString())
-                    profileImg.emit(
-                        userInFo
+                    profileImgPath.emit(
+                        userInFo.url
                     )
                 }
                 .onError {
@@ -101,14 +103,10 @@ class SetProfileViewModel @Inject constructor(
                 .onSuccess {
                     isAuthEvent.value = true
                     SetProfileNavigationAction.NavigateToToastMessage("인증 메일을 보냈습니다")
-
-                    Log.d("ttt onSuccess", it.toString())
-
                 }
                 .onError {
                     isAuthEvent.value = false
-                    Log.d("ttt onError", it.toString())
-
+                    SetProfileNavigationAction.NavigateToToastMessage("학교 이메일 형식에 맞지 않습니다")
                 }
 
         }
@@ -120,15 +118,11 @@ class SetProfileViewModel @Inject constructor(
                 email = schoolEmailInputContent.value,
                 code = schoolEmailCodeInputContent.value
             ).onSuccess {
-                Log.d("ttt onSuccess", it.toString())
                 SetProfileNavigationAction.NavigateToToastMessage("인증되었습니다")
-
                 isSchoolEmailAuth.value = true
             }.onError {
                 isSchoolEmailAuth.value = false
                 SetProfileNavigationAction.NavigateToToastMessage("인증 코드가 틀립니다")
-                Log.d("ttt onError", it.toString())
-
             }
 
         }

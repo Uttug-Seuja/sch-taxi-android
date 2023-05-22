@@ -43,7 +43,7 @@
                 android:id="@+id/user_profile_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:glide10000="@{viewmodel.profileImg.profilePath}"
+                app:glide10000="@{viewmodel.profileImgPath}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
