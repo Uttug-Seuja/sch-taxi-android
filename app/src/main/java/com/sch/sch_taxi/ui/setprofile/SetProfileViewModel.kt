@@ -188,7 +188,7 @@ class SetProfileViewModel @Inject constructor(
                             true -> "MAN"
                             false -> "WOMAN"
                         },
-                        profilePath = "profileImg.value!!.profilePath",
+                        profilePath = profileImgPath.value!!,
                     ).onSuccess {
                         editor.putString("accessToken", it.accessToken)
                         editor.putString("refreshToken", it.refreshToken)
