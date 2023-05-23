@@ -12,8 +12,7 @@
 
         <variable
             name="eventListener"
-            type="com.sch.sch_taxi.ui.reservationsearch.ReservationSearchActionHandler" />
-
+            type="com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultActionHandler" />
 
     </data>
 

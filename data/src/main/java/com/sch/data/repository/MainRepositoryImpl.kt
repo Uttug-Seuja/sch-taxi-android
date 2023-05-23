@@ -188,10 +188,9 @@ class MainRepositoryImpl @Inject constructor(
         page: Int,
         size: Int,
     ): NetworkResult<PagingReservation> {
-        val body = GetReservationWordRequest(word = word)
         return handleApi {
             mainAPIService.getReservationSearch(
-                body = body,
+                word = word,
                 page = page,
                 size = size,
             ).data.toDomain()

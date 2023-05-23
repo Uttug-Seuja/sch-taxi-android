@@ -96,9 +96,9 @@ interface MainAPIService {
     ): BaseResponse<PagingReservationKeywordResponse> // 나중에 해야흠
 
     // 예약 검색하기
-    @GET("/api/v1/search")
+    @GET("/api/v1/reservation/search")
     suspend fun getReservationSearch(
-        @Body body: GetReservationWordRequest,
+        @Query("word") word: String,
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): BaseResponse<PagingReservationResponse>

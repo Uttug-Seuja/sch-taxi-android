@@ -192,6 +192,7 @@ class ReservationSearchViewModel @Inject constructor(
     }
 
     override fun onClickedTaxiSearchResult(searchTitle: String) {
+        Log.d("ttt searchTitle", searchTitle.toString())
         baseViewModelScope.launch {
             _navigationHandler.emit(
                 ReservationSearchNavigationAction.NavigateToTaxiSearchResult(

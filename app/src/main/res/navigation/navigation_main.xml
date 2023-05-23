@@ -225,6 +225,9 @@
         <action
             android:id="@+id/action_taxiSearchResultFragment_to_taxiDetailFragment"
             app:destination="@id/taxiDetailFragment" />
+        <action
+            android:id="@+id/action_taxiSearchResultFragment_self"
+            app:destination="@id/taxiSearchResultFragment" />
     </fragment>
 
     <fragment

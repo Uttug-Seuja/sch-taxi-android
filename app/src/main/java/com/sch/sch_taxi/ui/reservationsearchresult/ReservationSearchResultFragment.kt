@@ -11,6 +11,7 @@ import com.sch.sch_taxi.ui.home.HomeFragmentDirections
 import com.sch.sch_taxi.ui.myreservation.MyReservationFragmentDirections
 import com.sch.sch_taxi.ui.myreservation.MyReservationNavigationAction
 import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationKeywordAdapter
+import com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultFragmentDirections.actionTaxiSearchResultFragmentSelf
 import com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultFragmentDirections.actionTaxiSearchResultFragmentToTaxiDetailFragment
 import com.sch.sch_taxi.ui.reservationsearchresult.adapter.ReservationSearchResultAdapter
 import com.sch.sch_taxi.ui.reservationsearchresult.adapter.ReservationSearchResultKeywordAdapter
@@ -53,7 +54,7 @@ class ReservationSearchResultFragment :
             viewModel.navigationHandler.collectLatest {
                 when (it) {
                     is ReservationSearchResultNavigationAction.NavigateToTaxiSearchResult -> navigate(
-                        actionTaxiSearchResultFragmentToTaxiDetailFragment(0)
+                        actionTaxiSearchResultFragmentSelf(it.searchTitle)
                     )
 
                     is ReservationSearchResultNavigationAction.NavigateToBack -> navController.popBackStack()

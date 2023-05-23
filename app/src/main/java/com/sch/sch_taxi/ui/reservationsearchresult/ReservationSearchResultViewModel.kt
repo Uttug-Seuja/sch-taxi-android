@@ -1,5 +1,6 @@
 package com.sch.sch_taxi.ui.reservationsearchresult
 
+import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sch.domain.model.Keyword
@@ -37,6 +38,7 @@ class ReservationSearchResultViewModel @Inject constructor(
     }
 
     fun getReservationSearch() {
+        Log.d("ttt searchTitleEvent.value", searchTitleEvent.value.toString())
         baseViewModelScope.launch {
             showLoading()
             reservationSearchResultEvent = createReservationSearchResultPager(
@@ -79,9 +81,9 @@ class ReservationSearchResultViewModel @Inject constructor(
     }
 
 
-    override fun onClickedTaxiSearchResult() {
+    override fun onClickedTaxiSearchResult(searchTitle: String) {
         baseViewModelScope.launch {
-            _navigationHandler.emit(ReservationSearchResultNavigationAction.NavigateToTaxiSearchResult)
+            _navigationHandler.emit(ReservationSearchResultNavigationAction.NavigateToTaxiSearchResult(searchTitle= searchTitle))
         }
     }
 
