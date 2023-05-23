@@ -33,7 +33,6 @@ class ReservationSearchResultViewModel @Inject constructor(
     var reservationSearchEvent: Flow<PagingData<Keyword>> = emptyFlow()
 
     init {
-        getReservationSearch()
         getReservationKeywordList()
     }
 

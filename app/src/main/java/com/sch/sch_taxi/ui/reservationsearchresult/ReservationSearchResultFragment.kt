@@ -46,6 +46,7 @@ class ReservationSearchResultFragment :
         }
         exception = viewModel.errorEvent
         viewModel.searchTitleEvent.value = args.searchResultTitle
+        viewModel.getReservationSearch()
         initAdapter()
     }
 
