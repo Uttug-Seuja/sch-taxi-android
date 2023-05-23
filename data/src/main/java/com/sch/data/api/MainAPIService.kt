@@ -90,7 +90,7 @@ interface MainAPIService {
     // 예약 키워드 검색하기
     @GET("/api/v1/reservation/search/keyword")
     suspend fun getReservationKeyword(
-        @Body body: GetReservationKeywordRequest,
+        @Query("word") word: String,
         @Query("page") page: Int,
         @Query("size") size: Int,
     ): BaseResponse<PagingReservationKeywordResponse> // 나중에 해야흠
@@ -105,7 +105,7 @@ interface MainAPIService {
 
     // 추천 검색어
     @GET("/api/v1/reservation/search/recommend")
-    suspend fun getRecommendKeyword(): BaseResponse<RecommendKeywordListResponse>
+    suspend fun getRecommendKeyword(): BaseResponse<List<KeywordResponse>>
 
     // 참여하기
     @POST("/api/v1/participation/create/{reservationId}")

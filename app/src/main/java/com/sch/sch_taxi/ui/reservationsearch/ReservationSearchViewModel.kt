@@ -5,8 +5,6 @@ import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sch.domain.model.Keyword
-import com.sch.domain.model.RecommendKeywordList
-import com.sch.domain.model.Reservation
 import com.sch.domain.model.SearchHistory
 import com.sch.domain.model.SearchHistoryList
 import com.sch.domain.model.Taxis
@@ -17,12 +15,11 @@ import com.sch.domain.usecase.main.DeleteSearchHistoryListUseCase
 import com.sch.domain.usecase.main.DeleteSearchHistoryUseCase
 import com.sch.domain.usecase.main.GetRecommendKeywordUseCase
 import com.sch.domain.usecase.main.GetReservationKeywordUseCase
-import com.sch.domain.usecase.main.GetReservationSearchUseCase
 import com.sch.domain.usecase.main.GetSearchHistoryUseCase
 import com.sch.sch_taxi.base.BaseViewModel
-import com.sch.sch_taxi.ui.home.adapter.createReservationPager
 import com.sch.sch_taxi.ui.reservationsearch.adapter.createReservationKeywordPager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -58,7 +55,7 @@ class ReservationSearchViewModel @Inject constructor(
     val taxiSearchHistoryIdxEvent = MutableStateFlow<Int>(0)
 
     var reservationSearchEvent: Flow<PagingData<Keyword>> = emptyFlow()
-    var recommendKeywordEvent = MutableStateFlow(RecommendKeywordList(emptyList()))
+    var recommendKeywordEvent = MutableStateFlow(emptyList<Keyword>())
 
 
     init {
@@ -66,9 +63,14 @@ class ReservationSearchViewModel @Inject constructor(
         getRecommendKeyword()
     }
 
+    @OptIn(FlowPreview::class)
     fun getReservationKeywordList() {
+        /**
+         * 페이징은 한번 만들고 끝인 것인가?!
+         *
+         *
+         * */
         baseViewModelScope.launch {
-            showLoading()
             searchTitleEvent.debounce(200).collectLatest { keyword ->
                 reservationSearchEvent = createReservationKeywordPager(
                     getReservationKeywordUseCase = getReservationKeywordUseCase,
@@ -87,8 +89,12 @@ class ReservationSearchViewModel @Inject constructor(
             getRecommendKeywordUseCase()
                 .onSuccess {
                     recommendKeywordEvent.value = it
+                    Log.d("ttt recommendKeywordEvent", it.toString())
                 }
-                .onError {  }
+                .onError {
+                    Log.d("ttt recommendKeywordEvent", it.toString())
+
+                }
         }
         dismissLoading()
     }
@@ -172,6 +178,16 @@ class ReservationSearchViewModel @Inject constructor(
     override fun onClickedBack() {
         baseViewModelScope.launch {
             _navigationHandler.emit(ReservationSearchNavigationAction.NavigateToBack)
+        }
+    }
+
+    fun onTaxiSearchResult(){
+        baseViewModelScope.launch {
+            _navigationHandler.emit(
+                ReservationSearchNavigationAction.NavigateToTaxiSearchResult(
+                    searchTitle = searchTitleEvent.value
+                )
+            )
         }
     }
 

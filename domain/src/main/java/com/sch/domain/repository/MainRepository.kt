@@ -1,10 +1,8 @@
 package com.sch.domain.repository
 
-import com.google.gson.annotations.SerializedName
 import com.sch.domain.NetworkResult
 import com.sch.domain.model.*
 import okhttp3.MultipartBody
-import retrofit2.http.*
 
 interface MainRepository {
     // 등록 요청
@@ -82,7 +80,7 @@ interface MainRepository {
 
     // 예약 키워드 검색하기
     suspend fun getReservationKeyword(
-        keyword: String,
+        word: String,
         page: Int,
         size: Int,
     ): NetworkResult<PagingReservationKeyword>
@@ -148,7 +146,7 @@ interface MainRepository {
 //    suspend fun deleteLeaveGroup(id: Int): NetworkResult<Group>
 
     // 추천 키워드 조회
-    suspend fun getRecommendKeyword(): NetworkResult<RecommendKeywordList>
+    suspend fun getRecommendKeyword(): NetworkResult<List<Keyword>>
 
     // 앱버젼 체크
 //    suspend fun getAppVersion(): NetworkResult<AppVersion>

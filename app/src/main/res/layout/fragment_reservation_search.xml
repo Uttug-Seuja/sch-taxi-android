@@ -120,7 +120,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recommend_keyword"
-                recommendKeywordAdapter = "@{vm.recommendKeywordEvent}"
+                recommendKeywordAdapter="@{vm.recommendKeywordEvent}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="16dp"
@@ -129,40 +129,49 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
                 tools:layout_editor_absoluteX="16dp" />
 
-
-            <TextView
-                android:id="@+id/tv_search_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="최근 검색어"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_recommend_keyword" />
-
-            <TextView
-                android:id="@+id/tv_all_delete"
-                onSingleClick="@{() -> vm.onClickedDeleteSearchHistoryList()}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:text="모두 지우기"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_recommend_keyword" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_taxi_search_history"
-                taxiSearchHistoryAdapter="@{vm.taxiSearchHistoryEvent}"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                searchHistoryVisible="@{vm.taxiSearchHistoryEvent}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="6dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="6dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_search_history"
-                app:spanCount="2" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_recommend_keyword">
+
+                <TextView
+                    android:id="@+id/tv_search_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="최근 검색어"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/tv_all_delete"
+                    onSingleClick="@{() -> vm.onClickedDeleteSearchHistoryList()}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="모두 지우기"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_taxi_search_history"
+                    taxiSearchHistoryAdapter="@{vm.taxiSearchHistoryEvent}"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="6dp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_search_history"
+                    app:spanCount="2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,12 +11,12 @@ class GetReservationKeywordUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
     suspend operator fun invoke(
-        keyword: String,
+        word: String,
         page: Int,
         size: Int,
     ): NetworkResult<PagingReservationKeyword> =
         repository.getReservationKeyword(
-            keyword = keyword,
+            word = word,
             page = page,
             size = size,
         )

@@ -4,7 +4,7 @@ package com.sch.data.repository
 import com.sch.data.api.MainAPIService
 import com.sch.data.api.handleApi
 import com.sch.data.model.remote.request.*
-import com.sch.data.model.remote.response.ReservationDetailResponse
+import com.sch.data.model.remote.response.KeywordResponse
 import com.sch.data.model.toDomain
 import com.sch.domain.NetworkResult
 import com.sch.domain.model.*
@@ -169,14 +169,13 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getReservationKeyword(
-        keyword: String,
+        word: String,
         page: Int,
         size: Int
     ): NetworkResult<PagingReservationKeyword> {
-        val body = GetReservationKeywordRequest(keyword = keyword)
         return handleApi {
             mainAPIService.getReservationKeyword(
-                body = body,
+                word = word,
                 page = page,
                 size = size
             ).data.toDomain()
@@ -302,10 +301,10 @@ class MainRepositoryImpl @Inject constructor(
 //        TODO("Not yet implemented")
 //    }
 
-    override suspend fun getRecommendKeyword(): NetworkResult<RecommendKeywordList> {
+    override suspend fun getRecommendKeyword(): NetworkResult<List<Keyword>> {
 
         return handleApi {
-            mainAPIService.getRecommendKeyword().data.recommendKeywordResponse.toDomain()
+            mainAPIService.getRecommendKeyword().data.toDomain()
         }
     }
 

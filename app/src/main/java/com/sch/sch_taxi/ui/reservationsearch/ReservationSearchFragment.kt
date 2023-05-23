@@ -18,7 +18,8 @@ import kotlinx.coroutines.flow.collectLatest
 
 
 @AndroidEntryPoint
-class ReservationSearchFragment : BaseFragment<FragmentReservationSearchBinding, ReservationSearchViewModel>(R.layout.fragment_reservation_search) {
+class ReservationSearchFragment :
+    BaseFragment<FragmentReservationSearchBinding, ReservationSearchViewModel>(R.layout.fragment_reservation_search) {
 
     private val TAG = "TaxiSearchFragment"
 
@@ -46,11 +47,16 @@ class ReservationSearchFragment : BaseFragment<FragmentReservationSearchBinding,
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
-                when(it) {
+                when (it) {
                     is ReservationSearchNavigationAction.NavigateToTaxiSearchResult -> {
 //                        requireActivity().hideKeyboard()
-                        navigate(ReservationSearchFragmentDirections.actionTaxiSearchFragmentToTaxiSearchResultFragment(it.searchTitle))
+                        navigate(
+                            ReservationSearchFragmentDirections.actionTaxiSearchFragmentToTaxiSearchResultFragment(
+                                it.searchTitle
+                            )
+                        )
                     }
+
                     is ReservationSearchNavigationAction.NavigateToBack -> navController.popBackStack()
                 }
             }
@@ -63,12 +69,13 @@ class ReservationSearchFragment : BaseFragment<FragmentReservationSearchBinding,
         }
     }
 
-    private fun initEditText(){
+    private fun initEditText() {
         binding.etSearchField.setOnKeyListener { v, keyCode, event ->
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
                 // 엔터 눌렀을때 행동
                 viewModel.createSearchHistory()
-                return@setOnKeyListener  true
+                viewModel.onTaxiSearchResult()
+                return@setOnKeyListener true
             }
 
             return@setOnKeyListener false

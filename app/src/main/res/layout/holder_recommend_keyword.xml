@@ -17,10 +17,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_search_item"
-        onSingleClick="@{() -> eventListener.onClickedTaxiSearchResult(holder.keyword)}"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/custom_backgroundgray03_radius10_line_gray08"
+        android:backgroundTint="@color/blue_10"
         android:clickable="true"
         android:focusable="true"
         android:padding="10dp">
@@ -30,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{holder.keyword}"
-            android:textSize="16sp"
+            android:textSize="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

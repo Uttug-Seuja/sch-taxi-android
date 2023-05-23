@@ -224,13 +224,3 @@ fun ReportNotificationResponse.toDomain(): ReportNotification {
         defendant_id = this.defendant_id
     )
 }
-
-fun List<RecommendKeywordResponse>.toDomain(): RecommendKeywordList {
-    return RecommendKeywordList(
-        map {
-            Keyword(
-                keyword = it.keyword
-            )
-        }
-    )
-}

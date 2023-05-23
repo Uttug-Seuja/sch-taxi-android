@@ -5,9 +5,8 @@ import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.sch.domain.model.RecommendKeywordList
+import com.sch.domain.model.Keyword
 import com.sch.domain.model.SearchHistoryList
-import com.sch.domain.model.Taxis
 import com.sch.sch_taxi.ui.reservationsearch.adapter.RecommendKeywordAdapter
 import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationSearchHistoryAdapter
 
@@ -15,6 +14,12 @@ import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationSearchHistoryAda
 fun ConstraintLayout.bindConstraintLayoutVisible(searchText : String) {
     if (searchText.isEmpty()) this.visibility = View.VISIBLE
     else this.visibility = View.GONE
+}
+
+@BindingAdapter("searchHistoryVisible")
+fun ConstraintLayout.bindSearchHistoryVisible(searchHistoryList: SearchHistoryList) {
+    if (searchHistoryList.searchHistory.isEmpty()) this.visibility = View.GONE
+    else this.visibility = View.VISIBLE
 }
 
 @BindingAdapter("recyclerViewVisible")
@@ -38,9 +43,9 @@ fun RecyclerView.bindTaxiSearchHistoryAdapter(itemList: SearchHistoryList) {
 }
 
 @BindingAdapter("recommendKeywordAdapter")
-fun RecyclerView.bindRecommendKeywordAdapter(itemList: RecommendKeywordList) {
+fun RecyclerView.bindRecommendKeywordAdapter(itemList: List<Keyword>) {
     val boundAdapter = this.adapter
     if (boundAdapter is RecommendKeywordAdapter) {
-        boundAdapter.submitList(itemList.recommendKeyword)
+        boundAdapter.submitList(itemList)
     }
 }
