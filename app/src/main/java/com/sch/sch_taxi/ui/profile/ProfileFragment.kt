@@ -42,7 +42,7 @@ class ProfileFragment :
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     ProfileNavigationAction.NavigateToBack -> navController.popBackStack()
-                    ProfileNavigationAction.NavigateToEditProfile -> TODO()
+                    ProfileNavigationAction.NavigateToEditProfile -> navigate(ProfileFragmentDirections.actionProfileFragmentToSaveProfile())
                     ProfileNavigationAction.NavigateToMannerTemperatureInfo -> TODO()
                     ProfileNavigationAction.NavigateToMannerUsageHistory -> TODO()
                     ProfileNavigationAction.NavigateToMannerWritingHistory -> TODO()
