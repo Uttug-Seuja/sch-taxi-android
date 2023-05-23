@@ -71,7 +71,7 @@ class ReservationSearchViewModel @Inject constructor(
          *
          * */
         baseViewModelScope.launch {
-            searchTitleEvent.debounce(200).collectLatest { keyword ->
+            searchTitleEvent.debounce(0).collectLatest { keyword ->
                 reservationSearchEvent = createReservationKeywordPager(
                     getReservationKeywordUseCase = getReservationKeywordUseCase,
                     keyword = keyword
