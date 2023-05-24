@@ -7,6 +7,7 @@ import com.sch.domain.usecase.main.GetUserProfileUseCase
 import com.sch.domain.usecase.main.PatchUserProfileUseCase
 import com.sch.domain.usecase.main.PostFileToImageUseCase
 import com.sch.sch_taxi.base.BaseViewModel
+import com.sch.sch_taxi.ui.reservationdetail.ReservationDetailNavigationAction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,6 +37,7 @@ class SaveProfileViewModel @Inject constructor(
     var beforeProfile: UserInfo? = null
     val profileImg: MutableStateFlow<String> = MutableStateFlow("")
     val profileName: MutableStateFlow<String> = MutableStateFlow("")
+    val profileEmail: MutableStateFlow<String> = MutableStateFlow("")
 
     init {
         baseViewModelScope.launch {
@@ -45,8 +47,15 @@ class SaveProfileViewModel @Inject constructor(
                     beforeProfile = it
                     profileImg.emit(it.profilePath)
                     profileName.emit(it.name)
+                    profileEmail.emit(it.email)
                 }
             dismissLoading()
+        }
+    }
+
+    override fun onClickedBack() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(SaveProfileNavigationAction.NavigateToBack)
         }
     }
 

@@ -29,14 +29,15 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class SaveProfileFragment : BaseFragment<FragmentSaveProfileBinding, SaveProfileViewModel>(R.layout.fragment_save_profile) {
+class SaveProfileFragment :
+    BaseFragment<FragmentSaveProfileBinding, SaveProfileViewModel>(R.layout.fragment_save_profile) {
 
     private val TAG = "SaveProfileFragment"
 
     override val layoutResourceId: Int
         get() = R.layout.fragment_save_profile
 
-    override val viewModel : SaveProfileViewModel by viewModels()
+    override val viewModel: SaveProfileViewModel by viewModels()
     private val navController by lazy { findNavController() }
 
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
@@ -47,18 +48,20 @@ class SaveProfileFragment : BaseFragment<FragmentSaveProfileBinding, SaveProfile
     private val permissionList = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE)
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
 
     // 권한을 허용하도록 요청
-    private val requestMultiplePermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
-        results.forEach {
-            if(!it.value) toastMessage("권한 허용 필요")
+    private val requestMultiplePermission =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
+            results.forEach {
+                if (!it.value) toastMessage("권한 허용 필요")
+            }
         }
-    }
 
     override fun initStartView() {
         binding.apply {
-            this.viewmodel  = viewModel
+            this.viewmodel = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
@@ -70,7 +73,8 @@ class SaveProfileFragment : BaseFragment<FragmentSaveProfileBinding, SaveProfile
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationEvent.collectLatest {
-                when(it) {
+                when (it) {
+                    is SaveProfileNavigationAction.NavigateToBack -> navController.popBackStack()
                     is SaveProfileNavigationAction.NavigateToSuccess -> navController.popBackStack()
                     is SaveProfileNavigationAction.NavigateToEditProfileImg -> editProfileImageBottomSheet()
                 }
@@ -79,7 +83,7 @@ class SaveProfileFragment : BaseFragment<FragmentSaveProfileBinding, SaveProfile
 
         lifecycleScope.launchWhenStarted {
             viewModel.profileName.collectLatest {
-                if(it != "" && it != viewModel.beforeProfile!!.name) {
+                if (it != "" && it != viewModel.beforeProfile!!.name) {
                     viewModel.editPossibleState.emit(true)
                 }
             }
@@ -90,18 +94,12 @@ class SaveProfileFragment : BaseFragment<FragmentSaveProfileBinding, SaveProfile
     }
 
     private fun initToolbar() {
-        with(binding.toolbar) {
-            this.title = "프로필"
-            // 뒤로가기 버튼
-            this.setNavigationIcon(R.drawable.ic_allow_back)
-            this.setNavigationOnClickListener { navController.popBackStack() }
-        }
     }
 
     private fun editProfileImageBottomSheet() {
         requestMultiplePermission.launch(permissionList)
         val dialog = EditProfileImageBottomSheet {
-            if(it) getGalleryImage()
+            if (it) getGalleryImage()
             else getCaptureImage()
 
             lifecycleScope.launch {
@@ -112,16 +110,19 @@ class SaveProfileFragment : BaseFragment<FragmentSaveProfileBinding, SaveProfile
     }
 
     private fun initRegisterForActivityResult() {
-        galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            activityResult.data?.let {
-                createFile(it.data!!)
+        galleryLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                activityResult.data?.let {
+                    createFile(it.data!!)
+                }
             }
-        }
 
         cameraLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) {
-            if(it) { cameraUri?.let { uri ->
-                createFile(uri)
-            } }
+            if (it) {
+                cameraUri?.let { uri ->
+                    createFile(uri)
+                }
+            }
         }
     }
 
@@ -155,7 +156,9 @@ class SaveProfileFragment : BaseFragment<FragmentSaveProfileBinding, SaveProfile
             put(MediaStore.Images.Media.DISPLAY_NAME, "img_$now.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpg")
         }
-        return requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content)
+        return requireContext().contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, content
+        )
     }
 
     private fun createFile(uri: Uri) {
