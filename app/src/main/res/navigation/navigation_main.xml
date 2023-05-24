@@ -87,6 +87,19 @@
     </fragment>
 
     <fragment
+        android:id="@+id/reservationUpdateFragment"
+        android:name="com.sch.sch_taxi.ui.reservationupdate.ReservationUpdateFragment"
+        android:label="ReservationUpdateFragment"
+        app:popUpTo="@id/navigation_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_reservation_update">
+
+        <action
+            android:id="@+id/action_reservationUpdateFragment_to_taxiDetailFragment"
+            app:destination="@id/taxiDetailFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/notificationFragment"
         android:name="com.sch.sch_taxi.ui.notifications.NotificationsFragment"
         android:label="notificationFragment"
