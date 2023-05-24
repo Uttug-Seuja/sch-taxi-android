@@ -67,4 +67,32 @@ class MyPageViewModel @Inject constructor(
             _navigationEvent.emit(MyPageNavigationAction.NavigateToAlarmSetting)
         }
     }
+
+    fun onUserLogOut() {
+        baseViewModelScope.launch {
+            showLoading()
+//            mainRepository.postLogOut()
+//                .onSuccess {
+//                    editor.remove("access_token")
+//                    editor.remove("refresh_token")
+//                    editor.commit()
+//                    _navigationEvent.emit(EditProfileNavigationAction.NavigateToSplash)
+//                }
+            dismissLoading()
+        }
+    }
+
+    fun onUserDelete() {
+        baseViewModelScope.launch {
+            showLoading()
+//            mainRepository.postLogOut()
+//                .onSuccess {
+//                    editor.remove("access_token")
+//                    editor.remove("refresh_token")
+//                    editor.commit()
+//                    _navigationEvent.emit(EditProfileNavigationAction.NavigateToSplash)
+//                }
+            dismissLoading()
+        }
+    }
 }
