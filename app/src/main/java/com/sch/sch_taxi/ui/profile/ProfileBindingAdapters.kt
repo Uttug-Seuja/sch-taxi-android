@@ -86,7 +86,13 @@ fun TextView.textChangeColor(
 @BindingAdapter("mannerTemperatureInfoVisible")
 fun ConstraintLayout.bindMannerTemperatureInfoVisible(clickable: Boolean) {
     if (clickable) this.visibility = View.VISIBLE
-    else this.visibility = View.GONE
+    else this.visibility = View.INVISIBLE
+}
+
+@BindingAdapter("mannerTemperatureInfoVisible")
+fun View.bindMannerTemperatureInfoVisible(clickable: Boolean) {
+    if (clickable) this.visibility = View.VISIBLE
+    else this.visibility = View.INVISIBLE
 }
 
 @BindingAdapter("progressPercent")

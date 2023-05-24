@@ -60,7 +60,7 @@ class ProfileViewModel @Inject constructor(
 
     override fun onClickedMannerTemperatureInfo() {
         baseViewModelScope.launch {
-            _navigationEvent.emit(ProfileNavigationAction.NavigateToMannerTemperatureInfo)
+            mannerTemperatureInfoState.value = !mannerTemperatureInfoState.value
         }
     }
 

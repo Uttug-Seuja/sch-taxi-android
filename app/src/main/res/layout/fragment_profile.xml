@@ -137,17 +137,16 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    mannerTemperatureInfoVisible="@{vm.mannerTemperatureInfoState}"
-                    >
+                    android:layout_height="match_parent">
 
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        mannerTemperatureInfoVisible="@{vm.mannerTemperatureInfoState}"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:elevation="25dp"
-                        android:visibility="gone"
+                        android:visibility="invisible"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_manner_temperature">
 
@@ -186,10 +185,10 @@
                         android:textSize="14dp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
+                        onSingleClick="@{() -> vm.onClickedMannerTemperatureInfo()}"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="3dp"
@@ -201,7 +200,6 @@
 
                     <ProgressBar
                         android:id="@+id/progressBar1"
-                        app:progressPercent ="@{vm.userProfile.currentTemperature}"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
@@ -213,6 +211,7 @@
                         android:max="100"
                         android:progressDrawable="@drawable/curved_progress_bar"
                         app:layout_constraintTop_toBottomOf="@+id/tv_manner_temperature"
+                        app:progressPercent="@{vm.userProfile.currentTemperature}"
                         tools:layout_editor_absoluteX="0dp" />
 
                     <TextView
@@ -370,6 +369,12 @@
 
         </ScrollView>
 
+        <View
+            mannerTemperatureInfoVisible="@{vm.mannerTemperatureInfoState}"
+            onSingleClick="@{()->vm.onClickedMannerTemperatureInfo()}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
