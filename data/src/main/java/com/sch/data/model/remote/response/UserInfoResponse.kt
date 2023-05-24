@@ -9,5 +9,6 @@ data class UserInfoResponse(
     @SerializedName("name") val name: String,
     @SerializedName("email") val email: String,
     @SerializedName("profilePath") val profilePath: String,
-    @SerializedName("currentTemperature") val currentTemperature: Double
+    @SerializedName("currentTemperature") val currentTemperature: Double,
+    @SerializedName("temperatureImage") val temperatureImage: String
 )

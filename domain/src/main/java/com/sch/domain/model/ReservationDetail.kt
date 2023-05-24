@@ -14,6 +14,8 @@ data class ReservationDetail(
     val startLongitude: Double,
     val destinationLatitude: Double,
     val destinationLongitude: Double,
-    val hostInfo: UserInfo,
+    val hostInfo: HostInfo,
     val iHost: Boolean,
+    val createAt: String,
+    val updateAt: String
 )

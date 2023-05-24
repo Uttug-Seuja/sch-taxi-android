@@ -29,7 +29,19 @@ fun UserInfoResponse.toDomain(): UserInfo {
         name = name,
         email = email,
         profilePath = profilePath,
-        currentTemperature = currentTemperature
+        currentTemperature = currentTemperature,
+        temperatureImage = temperatureImage
+
+    )
+}
+
+fun HostInfoResponse.toDomain(): HostInfo {
+    return HostInfo(
+        userId = userId,
+        gender = gender,
+        name = name,
+        email = email,
+        profilePath = profilePath,
     )
 }
 
@@ -68,10 +80,10 @@ fun ReservationResponse.toDomain(): Reservation {
         destinationLatitude = destinationLatitude,
         destinationLongitude = destinationLongitude,
         iHost = ihost,
-        createAt = createdAt,
-        updateAt = updateAt,
         hostInfo = hostInfo.toDomain(),
-        reservationStatus = reservationStatus
+        reservationStatus = reservationStatus,
+        createAt = createdAt,
+        updateAt = updateAt
     )
 }
 
@@ -91,7 +103,9 @@ fun ReservationDetailResponse.toDomain(): ReservationDetail {
         destinationLongitude = destinationLongitude,
         iHost = ihost,
         hostInfo = hostInfo.toDomain(),
-        reservationStatus = reservationStatus
+        reservationStatus = reservationStatus,
+        createAt = createdAt,
+        updateAt = updateAt
     )
 }
 
@@ -146,10 +160,10 @@ fun List<ReservationResponse>.toDomain(): MyReservation {
                 destinationLatitude = it.destinationLatitude,
                 destinationLongitude = it.destinationLongitude,
                 iHost = it.ihost,
-                createAt = it.createdAt,
-                updateAt = it.updateAt,
                 hostInfo = it.hostInfo.toDomain(),
-                reservationStatus = it.reservationStatus
+                reservationStatus = it.reservationStatus,
+                createAt = it.createdAt,
+                updateAt = it.updateAt
             )
         }
     )

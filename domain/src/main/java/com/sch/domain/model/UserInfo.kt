@@ -8,4 +8,5 @@ data class UserInfo(
     val email: String,
     val profilePath: String,
     val currentTemperature: Double,
+    val temperatureImage: String
 )

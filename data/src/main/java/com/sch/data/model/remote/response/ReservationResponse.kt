@@ -19,6 +19,6 @@ data class ReservationResponse(
     @SerializedName("destinationLongitude") val destinationLongitude: Double,
     @SerializedName("createdAt") val createdAt: String,
     @SerializedName("updateAt") val updateAt: String,
-    @SerializedName("hostInfo") val hostInfo: UserInfoResponse,
+    @SerializedName("hostInfo") val hostInfo: HostInfoResponse,
     @SerializedName("ihost") val ihost: Boolean,
 )
