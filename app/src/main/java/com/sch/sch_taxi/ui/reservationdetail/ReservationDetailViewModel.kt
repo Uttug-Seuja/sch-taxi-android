@@ -72,6 +72,7 @@ class ReservationDetailViewModel @Inject constructor(
 
                 }
                 .onError {
+                    Log.d("ttt getReservationDetailUseCase onError", it.toString())
 
                 }
 
@@ -183,6 +184,9 @@ class ReservationDetailViewModel @Inject constructor(
 
     fun onClickedReservationUpdateClicked() {
         baseViewModelScope.launch {
+            _navigationHandler.emit(
+                ReservationDetailNavigationAction.NavigateToReservationUpdate(reservationId = reservationId.value)
+            )
         }
     }
 
@@ -192,6 +196,9 @@ class ReservationDetailViewModel @Inject constructor(
             deleteReservationUseCase(reservationId = reservationId)
                 .onSuccess {
                     _toastMessage.emit("게시글이 삭제되었습니다")
+                    baseViewModelScope.launch {
+                        _navigationHandler.emit(ReservationDetailNavigationAction.NavigateToBack)
+                    }
                 }
                 .onError { }
 
