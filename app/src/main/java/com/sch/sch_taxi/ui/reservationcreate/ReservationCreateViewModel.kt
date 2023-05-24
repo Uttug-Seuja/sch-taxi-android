@@ -21,7 +21,6 @@ import javax.inject.Inject
 class ReservationCreateViewModel @Inject constructor(
     private val getResultKeywordUseCase: GetResultKeywordUseCase,
     private val postReservationUseCase: PostReservationUseCase,
-    private val patchReservationUseCase: PatchReservationUseCase
 ) : BaseViewModel(), ReservationCreateActionHandler {
 
     private val TAG = "TaxiCreateViewModel"
@@ -49,12 +48,14 @@ class ReservationCreateViewModel @Inject constructor(
 
     var destinationLatitude: MutableStateFlow<Double> = MutableStateFlow<Double>(0.0)
     var destinationLongitude: MutableStateFlow<Double> = MutableStateFlow<Double>(0.0)
-
+    var departureDate: MutableStateFlow<String> = MutableStateFlow<String>("")
 
     lateinit var seatEvent: MutableStateFlow<String>
     lateinit var genderEvent: MutableStateFlow<String>
     lateinit var dateEvent: MutableStateFlow<String>
 
+    private val genderMap =
+        hashMapOf<String, String>("남녀 모두" to "ALL", "남자만" to "MAN", "여자만" to "WOMAN")
 
     init {
         baseViewModelScope.launch {
@@ -136,7 +137,11 @@ class ReservationCreateViewModel @Inject constructor(
     override fun onClickedTaxiCreate() {
         baseViewModelScope.launch {
             Log.d("ttt", titleEvent.value.toString())
+            Log.d("ttt", startPlaceTitleEvent.value.toString())
+            Log.d("ttt", destinationTitleEvent.value.toString())
+            Log.d("ttt", seatEvent.value.toString())
             Log.d("ttt", genderEvent.value.toString())
+            Log.d("ttt", dateEvent.value.toString())
 
             if (titleEvent.value.isNotEmpty() && startPlaceTitleEvent.value.isNotEmpty() && destinationTitleEvent.value.isNotEmpty() && seatEvent.value.isNotEmpty()
                 && genderEvent.value != "모집 성별" && dateEvent.value != "탑승 날짜"
@@ -147,18 +152,18 @@ class ReservationCreateViewModel @Inject constructor(
                         title = titleEvent.value,
                         startPoint = startPlaceTitleEvent.value,
                         destination = destinationTitleEvent.value,
-                        departureDate = dateEvent.value,
-                        gender = genderEvent.value,
+                        departureDate = departureDate.value,
+                        gender = genderMap[genderEvent.value]!!,
                         startLatitude = startLatitude.value,
                         startLongitude = startLongitude.value,
                         destinationLatitude = destinationLatitude.value,
                         destinationLongitude = destinationLongitude.value
 
                     ).onSuccess {
-                        _navigationHandler.emit(ReservationCreateNavigationAction.NavigateToTaxiDetail)
+                        _navigationHandler.emit(ReservationCreateNavigationAction.NavigateToTaxiDetail(it.reservationId))
                     }
                         .onError { e ->
-                            Log.d("ttt", e.toString())
+                            Log.d("ttt onError", e.toString())
                             when (e) {
                                 is SQLiteException -> _toastMessage.emit("데이터 베이스 에러가 발생하였습니다.")
                                 else -> _toastMessage.emit("시스템 에러가 발생 하였습니다.")

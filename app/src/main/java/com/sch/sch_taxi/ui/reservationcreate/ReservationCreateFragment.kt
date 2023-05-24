@@ -51,7 +51,7 @@ class ReservationCreateFragment :
                     is ReservationCreateNavigationAction.NavigateToSelectReservation -> reservationTaxiSend()
                     is ReservationCreateNavigationAction.NavigateToSelectGender -> selectGanderBottomDialog()
                     is ReservationCreateNavigationAction.NavigateToSelectSeat -> selectSeatBottomDialog()
-                    is ReservationCreateNavigationAction.NavigateToTaxiDetail -> TODO()
+                    is ReservationCreateNavigationAction.NavigateToTaxiDetail -> navigate(ReservationCreateFragmentDirections.actionTaxiCreateFragmentToTaxiDetailFragment(it.id))
                     is ReservationCreateNavigationAction.NavigateToKeywordClicked -> { deleteEditTextFocus() }
                 }
             }
@@ -92,8 +92,7 @@ class ReservationCreateFragment :
 
     private fun reservationTaxiSend() {
         val bottomSheet = BottomTaxiReservationPicker(callback = {
-
-            Log.d("ttt send at", it.toString())
+            viewModel.departureDate.value = it.toString()
             viewModel.dateEvent.value =
                 it.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"))
         })

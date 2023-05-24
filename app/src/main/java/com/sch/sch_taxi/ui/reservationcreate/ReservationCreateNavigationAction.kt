@@ -1,7 +1,7 @@
 package com.sch.sch_taxi.ui.reservationcreate
 
 sealed class ReservationCreateNavigationAction {
-    object NavigateToTaxiDetail: ReservationCreateNavigationAction()
+    class NavigateToTaxiDetail(val id: Int): ReservationCreateNavigationAction()
     object NavigateToBack: ReservationCreateNavigationAction()
     object NavigateToSelectGender: ReservationCreateNavigationAction()
     object NavigateToSelectReservation: ReservationCreateNavigationAction()
