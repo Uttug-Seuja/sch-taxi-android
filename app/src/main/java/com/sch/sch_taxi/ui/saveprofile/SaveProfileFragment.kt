@@ -6,6 +6,7 @@ import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -47,14 +48,15 @@ class SaveProfileFragment :
     // 요청하고자 하는 권한들
     private val permissionList = arrayOf(
         Manifest.permission.CAMERA,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE
+//        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//        Manifest.permission.READ_EXTERNAL_STORAGE
     )
 
     // 권한을 허용하도록 요청
     private val requestMultiplePermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
             results.forEach {
+                Log.d("Ttt", it.toString())
                 if (!it.value) toastMessage("권한 허용 필요")
             }
         }
@@ -165,6 +167,8 @@ class SaveProfileFragment :
         val file = uriToFile(uri, requireContext())
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+        Log.d("ttt requestBody", requestBody.toString())
         // Update Profile API
         viewModel.setFileToUri(file = requestBody)
     }
