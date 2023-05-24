@@ -257,7 +257,7 @@
                         android:layout_height="25dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="5dp"
-                        android:src="@drawable/user"
+                        app:glide10000="@{vm.userProfile.temperatureImage}"
                         app:layout_constraintBottom_toTopOf="@+id/progressBar1"
                         app:layout_constraintEnd_toEndOf="parent" />
 
