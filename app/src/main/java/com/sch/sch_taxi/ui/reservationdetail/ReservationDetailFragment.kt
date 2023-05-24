@@ -77,10 +77,16 @@ class ReservationDetailFragment :
                         reservationId = it.reservationId,
                         sendUserId = it.sendUserId
                     )
+
                     is ReservationDetailNavigationAction.NavigateToSelectSeatBottomDialog -> selectSeatBottomDialog()
                     is ReservationDetailNavigationAction.NavigateToUserProfile -> {
                         navigate(ReservationDetailFragmentDirections.actionTaxiDetailFragmentToProfileFragment())
                     }
+
+                    is ReservationDetailNavigationAction.NavigateToReservationUpdate -> navigate(
+                        ReservationDetailFragmentDirections.actionTaxiDetailFragmentToReservationUpdateFragment(it.reservationId)
+                    )
+
                 }
             }
         }
@@ -125,21 +131,24 @@ class ReservationDetailFragment :
     }
 
     private fun selectSeatBottomDialog() {
-        val dialog: BottomSelectSeat = BottomSelectSeat((viewModel.participationEvent.value!!.participationInfoList.ParticipationInfo)) {
-            lifecycleScope.launchWhenStarted {
-                val seatPosition = when (it) {
-                    0 -> "SEAT_1"
-                    1 -> "SEAT_2"
-                    2 -> "SEAT_3"
-                    3 -> "SEAT_4"
-                    else -> "SEAT_1"
+        val dialog: BottomSelectSeat =
+            BottomSelectSeat((viewModel.participationEvent.value!!.participationInfoList.ParticipationInfo)) {
+                lifecycleScope.launchWhenStarted {
+                    val seatPosition = when (it) {
+                        0 -> "SEAT_1"
+                        1 -> "SEAT_2"
+                        2 -> "SEAT_3"
+                        3 -> "SEAT_4"
+                        else -> "SEAT_1"
+
+                    }
+                    if (viewModel.participationEvent.value!!.iparticipation) viewModel.onClickedPatchParticipation(
+                        seatPosition = seatPosition
+                    )
+                    else viewModel.onClickedParticipation(seatPosition = seatPosition)
 
                 }
-                if (viewModel.participationEvent.value!!.iparticipation) viewModel.onClickedPatchParticipation(seatPosition = seatPosition)
-                else viewModel.onClickedParticipation(seatPosition = seatPosition)
-
             }
-        }
         dialog.show(childFragmentManager, TAG)
     }
 

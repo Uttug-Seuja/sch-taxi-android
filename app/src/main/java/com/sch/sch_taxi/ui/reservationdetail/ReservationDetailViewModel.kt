@@ -163,6 +163,16 @@ class ReservationDetailViewModel @Inject constructor(
         }
     }
 
+    override fun onClickedReservationUpdate() {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(
+                ReservationDetailNavigationAction.NavigateToReservationUpdate(
+                    reservationId = reservationId.value,
+                )
+            )
+        }
+    }
+
     override fun onClickedSelectSeatBottomDialog() {
         baseViewModelScope.launch {
             _navigationHandler.emit(
@@ -209,7 +219,7 @@ class ReservationDetailViewModel @Inject constructor(
 
     override fun onClickedUserProfile(userId: Int) {
         baseViewModelScope.launch {
-            _navigationHandler.emit(ReservationDetailNavigationAction.NavigateToUserProfile(userId))
+            _navigationHandler.emit(ReservationDetailNavigationAction.NavigateToUserProfile(userId = userId))
 
         }
     }

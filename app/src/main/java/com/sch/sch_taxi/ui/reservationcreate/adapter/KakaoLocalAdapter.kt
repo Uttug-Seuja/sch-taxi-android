@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.KakaoLocal
 import com.sch.sch_taxi.databinding.HolderKakaoLocalBinding
 import com.sch.sch_taxi.ui.reservationcreate.ReservationCreateActionHandler
-import com.sch.sch_taxi.ui.reservationupdate.adapter.KakaoLocalUpdateAdapter
 
 class KakaoLocalAdapter(
     private val eventListener: ReservationCreateActionHandler,
-) : ListAdapter<KakaoLocal, KakaoLocalUpdateAdapter.TaxiCreateViewHolder>(KakaoLocalItemDiffCallback) {
+) : ListAdapter<KakaoLocal, KakaoLocalAdapter.TaxiCreateViewHolder>(KakaoLocalItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaxiCreateViewHolder {
         return TaxiCreateViewHolder(

@@ -94,6 +94,10 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_reservation_update">
 
+        <argument
+            android:name="reservation_id"
+            app:argType="integer" />
+
         <action
             android:id="@+id/action_reservationUpdateFragment_to_taxiDetailFragment"
             app:destination="@id/taxiDetailFragment" />
@@ -261,6 +265,9 @@
         <action
             android:id="@+id/action_taxiDetailFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_taxiDetailFragment_to_reservationUpdateFragment"
+            app:destination="@id/reservationUpdateFragment" />
     </fragment>
 
     <fragment
