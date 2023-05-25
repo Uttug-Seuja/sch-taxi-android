@@ -53,8 +53,10 @@ class ReservationSearchViewModel @Inject constructor(
     )
     val taxiSearchHistoryEvent: StateFlow<SearchHistoryList> = _taxiSearchHistoryEvent
     val taxiSearchHistoryIdxEvent = MutableStateFlow<Int>(0)
+    var reservationSearchEvent: MutableStateFlow<List<Keyword>> =
+        MutableStateFlow(emptyList<Keyword>())
 
-    var reservationSearchEvent: Flow<PagingData<Keyword>> = emptyFlow()
+    //    var reservationSearchEvent: Flow<PagingData<Keyword>> = emptyFlow()
     var recommendKeywordEvent = MutableStateFlow(emptyList<Keyword>())
 
 
@@ -70,20 +72,38 @@ class ReservationSearchViewModel @Inject constructor(
          *
          *
          * */
+//        baseViewModelScope.launch {
+//            searchTitleEvent.debounce(0).collectLatest { keyword ->
+//                reservationSearchEvent = createReservationKeywordPager(
+//                    getReservationKeywordUseCase = getReservationKeywordUseCase,
+//                    keyword = keyword
+//                ).flow.cachedIn(
+//                    baseViewModelScope
+//                )
+//            }
+//            dismissLoading()
+//        }
+
         baseViewModelScope.launch {
-            searchTitleEvent.debounce(0).collectLatest { keyword ->
-                reservationSearchEvent = createReservationKeywordPager(
-                    getReservationKeywordUseCase = getReservationKeywordUseCase,
-                    keyword = keyword
-                ).flow.cachedIn(
-                    baseViewModelScope
-                )
+            searchTitleEvent.debounce(200).collectLatest { keyword ->
+                if (keyword.isNotEmpty()) {
+                    getReservationKeywordUseCase(
+                        word = keyword,
+                        page = 1,
+                        size = 10,
+                    ).onSuccess {
+                        reservationSearchEvent.value = it.content
+                        Log.d("Ttt onSuccess", it.toString())
+                    }.onError {
+                        Log.d("Ttt onError", it.toString())
+                    }
+                }
             }
             dismissLoading()
         }
     }
 
-    fun getRecommendKeyword(){
+    fun getRecommendKeyword() {
         showLoading()
         baseViewModelScope.launch {
             getRecommendKeywordUseCase()
@@ -181,7 +201,7 @@ class ReservationSearchViewModel @Inject constructor(
         }
     }
 
-    fun onTaxiSearchResult(){
+    fun onTaxiSearchResult() {
         baseViewModelScope.launch {
             _navigationHandler.emit(
                 ReservationSearchNavigationAction.NavigateToTaxiSearchResult(

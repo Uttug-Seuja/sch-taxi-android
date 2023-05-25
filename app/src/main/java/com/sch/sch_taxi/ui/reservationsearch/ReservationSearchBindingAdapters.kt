@@ -6,8 +6,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Keyword
+import com.sch.domain.model.Reservation
 import com.sch.domain.model.SearchHistoryList
+import com.sch.sch_taxi.ui.myreservation.adapter.MyReservationAdapter
 import com.sch.sch_taxi.ui.reservationsearch.adapter.RecommendKeywordAdapter
+import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationKeywordAdapter
 import com.sch.sch_taxi.ui.reservationsearch.adapter.ReservationSearchHistoryAdapter
 
 @BindingAdapter("constraintLayoutVisible")
@@ -39,6 +42,14 @@ fun RecyclerView.bindTaxiSearchHistoryAdapter(itemList: SearchHistoryList) {
     val boundAdapter = this.adapter
     if (boundAdapter is ReservationSearchHistoryAdapter) {
         boundAdapter.submitList(itemList.searchHistory)
+    }
+}
+
+@BindingAdapter("reservationSearchAdapter")
+fun RecyclerView.bindReservationSearchAdapter(itemList: List<Keyword>) {
+    val boundAdapter = this.adapter
+    if (boundAdapter is ReservationKeywordAdapter) {
+        boundAdapter.submitList(itemList)
     }
 }
 

@@ -179,6 +179,7 @@
             android:id="@+id/rv_reservation_search"
             recyclerViewVisible="@{vm.searchTitleEvent}"
             android:layout_width="match_parent"
+            reservationSearchAdapter = "@{vm.reservationSearchEvent}"
             android:layout_height="0dp"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
