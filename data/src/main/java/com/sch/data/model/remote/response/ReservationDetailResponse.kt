@@ -19,6 +19,6 @@ data class ReservationDetailResponse(
     @SerializedName("isHost") val isHost: Boolean,
     @SerializedName("hostInfo") val hostInfo: HostInfoResponse,
     @SerializedName("ihost") val ihost: Boolean,
-    @SerializedName("createdAt") val createdAt: String,
-    @SerializedName("updateAt") val updateAt: String,
+    @SerializedName("createDate") val createDate: String,
+    @SerializedName("lastModifyDate") val lastModifyDate: String,
 )

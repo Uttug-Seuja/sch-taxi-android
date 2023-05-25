@@ -104,8 +104,8 @@ fun ReservationDetailResponse.toDomain(): ReservationDetail {
         iHost = ihost,
         hostInfo = hostInfo.toDomain(),
         reservationStatus = reservationStatus,
-        createAt = createdAt,
-        updateAt = updateAt
+        createDate = createDate,
+        lastModifyDate = lastModifyDate
     )
 }
 
