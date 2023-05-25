@@ -8,7 +8,7 @@
         android:title="@string/bottom_home"/>
 
     <item
-        android:id="@+id/chattingFragment"
+        android:id="@+id/chatFragment"
         android:enabled="true"
         android:icon="@drawable/ic_room_bottom"
         android:title="@string/bottom_chatting"/>

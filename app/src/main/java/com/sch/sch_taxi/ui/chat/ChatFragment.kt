@@ -17,7 +17,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(R.layout.f
     private val TAG = "ChatFragment"
 
     override val layoutResourceId: Int
-        get() = R.layout.fragment_chat_room
+        get() = R.layout.fragment_chat
 
     override val viewModel: ChatViewModel by viewModels()
     private val chatAdapter by lazy { ChatAdapter(viewModel) }
