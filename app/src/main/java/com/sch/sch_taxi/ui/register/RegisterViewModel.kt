@@ -45,6 +45,8 @@ class RegisterViewModel @Inject constructor(
                     editor.putString("deviceId", deviceId.value)
 
                     Log.d("ttt isRegistered", it.toString())
+                    Log.d("ttt fcmToken", firebaseToken.value)
+                    Log.d("ttt deviceId", deviceId.value)
 
                     if (!it.isRegistered) {
                         editor.commit()
