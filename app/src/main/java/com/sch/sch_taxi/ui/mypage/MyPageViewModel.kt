@@ -4,7 +4,9 @@ package com.sch.sch_taxi.ui.mypage
 import com.sch.domain.model.UserInfo
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetUserProfileUseCase
+import com.sch.domain.usecase.main.PostLogoutUseCase
 import com.sch.sch_taxi.base.BaseViewModel
+import com.sch.sch_taxi.di.PresentationApplication.Companion.editor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    private val getUserProfileUseCase: GetUserProfileUseCase
+    private val getUserProfileUseCase: GetUserProfileUseCase,
+    private val postLogoutUseCase: PostLogoutUseCase
 ) : BaseViewModel(), MyPageActionHandler {
 
     private val TAG = "MyPageViewModel"
@@ -68,18 +71,25 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
+    override fun onClickedLogout() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(MyPageNavigationAction.NavigateToLogoutDialog)
+        }
+    }
+
     fun onUserLogOut() {
         baseViewModelScope.launch {
             showLoading()
-//            mainRepository.postLogOut()
-//                .onSuccess {
-//                    editor.remove("access_token")
-//                    editor.remove("refresh_token")
-//                    editor.commit()
-//                    _navigationEvent.emit(EditProfileNavigationAction.NavigateToSplash)
-//                }
+            postLogoutUseCase()
+                .onSuccess {
+                    editor.remove("accessToken")
+                    editor.remove("refreshToken")
+                    editor.commit()
+                    _navigationEvent.emit(MyPageNavigationAction.NavigateToRegister)
+                }
             dismissLoading()
         }
+
     }
 
     fun onUserDelete() {

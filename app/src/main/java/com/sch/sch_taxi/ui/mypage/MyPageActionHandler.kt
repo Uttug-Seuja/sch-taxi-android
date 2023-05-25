@@ -6,4 +6,6 @@ interface MyPageActionHandler {
     fun onClickedMyReservation()
     fun onClickedMyParticipation()
     fun onClickedAlarmSetting()
+    fun onClickedLogout()
+
 }

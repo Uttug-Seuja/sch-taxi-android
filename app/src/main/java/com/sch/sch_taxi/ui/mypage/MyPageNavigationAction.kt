@@ -5,5 +5,8 @@ sealed class MyPageNavigationAction {
     object NavigateToMyReservation: MyPageNavigationAction()
     object NavigateToMyParticipation: MyPageNavigationAction()
     object NavigateToAlarmSetting: MyPageNavigationAction()
+    object NavigateToRegister: MyPageNavigationAction()
+    object NavigateToLogoutDialog: MyPageNavigationAction()
+
 
 }

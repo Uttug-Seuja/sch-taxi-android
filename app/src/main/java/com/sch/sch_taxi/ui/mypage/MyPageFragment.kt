@@ -52,6 +52,11 @@ class MyPageFragment :
                         MyPageFragmentDirections.actionMyPageFragmentToAlarmSettingFragment()
                     )
 
+                    is MyPageNavigationAction.NavigateToRegister -> navigate(
+                        MyPageFragmentDirections.actionRegisterFragment()
+                    )
+
+                    is MyPageNavigationAction.NavigateToLogoutDialog -> logOutDialog()
                 }
             }
         }
