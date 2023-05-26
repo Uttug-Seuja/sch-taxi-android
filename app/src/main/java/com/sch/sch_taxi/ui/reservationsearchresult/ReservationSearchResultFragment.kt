@@ -74,11 +74,11 @@ class ReservationSearchResultFragment :
             }
         }
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.reservationSearchEvent.collectLatest {
-                reservationSearchResultKeywordAdapter.submitData(it)
-            }
-        }
+//        lifecycleScope.launchWhenStarted {
+//            viewModel.reservationSearchEvent.collectLatest {
+//                reservationSearchResultKeywordAdapter.submitData(it)
+//            }
+//        }
     }
 
     private fun initAdapter() {

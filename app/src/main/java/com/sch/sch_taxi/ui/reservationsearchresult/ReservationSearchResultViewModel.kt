@@ -5,6 +5,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sch.domain.model.Keyword
 import com.sch.domain.model.Reservation
+import com.sch.domain.onError
+import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetReservationKeywordUseCase
 import com.sch.domain.usecase.main.GetReservationSearchUseCase
 import com.sch.sch_taxi.base.BaseViewModel
@@ -30,11 +32,8 @@ class ReservationSearchResultViewModel @Inject constructor(
     var searchTitleEvent: MutableStateFlow<String> = MutableStateFlow("")
 
     var reservationSearchResultEvent: Flow<PagingData<Reservation>> = emptyFlow()
-    var reservationSearchEvent: Flow<PagingData<Keyword>> = emptyFlow()
-
-    init {
-        getReservationKeywordList()
-    }
+    var reservationSearchEvent: MutableStateFlow<List<Keyword>> =
+        MutableStateFlow(emptyList<Keyword>())
 
     fun getReservationSearch() {
         Log.d("ttt searchTitleEvent.value", searchTitleEvent.value.toString())
@@ -53,18 +52,37 @@ class ReservationSearchResultViewModel @Inject constructor(
     }
 
     fun getReservationKeywordList() {
+
         baseViewModelScope.launch {
-            showLoading()
             searchTitleEvent.debounce(200).collectLatest { keyword ->
-                reservationSearchEvent = createReservationKeywordPager(
-                    getReservationKeywordUseCase = getReservationKeywordUseCase,
-                    keyword = keyword
-                ).flow.cachedIn(
-                    baseViewModelScope
-                )
+                if (keyword.isNotEmpty()) {
+                    getReservationKeywordUseCase(
+                        word = keyword,
+                        page = 1,
+                        size = 10,
+                    ).onSuccess {
+                        reservationSearchEvent.value = it.content
+                        Log.d("Ttt onSuccess", it.toString())
+                    }.onError {
+                        Log.d("Ttt onError", it.toString())
+                    }
+                }
             }
             dismissLoading()
         }
+
+//        baseViewModelScope.launch {
+//            showLoading()
+//            searchTitleEvent.debounce(200).collectLatest { keyword ->
+//                reservationSearchEvent = createReservationKeywordPager(
+//                    getReservationKeywordUseCase = getReservationKeywordUseCase,
+//                    keyword = keyword
+//                ).flow.cachedIn(
+//                    baseViewModelScope
+//                )
+//            }
+//            dismissLoading()
+//        }
     }
 
     override fun onClickedBack() {
@@ -82,7 +100,11 @@ class ReservationSearchResultViewModel @Inject constructor(
 
     override fun onClickedTaxiSearchResult(searchTitle: String) {
         baseViewModelScope.launch {
-            _navigationHandler.emit(ReservationSearchResultNavigationAction.NavigateToTaxiSearchResult(searchTitle= searchTitle))
+            _navigationHandler.emit(
+                ReservationSearchResultNavigationAction.NavigateToTaxiSearchResult(
+                    searchTitle = searchTitle
+                )
+            )
         }
     }
 

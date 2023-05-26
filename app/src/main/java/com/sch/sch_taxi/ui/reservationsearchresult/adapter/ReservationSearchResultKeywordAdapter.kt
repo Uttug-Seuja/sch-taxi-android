@@ -4,15 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Keyword
 import com.sch.sch_taxi.databinding.HolderReservationResultSearchBinding
 import com.sch.sch_taxi.databinding.HolderReservationSearchBinding
+import com.sch.sch_taxi.ui.reservationsearch.ReservationSearchActionHandler
 import com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultActionHandler
 
 class ReservationSearchResultKeywordAdapter(
     private val eventListener: ReservationSearchResultActionHandler,
-) : PagingDataAdapter<Keyword, ReservationSearchResultKeywordAdapter.ViewHolder>(ReservationSearchItemDiffCallback){
+) : ListAdapter<Keyword, ReservationSearchResultKeywordAdapter.ViewHolder>(TaxiSearchItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -43,7 +45,7 @@ class ReservationSearchResultKeywordAdapter(
 
 
 
-    internal object ReservationSearchItemDiffCallback : DiffUtil.ItemCallback<Keyword>() {
+    internal object TaxiSearchItemDiffCallback : DiffUtil.ItemCallback<Keyword>() {
         override fun areItemsTheSame(oldItem: Keyword, newItem: Keyword) =
             oldItem == newItem
 
