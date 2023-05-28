@@ -54,4 +54,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
 
     override fun initAfterBinding() {
     }
+
+    override fun onResume() {
+        viewModel.getReservation()
+        super.onResume()
+
+    }
 }
