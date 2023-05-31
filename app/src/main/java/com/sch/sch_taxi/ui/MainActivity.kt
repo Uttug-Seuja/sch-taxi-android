@@ -8,7 +8,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.sch.sch_taxi.NavigationGraphDirections
 import com.sch.sch_taxi.base.BaseActivity
-import com.sch.sch_taxi.service.MyFirebaseMessagingService
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,9 +26,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun initStartView() {
         initNavController()
-        /** FCM설정, Token값 가져오기 */
-//        MyFirebaseMessagingService().getFirebaseToken()
-
         /** DynamicLink 수신확인 */
         initDynamicLink()
     }
