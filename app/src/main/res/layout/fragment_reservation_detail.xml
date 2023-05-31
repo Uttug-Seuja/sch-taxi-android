@@ -93,8 +93,9 @@
                     <ImageView
                         android:id="@+id/asdasd"
                         android:layout_width="50dp"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_baseline_bookmark_border_24" />
+                        android:layout_height="50dp"
+                        android:scaleType="centerCrop"
+                        app:glide10000="@{vm.reservesEvent.hostInfo.profilePath}" />
 
                     <LinearLayout
                         android:id="@+id/asd"
@@ -643,7 +644,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
-                app:cardBackgroundColor="#1570ff"
                 app:cardCornerRadius="8dp"
                 app:layout_constraintHorizontal_bias="0.504">
 
