@@ -7,9 +7,11 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.util.Log
+import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.card.MaterialCardView
+import org.w3c.dom.Text
 import java.util.Timer
 import java.util.TimerTask
 
@@ -71,26 +73,32 @@ fun TextView.bindTextChangeColor(textLength: Int) {
         this.isEnabled = false
     }
 }
+@BindingAdapter("editTextChangeEnabled")
+fun EditText.bindEditTextChangeEnabled(isSuccess : Boolean) {
+    this.isEnabled = !isSuccess
+}
 
+@BindingAdapter("textChangeEnabled")
+fun TextView.bindTextChangeEnabled(isSuccess : Boolean) {
+    this.isEnabled = !isSuccess
+
+}
 
 @BindingAdapter("nicknameEditTextCount")
 fun TextView.bindNicknameEditTextCount(textLength: Int) {
-    this.text = "$textLength/15"
-}
-
-@BindingAdapter("ageEditTextCount")
-fun TextView.bindAgeEditTextCount(textLength: Int) {
-    this.text = "$textLength/8"
+    this.text = "${0}/15".format(textLength)
+    if (textLength != 0) this.setTextColor(Color.parseColor("#000000"))
+    else this.setTextColor(Color.parseColor("#BDBDBD"))
 }
 
 @BindingAdapter("manBtnClicked")
 fun MaterialCardView.bindManBtnClicked(isMan: Boolean?) {
-    if (isMan == true) this.strokeColor = Color.parseColor("#007680")
+    if (isMan == true) this.strokeColor = Color.parseColor("#3F80FF")
     else this.strokeColor = Color.parseColor("#d9d9d9")
 }
 
 @BindingAdapter("womanBtnClicked")
 fun MaterialCardView.bindWomanBtnClicked(isMan: Boolean?) {
-    if (isMan == false) this.strokeColor = Color.parseColor("#007680")
+    if (isMan == false) this.strokeColor = Color.parseColor("#3F80FF")
     else this.strokeColor = Color.parseColor("#d9d9d9")
 }

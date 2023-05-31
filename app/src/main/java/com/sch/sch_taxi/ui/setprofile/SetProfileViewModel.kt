@@ -23,7 +23,6 @@ import okhttp3.MultipartBody
 
 @HiltViewModel
 class SetProfileViewModel @Inject constructor(
-    private val getUserProfileUseCase: GetUserProfileUseCase,
     private val postRegisterUseCase: PostRegisterUseCase,
     private val postFileToImageUseCase: PostFileToImageUseCase,
     private val postEmailUseCase: PostEmailUseCase,
@@ -62,9 +61,6 @@ class SetProfileViewModel @Inject constructor(
                         userInFo.url
                     )
                 }
-                .onError {
-                    Log.d("ttt error", it.toString())
-                }
             dismissLoading()
         }
 
@@ -91,64 +87,60 @@ class SetProfileViewModel @Inject constructor(
 
     override fun onGenderWomanClicked() {
         baseViewModelScope.launch {
-            Log.d("ttt", "누름")
             isManEvent.value = false
         }
     }
 
     override fun onSchoolEmailAuthClicked() {
+        showLoading()
         isAuthEvent.value = true
         baseViewModelScope.launch {
+            showLoading()
+
             postEmailUseCase(email = schoolEmailInputContent.value)
                 .onSuccess {
                     isAuthEvent.value = true
-                    SetProfileNavigationAction.NavigateToToastMessage("인증 메일을 보냈습니다")
+                    _navigationHandler.emit(
+                        SetProfileNavigationAction.NavigateToToastMessage(
+                            "인증 메일을 보냈습니다"
+                        )
+                    )
                 }
                 .onError {
                     isAuthEvent.value = false
-                    SetProfileNavigationAction.NavigateToToastMessage("학교 이메일 형식에 맞지 않습니다")
+                    _navigationHandler.emit(
+                        SetProfileNavigationAction.NavigateToToastMessage(
+                            "학교 이메일 형식에 맞지 않습니다"
+                        )
+                    )
                 }
+            dismissLoading()
 
         }
     }
 
     override fun onSchoolEmailCodeAuthClicked() {
         baseViewModelScope.launch {
+            showLoading()
+
             postEmailCodeUseCase(
                 email = schoolEmailInputContent.value,
                 code = schoolEmailCodeInputContent.value
             ).onSuccess {
-                SetProfileNavigationAction.NavigateToToastMessage("인증되었습니다")
                 isSchoolEmailAuth.value = true
+                _navigationHandler.emit(
+                    SetProfileNavigationAction.NavigateToToastMessage(
+                        "인증되었습니다"
+                    )
+                )
             }.onError {
                 isSchoolEmailAuth.value = false
-                SetProfileNavigationAction.NavigateToToastMessage("인증 코드가 틀립니다")
+                _navigationHandler.emit(
+                    SetProfileNavigationAction.NavigateToToastMessage(
+                        "인증 코드가 틀립니다"
+                    )
+                )
             }
-
-        }
-    }
-
-    override fun onAgeSetClicked() {
-        baseViewModelScope.launch {
-            _navigationHandler.emit(SetProfileNavigationAction.NavigateToAgeNumberPicker)
-        }
-
-    }
-
-
-    override fun onProfileImageSetClicked() {
-        baseViewModelScope.launch {
-            _navigationHandler.emit(SetProfileNavigationAction.NavigateToSetProfileImage)
-        }
-    }
-
-    fun setFileToUri(file: MultipartBody.Part) {
-        baseViewModelScope.launch {
-            showLoading()
-            postFileToImageUseCase(file = file)
-                .onSuccess {
-//                    profileImg.value = it.image_url
-                }
             dismissLoading()
         }
     }
@@ -158,25 +150,36 @@ class SetProfileViewModel @Inject constructor(
             showLoading()
             val idToken = sSharedPreferences.getString("idToken", null)
             val provider = sSharedPreferences.getString("provider", null)
-            if (nicknameInputContent.value == "") _navigationHandler.emit(
-                SetProfileNavigationAction.NavigateToToastMessage(
-                    "이름을 입력해주세요"
+            if (nicknameInputContent.value == "")
+                baseViewModelScope.launch {
+                    _navigationHandler.emit(
+                        SetProfileNavigationAction.NavigateToToastMessage(
+                            "이름을 입력해주세요"
+                        )
+                    )
+                }
+            else if (isManEvent.value == null) baseViewModelScope.launch {
+                _navigationHandler.emit(
+                    SetProfileNavigationAction.NavigateToToastMessage(
+                        "성별을 선택해주세요"
+                    )
                 )
-            )
-            else if (isManEvent.value == null) _navigationHandler.emit(
-                SetProfileNavigationAction.NavigateToToastMessage(
-                    "성별을 선택해주세요"
+            }
+            else if (schoolEmailInputContent.value == "") baseViewModelScope.launch {
+                _navigationHandler.emit(
+                    SetProfileNavigationAction.NavigateToToastMessage("학교 이메일을 입력주세요")
                 )
-            )
-            else if (schoolEmailInputContent.value == "") _navigationHandler.emit(
-                SetProfileNavigationAction.NavigateToToastMessage("학교 이메일을 입력주세요")
-            )
-            else if (schoolEmailCodeInputContent.value == "") _navigationHandler.emit(
-                SetProfileNavigationAction.NavigateToToastMessage("인증 코드를 입력해주세요")
-            )
-            else if (!isSchoolEmailAuth.value) _navigationHandler.emit(
-                SetProfileNavigationAction.NavigateToToastMessage("인증 코드가 틀립니다.")
-            )
+            }
+            else if (schoolEmailCodeInputContent.value == "") baseViewModelScope.launch {
+                _navigationHandler.emit(
+                    SetProfileNavigationAction.NavigateToToastMessage("인증 코드를 입력해주세요")
+                )
+            }
+            else if (!isSchoolEmailAuth.value) baseViewModelScope.launch {
+                _navigationHandler.emit(
+                    SetProfileNavigationAction.NavigateToToastMessage("인증 코드가 틀립니다.")
+                )
+            }
             else {
                 if (idToken != null && provider != null) {
 
@@ -193,6 +196,9 @@ class SetProfileViewModel @Inject constructor(
                         editor.putString("accessToken", it.accessToken)
                         editor.putString("refreshToken", it.refreshToken)
                         editor.commit()
+                        /**
+                         * fcm 등록 코드
+                         * */
                         val deviceId = sSharedPreferences.getString("deviceId", null)
                         val fcmToken = sSharedPreferences.getString("fcmToken", null)
 //                        postNotificationTokenUseCase(deviceId = deviceId!!, token = fcmToken!!)
