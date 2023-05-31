@@ -11,5 +11,5 @@
 
     <stroke
         android:width="4dp"
-        android:color="@color/main_yellow_light_mode" />
+        android:color="@color/blue_50" />
 </shape>

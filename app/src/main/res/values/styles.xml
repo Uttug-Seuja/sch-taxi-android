@@ -355,8 +355,8 @@
 
     <!-- 선택한 날짜를 표시할 색상 -->
     <style name="CalenderViewDatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorControlActivated">@color/main_yellow_light_mode</item>
-        <item name="colorControlHighlight">@color/main_yellow_light_mode</item>
+        <item name="colorControlActivated">@color/blue_50</item>
+        <item name="colorControlHighlight">@color/blue_50</item>
     </style>
 
     <!-- 달력 안의 숫자들에 적용되는 스타일 -->
