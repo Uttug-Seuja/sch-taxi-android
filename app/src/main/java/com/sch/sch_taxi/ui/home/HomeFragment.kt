@@ -25,6 +25,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>(R.layout.f
         binding.apply {
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
+            this.srRefresh.setOnRefreshListener {
+                viewModel.getReservation()
+                this.srRefresh.isRefreshing = false
+            }
         }
         exception = viewModel.errorEvent
         initAdapter()

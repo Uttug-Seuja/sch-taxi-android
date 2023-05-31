@@ -47,9 +47,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    override fun onClickedTaxiDetail(reservationId : Int) {
+    override fun onClickedTaxiDetail(reservationId: Int) {
         baseViewModelScope.launch {
-            _navigationHandler.emit(HomeNavigationAction.NavigateToTaxiDetail(reservationId= reservationId))
+            _navigationHandler.emit(HomeNavigationAction.NavigateToTaxiDetail(reservationId = reservationId))
         }
     }
 
@@ -63,18 +63,5 @@ class HomeViewModel @Inject constructor(
         baseViewModelScope.launch {
             _navigationHandler.emit(HomeNavigationAction.NavigateToTaxiCreate)
         }
-    }
-
-    private fun getTempList() {
-//        val test1 = listOf(
-//            Taxi("어린왕자(생택취페리 탄생 120주년 블라블라)", 1),
-//            Taxi("붕대 감기(윤이형 소설)", 1),
-//            Taxi("초록빛 힐링의 섬 아일랜드에 멈추다 하하하하", 1),
-//            Taxi("호모데우스(미래의 역사)", 1)
-//        )
-//        val testList = Taxis(test1)
-//        baseViewModelScope.launch {
-//            _taxiEvent.value = testList
-//        }
     }
 }
