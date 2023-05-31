@@ -1,5 +1,6 @@
 package com.sch.sch_taxi.ui.reservationsearchresult.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -11,11 +12,17 @@ import com.sch.sch_taxi.ui.reservationsearchresult.ReservationSearchResultAction
 
 class ReservationSearchResultAdapter(
     private val eventListener: ReservationSearchResultActionHandler,
-) : PagingDataAdapter<Reservation, ReservationSearchResultAdapter.ViewHolder>(ReservationItemDiffCallback){
+) : PagingDataAdapter<Reservation, ReservationSearchResultAdapter.ViewHolder>(
+    ReservationItemDiffCallback
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            HolderSearchReservationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            HolderSearchReservationBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
                 .apply {
                     eventListener = this@ReservationSearchResultAdapter.eventListener
                 }
@@ -32,14 +39,38 @@ class ReservationSearchResultAdapter(
         private val binding: HolderSearchReservationBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        private val gender =
+            hashMapOf<String, String>("ALL" to "남녀모두", "MAN" to "남자만", "WOMAN" to "여자만")
+        private val reserveStatus =
+            hashMapOf<String, String>(
+                "POSSIBLE" to "신청가능",
+                "IMMINENT" to "마감임박!",
+                "DEADLINE" to "마감"
+            )
+        private val stateTextColor = hashMapOf<String, String>(
+            "POSSIBLE" to "#FFFFFF",
+            "IMMINENT" to "#FFFFFF",
+            "DEADLINE" to "#cccccc"
+        )
+        private val stateBtnColor = hashMapOf<String, String>(
+            "POSSIBLE" to "#1570ff",
+            "IMMINENT" to "#FF4D37",
+            "DEADLINE" to "#EEEEEE"
+        )
+
         fun bind(item: Reservation) {
             binding.apply {
                 holder = item
+                startTimeText.text = item.departureDate.substring(11, 16)
+                binding.subTitleText.text =
+                    "${item.startPoint}->${item.destination}•${gender[item.gender]}"
+                binding.stateBtn.setCardBackgroundColor(Color.parseColor(stateBtnColor[item.reservationStatus]))
+                binding.stateText.text = reserveStatus[item.reservationStatus]
+                binding.stateText.setTextColor(Color.parseColor(stateTextColor[item.reservationStatus]))
                 executePendingBindings()
             }
         }
     }
-
 
 
     internal object ReservationItemDiffCallback : DiffUtil.ItemCallback<Reservation>() {
