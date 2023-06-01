@@ -37,7 +37,7 @@ class MyPageFragment :
             viewModel.navigationEvent.collectLatest {
                 when (it) {
                     is MyPageNavigationAction.NavigateToProfile -> navigate(
-                        MyPageFragmentDirections.actionMyPageFragmentToProfileFragment()
+                        MyPageFragmentDirections.actionMyPageFragmentToProfileFragment(-1)
                     )
 
                     is MyPageNavigationAction.NavigateToMyReservation -> navigate(
