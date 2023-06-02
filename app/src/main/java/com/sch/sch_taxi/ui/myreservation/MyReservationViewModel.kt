@@ -1,5 +1,6 @@
 package com.sch.sch_taxi.ui.myreservation
 
+import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.sch.domain.model.Reservation
@@ -40,9 +41,11 @@ class MyReservationViewModel @Inject constructor(
         baseViewModelScope.launch {
             getUserReservationUseCase()
                 .onSuccess {
-                    _userReservationEvent.value = it.reservation
+                    _userReservationEvent.value = it
                 }
-                .onError {  }
+                .onError {
+                    Log.d("ttt onError", it.toString())
+                }
         }
     }
 
