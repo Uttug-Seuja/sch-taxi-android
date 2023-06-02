@@ -80,11 +80,11 @@ class MyPageFragment :
         val dialog = DefaultYellowAlertDialog(
             alertDialogModel = res,
             clickToPositive = {
-                toastMessage("로그아웃")
+                toastMessage("로그아웃 되었습니다")
                 viewModel.onUserLogOut()
             },
             clickToNegative = {
-                toastMessage("취소")
+//                toastMessage("취소")
             }
         )
         dialog.show(childFragmentManager, TAG)
@@ -108,5 +108,10 @@ class MyPageFragment :
             }
         )
         dialog.show(childFragmentManager, TAG)
+    }
+
+    override fun onResume() {
+        viewModel.getProfile()
+        super.onResume()
     }
 }
