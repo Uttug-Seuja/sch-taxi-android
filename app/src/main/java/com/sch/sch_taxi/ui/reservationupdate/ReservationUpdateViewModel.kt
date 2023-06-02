@@ -50,6 +50,8 @@ class ReservationUpdateViewModel @Inject constructor(
     var destinationLatitude: MutableStateFlow<Double> = MutableStateFlow<Double>(0.0)
     var destinationLongitude: MutableStateFlow<Double> = MutableStateFlow<Double>(0.0)
 
+    var departureDate: MutableStateFlow<String> = MutableStateFlow<String>("")
+
     lateinit var dateEvent: MutableStateFlow<String>
 
 
@@ -139,7 +141,7 @@ class ReservationUpdateViewModel @Inject constructor(
                         title = titleEvent.value,
                         startPoint = startPlaceTitleEvent.value,
                         destination = destinationTitleEvent.value,
-                        departureDate = dateEvent.value,
+                        departureDate = departureDate.value,
                         startLatitude = startLatitude.value,
                         startLongitude = startLongitude.value,
                         destinationLatitude = destinationLatitude.value,
@@ -151,6 +153,8 @@ class ReservationUpdateViewModel @Inject constructor(
                                 it.reservationId
                             )
                         )
+                        _toastMessage.emit("수정되었습니다")
+
                     }
                         .onError { e ->
                             Log.d("ttt", e.toString())

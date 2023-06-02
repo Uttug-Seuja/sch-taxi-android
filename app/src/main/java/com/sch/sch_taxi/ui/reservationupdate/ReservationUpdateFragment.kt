@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentReservationUpdateBinding
@@ -13,6 +14,7 @@ import com.sch.sch_taxi.ui.reservationcreate.bottom.BottomSelectGander
 import com.sch.sch_taxi.ui.reservationcreate.bottom.BottomSelectSeat
 import com.sch.sch_taxi.ui.reservationcreate.bottom.BottomTaxiReservationPicker
 import com.sch.sch_taxi.ui.reservationcreate.bottom.GanderType
+import com.sch.sch_taxi.ui.reservationdetail.ReservationDetailFragmentArgs
 import com.sch.sch_taxi.util.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -31,6 +33,7 @@ class ReservationUpdateFragment :
     override val viewModel: ReservationUpdateViewModel by viewModels()
     private val startPlacesAdapter by lazy { KakaoLocalUpdateAdapter(viewModel) }
     private val destinationsAdapter by lazy { KakaoLocalUpdateAdapter(viewModel) }
+    private val args: ReservationUpdateFragmentArgs by navArgs()
 
     private val navController by lazy { findNavController() }
     override fun initStartView() {
@@ -38,6 +41,7 @@ class ReservationUpdateFragment :
             this.vm = viewModel
             this.lifecycleOwner = viewLifecycleOwner
         }
+        viewModel.reservationId.value = args.reservationId
         exception = viewModel.errorEvent
         initAdapter()
         initEditText()
@@ -49,11 +53,7 @@ class ReservationUpdateFragment :
                 when (it) {
                     is ReservationUpdateNavigationAction.NavigateToBack -> navController.popBackStack()
                     is ReservationUpdateNavigationAction.NavigateToSelectReservation -> reservationTaxiSend()
-                    is ReservationUpdateNavigationAction.NavigateToTaxiDetail -> navigate(
-                        ReservationUpdateFragmentDirections.actionReservationUpdateFragmentToTaxiDetailFragment(
-                            it.id
-                        )
-                    )
+                    is ReservationUpdateNavigationAction.NavigateToTaxiDetail -> navController.popBackStack()
 
                     is ReservationUpdateNavigationAction.NavigateToKeywordClicked -> {
                         deleteEditTextFocus()
@@ -105,6 +105,7 @@ class ReservationUpdateFragment :
 
     private fun reservationTaxiSend() {
         val bottomSheet = BottomTaxiReservationPicker(callback = {
+            viewModel.departureDate.value = it.toString()
             viewModel.dateEvent.value =
                 it.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 HH시 mm분"))
         })

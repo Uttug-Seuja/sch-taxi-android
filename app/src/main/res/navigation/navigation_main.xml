@@ -83,7 +83,9 @@
 
         <action
             android:id="@+id/action_taxiCreateFragment_to_taxiDetailFragment"
-            app:destination="@id/taxiDetailFragment" />
+            app:destination="@id/taxiDetailFragment"
+            app:popUpTo="@id/taxiCreateFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -100,7 +102,9 @@
 
         <action
             android:id="@+id/action_reservationUpdateFragment_to_taxiDetailFragment"
-            app:destination="@id/taxiDetailFragment" />
+            app:destination="@id/taxiDetailFragment"
+            app:popUpTo="@id/reservationUpdateFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -205,7 +209,6 @@
 
         <argument
             android:name="user_id"
-            android:defaultValue="-1"
             app:argType="integer" />
 
         <action
