@@ -9,6 +9,6 @@ import javax.inject.Inject
 class PostFileToImageUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(file: MultipartBody.Part): NetworkResult<ImageUrl> =
+    suspend operator fun invoke(file: MultipartBody.Part): NetworkResult<ImageUrl?> =
         repository.postFileToUrl(file = file)
 }

@@ -1,7 +1,9 @@
 package com.sch.sch_taxi.ui.saveprofile
 
 
+import android.util.Log
 import com.sch.domain.model.UserInfo
+import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetUserProfileUseCase
 import com.sch.domain.usecase.main.PatchUserProfileUseCase
@@ -64,8 +66,10 @@ class SaveProfileViewModel @Inject constructor(
             showLoading()
             postFileToImageUseCase(file = file)
                 .onSuccess {
-                    profileImg.value = it.image_url
+                    Log.d("ttt it", it.toString())
+                    profileImg.value = it!!.imageUrl!!
                 }
+                .onError { Log.d("ttt onError", it.toString()) }
             dismissLoading()
         }
     }
