@@ -80,12 +80,22 @@ class ReservationDetailFragment :
 
                     is ReservationDetailNavigationAction.NavigateToSelectSeatBottomDialog -> selectSeatBottomDialog()
                     is ReservationDetailNavigationAction.NavigateToUserProfile -> {
-                        navigate(ReservationDetailFragmentDirections.actionTaxiDetailFragmentToProfileFragment())
+                        navigate(
+                            ReservationDetailFragmentDirections.actionTaxiDetailFragmentToProfileFragment(
+                                it.userId
+                            )
+                        )
                     }
 
-                    is ReservationDetailNavigationAction.NavigateToReservationUpdate -> navigate(
-                        ReservationDetailFragmentDirections.actionTaxiDetailFragmentToReservationUpdateFragment(it.reservationId)
-                    )
+                    is ReservationDetailNavigationAction.NavigateToReservationUpdate -> {
+                        binding.mapView.removeAllViews()
+
+                        navigate(
+                            ReservationDetailFragmentDirections.actionTaxiDetailFragmentToReservationUpdateFragment(
+                                it.reservationId
+                            )
+                        )
+                    }
 
                 }
             }
@@ -135,13 +145,16 @@ class ReservationDetailFragment :
             BottomSelectSeat((viewModel.participationEvent.value!!.participationInfoList.ParticipationInfo)) {
                 lifecycleScope.launchWhenStarted {
                     val seatPosition = when (it) {
-                        0 -> "SEAT_1"
-                        1 -> "SEAT_2"
-                        2 -> "SEAT_3"
-                        3 -> "SEAT_4"
+                        1 -> "SEAT_1"
+                        2 -> "SEAT_2"
+                        3 -> "SEAT_3"
+                        4 -> "SEAT_4"
                         else -> "SEAT_1"
 
                     }
+                    Log.d("Ttt", seatPosition.toString())
+                    Log.d("Ttt", viewModel.participationEvent.value!!.iparticipation.toString())
+
                     if (viewModel.participationEvent.value!!.iparticipation) viewModel.onClickedPatchParticipation(
                         seatPosition = seatPosition
                     )
@@ -300,4 +313,16 @@ class ReservationDetailFragment :
 
         return ret.roundToLong() // 미터 단위
     }
+
+    override fun onResume() {
+        viewModel.getParticipation()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        binding.mapView.removeAllViews()
+        super.onPause()
+    }
+
+
 }

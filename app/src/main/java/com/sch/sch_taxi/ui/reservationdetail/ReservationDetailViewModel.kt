@@ -61,6 +61,7 @@ class ReservationDetailViewModel @Inject constructor(
 
     fun getReservationDetail() {
         baseViewModelScope.launch {
+            showLoading()
             getReservationDetailUseCase(reservationId = reservationId.value)
                 .onSuccess {
                     reservesEvent.value = it
@@ -75,12 +76,14 @@ class ReservationDetailViewModel @Inject constructor(
                     Log.d("ttt getReservationDetailUseCase onError", it.toString())
 
                 }
+            dismissLoading()
 
         }
     }
 
     fun getParticipation() {
         baseViewModelScope.launch {
+            showLoading()
             getParticipationUseCase(id = reservationId.value)
                 .onSuccess {
                     participationEvent.value = it
@@ -90,19 +93,20 @@ class ReservationDetailViewModel @Inject constructor(
                     Log.d("ttt onError", it.toString())
 
                 }
+            dismissLoading()
 
         }
     }
 
     fun onClickedParticipation(seatPosition: String) {
-        showLoading()
         baseViewModelScope.launch {
+            showLoading()
             postParticipationUseCase(
                 reservationId = reservationId.value,
                 seatPosition = seatPosition
             )
                 .onSuccess {
-                    Log.d("ttt onSuccess", it.toString())
+                    getParticipation()
                     _toastMessage.emit("신청되었습니다")
 
                 }
@@ -122,18 +126,22 @@ class ReservationDetailViewModel @Inject constructor(
     }
 
     fun onClickedPatchParticipation(seatPosition: String) {
-        showLoading()
+        Log.d("ttt it", reservationId.value.toString())
+        Log.d("ttt it", seatPosition.toString())
+
         baseViewModelScope.launch {
+            showLoading()
             patchParticipationUseCase(
                 participationId = reservationId.value,
                 seatPosition = seatPosition
             )
                 .onSuccess {
-                    Log.d("ttt onSuccess", it.toString())
+                    getParticipation()
                     _toastMessage.emit("수정되었습니다")
 
                 }
                 .onError {
+                    Log.d("ttt it", it.toString())
                     when (it) {
                         is BadRequestException -> baseViewModelScope.launch {
                             _toastMessage.emit("잘못된 성별입니다")
@@ -144,8 +152,8 @@ class ReservationDetailViewModel @Inject constructor(
                         }
                     }
                 }
+            dismissLoading()
         }
-        dismissLoading()
     }
 
     override fun onClickedBack() {
@@ -191,8 +199,8 @@ class ReservationDetailViewModel @Inject constructor(
     }
 
     fun onReservationDeleteClicked(reservationId: Int) {
-        showLoading()
         baseViewModelScope.launch {
+            showLoading()
             deleteReservationUseCase(reservationId = reservationId)
                 .onSuccess {
                     _toastMessage.emit("게시글이 삭제되었습니다")
@@ -201,9 +209,8 @@ class ReservationDetailViewModel @Inject constructor(
                     }
                 }
                 .onError { }
-
+            dismissLoading()
         }
-        dismissLoading()
     }
 
     fun onClickedUserReport(sendUserId: Int) {
@@ -214,12 +221,14 @@ class ReservationDetailViewModel @Inject constructor(
 
     fun onClickedReport(reservationId: Int, reportReason: String) {
         baseViewModelScope.launch {
+            showLoading()
             postReportsParticipationUseCase(
                 participationId = reservationId,
                 reportReason = reportReason,
                 reportType = reportReason
 
             ).onSuccess { }.onError { }
+            dismissLoading()
 
         }
     }
