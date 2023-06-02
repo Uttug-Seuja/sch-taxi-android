@@ -29,11 +29,7 @@ class MyPageViewModel @Inject constructor(
     val userProfile: MutableStateFlow<UserInfo?> = MutableStateFlow(null)
 
     init {
-        baseViewModelScope.launch {
-            getUserProfileUseCase().onSuccess {
-                userProfile.emit(it)
-            }
-        }
+        getProfile()
     }
 
     fun getProfile() {
