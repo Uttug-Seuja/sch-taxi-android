@@ -24,23 +24,13 @@ import java.io.IOException
 */
 
 class BearerInterceptor : Interceptor {
-    //todo 조건 분기로 인터셉터 구조 변경
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        Log.d("ttt BearerInterceptor", "BearerInterceptor 들어옴" )
         val request = chain.request()
-        Log.d("ttt request", request.toString() )
-
         val response = chain.proceed(request)
-        Log.d("ttt response", response.toString() )
-
         val baseResponse = response.toBaseResponse()
-
         var accessToken = ""
         var isRefreshable = false
-
-        Log.d("ttt baseResponse?.status  ", baseResponse?.status.toString() )
-        Log.d("ttt isRefreshable ", isRefreshable.toString() )
 
         if(baseResponse?.status == 401) {
             runBlocking {
