@@ -75,15 +75,7 @@ fun ReservationResponse.toDomain(): Reservation {
         gender = gender,
         passengerNum = passengerNum,
         currentNum = currentNum,
-        startLatitude = startLatitude,
-        startLongitude = startLongitude,
-        destinationLatitude = destinationLatitude,
-        destinationLongitude = destinationLongitude,
-        iHost = ihost,
-        hostInfo = hostInfo.toDomain(),
-        reservationStatus = reservationStatus,
-        createAt = createdAt,
-        updateAt = updateAt
+        reservationStatus = reservationStatus
     )
 }
 
@@ -117,6 +109,7 @@ fun PagingReservationKeywordResponse.toDomain(): PagingReservationKeyword {
     return PagingReservationKeyword(content = this.content.toDomain(), last = this.last)
 }
 
+@JvmName("KeywordResponseToKeyword")
 fun List<KeywordResponse>.toDomain(): List<Keyword> {
     return map {
         Keyword(it.keyword)
@@ -142,31 +135,22 @@ fun List<ParticipationInfoListResponse>.toDomain(): ParticipationInfoList {
     )
 }
 
+@JvmName("ReservationResponseToReservation")
+fun List<ReservationResponse>.toDomain(): List<Reservation> {
+    return map {
+        Reservation(
+            reservationId = it.reservationId,
+            title = it.title,
+            startPoint = it.startPoint,
+            destination = it.destination,
+            departureDate = it.departureDate,
+            gender = it.gender,
+            passengerNum = it.passengerNum,
+            currentNum = it.currentNum,
+            reservationStatus = it.reservationStatus
+        )
+    }
 
-fun List<ReservationResponse>.toDomain(): MyReservation {
-    return MyReservation(
-        map {
-            Reservation(
-                reservationId = it.reservationId,
-                title = it.title,
-                startPoint = it.startPoint,
-                destination = it.destination,
-                departureDate = it.departureDate,
-                gender = it.gender,
-                passengerNum = it.passengerNum,
-                currentNum = it.currentNum,
-                startLatitude = it.startLatitude,
-                startLongitude = it.startLongitude,
-                destinationLatitude = it.destinationLatitude,
-                destinationLongitude = it.destinationLongitude,
-                iHost = it.ihost,
-                hostInfo = it.hostInfo.toDomain(),
-                reservationStatus = it.reservationStatus,
-                createAt = it.createdAt,
-                updateAt = it.updateAt
-            )
-        }
-    )
 }
 
 fun OptionsResponse.toDomain(): Options {
@@ -195,7 +179,7 @@ fun List<NotificationResponse>.toDomain(): NotificationList {
 }
 
 fun ImageUrlResponse.toDomain(): ImageUrl {
-    return ImageUrl(image_url = this.image_url)
+    return ImageUrl(imageUrl = this.imageUrl)
 }
 
 fun List<ProfileResponse>.toDomain(): ProfileList {

@@ -103,10 +103,10 @@ interface MainRepository {
     suspend fun getParticipation(id: Int): NetworkResult<Participation>
 
     // 내 예약 글
-    suspend fun getUserReservation(): NetworkResult<MyReservation>
+    suspend fun getUserReservation(): NetworkResult<List<Reservation>>
 
     // 내가 참여한 예약
-    suspend fun getUserParticipation(): NetworkResult<MyReservation>
+    suspend fun getUserParticipation(): NetworkResult<List<Reservation>>
 
 //    // 야간 푸시알림 설정 <- 마이페이지
 //    suspend fun postOptionNight(): NetworkResult<Unit>
@@ -137,7 +137,7 @@ interface MainRepository {
     // 파일 URL로 바꾸기
     suspend fun postFileToUrl(
         file: MultipartBody.Part
-    ): NetworkResult<ImageUrl>
+    ): NetworkResult<ImageUrl?>
 
     // 그룹에서 나가기
 //    suspend fun deleteLeaveGroup(id: Int): NetworkResult<Group>

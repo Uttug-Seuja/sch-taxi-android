@@ -211,10 +211,11 @@ class MainRepositoryImpl @Inject constructor(
         participationId: Int,
         seatPosition: String
     ): NetworkResult<Unit> {
+        val body = SeatPositionRequest(seatPosition= seatPosition)
         return handleApi {
             mainAPIService.patchParticipation(
                 id = participationId,
-                seatPosition = seatPosition
+                body = body
             )
         }
     }
@@ -227,15 +228,15 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.getParticipation(id = id).data.toDomain() }
     }
 
-    override suspend fun getUserReservation(): NetworkResult<MyReservation> {
+    override suspend fun getUserReservation(): NetworkResult<List<Reservation>> {
         return handleApi {
-            mainAPIService.getUserReservation().data.reservation.toDomain()
+            mainAPIService.getUserReservation().data.toDomain()
         }
     }
 
-    override suspend fun getUserParticipation(): NetworkResult<MyReservation> {
+    override suspend fun getUserParticipation(): NetworkResult<List<Reservation>> {
         return handleApi {
-            mainAPIService.getUserParticipation().data.reservation.toDomain()
+            mainAPIService.getUserParticipation().data.toDomain()
         }
     }
 
