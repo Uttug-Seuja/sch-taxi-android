@@ -89,7 +89,7 @@ class ReservationSearchViewModel @Inject constructor(
                 if (keyword.isNotEmpty()) {
                     getReservationKeywordUseCase(
                         word = keyword,
-                        page = 1,
+                        page = 0,
                         size = 10,
                     ).onSuccess {
                         reservationSearchEvent.value = it.content
