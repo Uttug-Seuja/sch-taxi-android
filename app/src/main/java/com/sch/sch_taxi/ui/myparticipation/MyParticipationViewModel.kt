@@ -1,5 +1,6 @@
 package com.sch.sch_taxi.ui.myparticipation
 
+import android.util.Log
 import com.sch.domain.model.Reservation
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
@@ -34,9 +35,11 @@ class MyParticipationViewModel @Inject constructor(
         baseViewModelScope.launch {
             getUserParticipationUseCase()
                 .onSuccess {
-                    _userParticipationEvent.value = it.reservation
+                    _userParticipationEvent.value = it
                 }
-                .onError {  }
+                .onError {
+                    Log.d("ttt onError", it.toString())
+                }
         }
     }
     override fun onClickedBack() {
