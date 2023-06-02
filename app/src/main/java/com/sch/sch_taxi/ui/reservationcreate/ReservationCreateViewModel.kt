@@ -10,6 +10,7 @@ import com.sch.domain.onSuccess
 import com.sch.domain.runCatching
 import com.sch.domain.usecase.kakao.GetResultKeywordUseCase
 import com.sch.domain.usecase.main.PatchReservationUseCase
+import com.sch.domain.usecase.main.PostParticipationUseCase
 import com.sch.domain.usecase.main.PostReservationUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class ReservationCreateViewModel @Inject constructor(
     private val getResultKeywordUseCase: GetResultKeywordUseCase,
     private val postReservationUseCase: PostReservationUseCase,
+    private val postParticipationUseCase: PostParticipationUseCase
 ) : BaseViewModel(), ReservationCreateActionHandler {
 
     private val TAG = "TaxiCreateViewModel"
@@ -49,6 +51,8 @@ class ReservationCreateViewModel @Inject constructor(
     var destinationLatitude: MutableStateFlow<Double> = MutableStateFlow<Double>(0.0)
     var destinationLongitude: MutableStateFlow<Double> = MutableStateFlow<Double>(0.0)
     var departureDate: MutableStateFlow<String> = MutableStateFlow<String>("")
+    var seatPosition: MutableStateFlow<String> = MutableStateFlow<String>("")
+
 
     lateinit var seatEvent: MutableStateFlow<String>
     lateinit var genderEvent: MutableStateFlow<String>
@@ -108,15 +112,15 @@ class ReservationCreateViewModel @Inject constructor(
         baseViewModelScope.launch {
             if (isStartKeyword.value) {
                 startPlaceTitleEvent.value = kakaoLocal.name
-                startLatitude.value = kakaoLocal.x
-                startLongitude.value = kakaoLocal.y
+                startLatitude.value = kakaoLocal.y
+                startLongitude.value = kakaoLocal.x
                 startPlaceEvent.value = kakaoLocal
                 startPlacesEvent.value = KakaoLocals(emptyList())
             }
             if (isDestinationsKeyword.value) {
                 destinationTitleEvent.value = kakaoLocal.name
-                destinationLatitude.value = kakaoLocal.x
-                destinationLongitude.value = kakaoLocal.y
+                destinationLatitude.value = kakaoLocal.y
+                destinationLongitude.value = kakaoLocal.x
                 destinationEvent.value = kakaoLocal
                 destinationsEvent.value = KakaoLocals(emptyList())
             }
@@ -160,7 +164,18 @@ class ReservationCreateViewModel @Inject constructor(
                         destinationLongitude = destinationLongitude.value
 
                     ).onSuccess {
-                        _navigationHandler.emit(ReservationCreateNavigationAction.NavigateToTaxiDetail(it.reservationId))
+                        postParticipationUseCase(
+                            reservationId = it.reservationId,
+                            seatPosition = seatPosition.value
+                        )
+
+                        _navigationHandler.emit(
+                            ReservationCreateNavigationAction.NavigateToTaxiDetail(
+                                it.reservationId
+                            )
+                        )
+                        _toastMessage.emit("글이 생성되었습니다.")
+
                     }
                         .onError { e ->
                             Log.d("ttt onError", e.toString())

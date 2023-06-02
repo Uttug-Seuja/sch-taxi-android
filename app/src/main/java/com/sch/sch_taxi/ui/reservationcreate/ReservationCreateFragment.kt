@@ -114,6 +114,15 @@ class ReservationCreateFragment :
         val dialog: BottomSelectSeat = BottomSelectSeat(emptyList()) {
             lifecycleScope.launchWhenStarted {
                 viewModel.seatEvent.emit("${it}번 자리")
+
+                viewModel.seatPosition.value = when (it) {
+                    1 -> "SEAT_1"
+                    2 -> "SEAT_2"
+                    3 -> "SEAT_3"
+                    4 -> "SEAT_4"
+                    else -> "SEAT_1"
+
+                }
             }
         }
         dialog.show(childFragmentManager, TAG)
