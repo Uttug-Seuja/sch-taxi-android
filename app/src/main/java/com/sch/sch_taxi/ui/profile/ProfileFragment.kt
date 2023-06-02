@@ -43,9 +43,6 @@ class ProfileFragment :
                 when (it) {
                     ProfileNavigationAction.NavigateToBack -> navController.popBackStack()
                     ProfileNavigationAction.NavigateToEditProfile -> navigate(ProfileFragmentDirections.actionProfileFragmentToSaveProfile())
-                    ProfileNavigationAction.NavigateToMannerTemperatureInfo -> TODO()
-                    ProfileNavigationAction.NavigateToMannerUsageHistory -> TODO()
-                    ProfileNavigationAction.NavigateToMannerWritingHistory -> TODO()
                 }
             }
         }

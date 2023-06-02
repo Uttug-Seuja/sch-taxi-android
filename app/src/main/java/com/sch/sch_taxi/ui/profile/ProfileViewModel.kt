@@ -1,6 +1,7 @@
 package com.sch.sch_taxi.ui.profile
 
 
+import android.util.Log
 import com.sch.domain.model.UserInfo
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
@@ -33,15 +34,17 @@ class ProfileViewModel @Inject constructor(
     fun getProfile() {
         if (userId.value != -1) {
             baseViewModelScope.launch {
+                showLoading()
                 getOtherProfileUseCase(userId = userId.value)
                     .onSuccess { userProfile.value = it }
-                    .onError { }
+                dismissLoading()
             }
         } else {
             baseViewModelScope.launch {
+                showLoading()
                 getUserProfileUseCase()
                     .onSuccess { userProfile.value = it }
-                    .onError { }
+                dismissLoading()
             }
         }
     }
@@ -61,18 +64,6 @@ class ProfileViewModel @Inject constructor(
     override fun onClickedMannerTemperatureInfo() {
         baseViewModelScope.launch {
             mannerTemperatureInfoState.value = !mannerTemperatureInfoState.value
-        }
-    }
-
-    override fun onClickedMannerWritingHistory() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(ProfileNavigationAction.NavigateToMannerWritingHistory)
-        }
-    }
-
-    override fun onClickedMannerUsageHistory() {
-        baseViewModelScope.launch {
-            _navigationEvent.emit(ProfileNavigationAction.NavigateToMannerUsageHistory)
         }
     }
 }
