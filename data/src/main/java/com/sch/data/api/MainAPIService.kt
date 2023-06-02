@@ -48,13 +48,13 @@ interface MainAPIService {
     suspend fun getUserProfile(): BaseResponse<UserInfoResponse>
 
     // 다른 사람 프로필 가져오기
-    @GET("/api/v1/user/other-profile")
+    @GET("/api/v1/user/other-profile/{userId}")
     suspend fun getOtherProfile(
         @Path("userId") userId: Int
     ): BaseResponse<UserInfoResponse>
 
     // 유저 프로필 사진 변경하기
-    @PUT("/api/v1/user/profile")
+    @PATCH("/api/v1/user/profile")
     suspend fun patchUserProfile(@Body body: PatchUserProfileRequest): BaseResponse<UserInfoResponse>
 
     // 예약 글 생성
@@ -66,7 +66,7 @@ interface MainAPIService {
     suspend fun deleteReservation(@Path("reservationId") reservationId: Int): Unit
 
     // 예약 수정
-    @PUT("/api/v1/reservation/{reservationId}")
+    @PATCH("/api/v1/reservation/{reservationId}")
     suspend fun patchReservation(
         @Path("reservationId") reservationId: Int,
         @Body body: PatchReservationRequest
@@ -85,7 +85,7 @@ interface MainAPIService {
 
     // 내 예약 글
     @GET("/api/v1/reservation/my")
-    suspend fun getUserReservation(): BaseResponse<MyReservationResponse>
+    suspend fun getUserReservation(): BaseResponse<List<ReservationResponse>>
 
     // 예약 키워드 검색하기
     @GET("/api/v1/reservation/search/keyword")
@@ -116,13 +116,13 @@ interface MainAPIService {
 
     // 참여 취소하기
     @DELETE("api/v1/participation/delete/{reservationId}")
-    suspend fun deleteParticipation(@Path("participationId") id: Int): Unit
+    suspend fun deleteParticipation(@Path("reservationId") id: Int): Unit
 
     // 내가 참여한 게시글의 좌석 변경
     @PATCH("/api/v1/participation/update/{reservationId}")
     suspend fun patchParticipation(
-        @Path("participationId") id: Int,
-        @Body seatPosition: String
+        @Path("reservationId") id: Int,
+        @Body body: SeatPositionRequest
     ): Unit
 
     // 해당 게시글의 참여자 리스트 조회 및 내가 참여했는지 확인
@@ -131,7 +131,7 @@ interface MainAPIService {
 
     // 내가 참여한 예약글
     @GET("/api/v1/reservation/my/participation")
-    suspend fun getUserParticipation(): BaseResponse<MyReservationResponse>
+    suspend fun getUserParticipation(): BaseResponse<List<ReservationResponse>>
 
 //    // 야간 푸시알림 설정 <- 마이페이지
 //    @POST("/api/v1/options/night")
