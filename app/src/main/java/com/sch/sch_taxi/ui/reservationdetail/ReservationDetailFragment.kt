@@ -97,6 +97,11 @@ class ReservationDetailFragment :
                         )
                     }
 
+                    is ReservationDetailNavigationAction.NavigateToChatRoom -> navigate(
+                        ReservationDetailFragmentDirections.actionTaxiDetailFragmentToChatRoomFragment(
+                            it.reservationId
+                        )
+                    )
                 }
             }
         }

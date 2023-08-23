@@ -189,7 +189,7 @@ class ReservationDetailViewModel @Inject constructor(
 
         baseViewModelScope.launch {
             if (reservesEvent.value!!.reservationStatus == "CHATTING") {
-
+                _navigationHandler.emit(ReservationDetailNavigationAction.NavigateToChatRoom(reservationId = reservationId.value))
 
             } else {
                 _navigationHandler.emit(

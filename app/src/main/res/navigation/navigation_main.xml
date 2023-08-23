@@ -197,6 +197,10 @@
         app:popUpToInclusive="true"
         tools:layout="@layout/fragment_chat_room">
 
+        <argument
+            android:name="reservation_id"
+            app:argType="integer" />
+
     </fragment>
 
     <fragment
@@ -263,8 +267,8 @@
             app:argType="integer" />
 
         <action
-            android:id="@+id/action_taxiDetailFragment_to_chatFragment"
-            app:destination="@id/chatFragment" />
+            android:id="@+id/action_taxiDetailFragment_to_chatRoomFragment"
+            app:destination="@id/chatRoomFragment" />
         <action
             android:id="@+id/action_taxiDetailFragment_to_profileFragment"
             app:destination="@id/profileFragment" />

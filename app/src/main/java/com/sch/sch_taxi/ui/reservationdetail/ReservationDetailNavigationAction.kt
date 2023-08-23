@@ -9,5 +9,7 @@ sealed class ReservationDetailNavigationAction {
 
     object NavigateToSelectSeatBottomDialog : ReservationDetailNavigationAction()
     class NavigateToUserProfile(val userId: Int) : ReservationDetailNavigationAction()
+    class NavigateToChatRoom(val reservationId: Int) : ReservationDetailNavigationAction()
+
 
 }
