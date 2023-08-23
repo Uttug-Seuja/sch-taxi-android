@@ -320,6 +320,7 @@ class ReservationDetailFragment :
     }
 
     override fun onResume() {
+        binding.mapView.removeAllViews()
         viewModel.getParticipation()
         super.onResume()
     }
