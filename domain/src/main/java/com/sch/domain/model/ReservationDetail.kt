@@ -6,7 +6,7 @@ data class ReservationDetail(
     val startPoint: String,
     val destination: String,
     val departureDate: String,
-    val reservationStatus: String,
+    var reservationStatus: String,
     val gender: String,
     val passengerNum: Int,
     val currentNum: Int,

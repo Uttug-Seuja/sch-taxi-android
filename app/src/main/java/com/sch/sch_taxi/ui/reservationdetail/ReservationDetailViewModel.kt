@@ -87,6 +87,9 @@ class ReservationDetailViewModel @Inject constructor(
             getParticipationUseCase(id = reservationId.value)
                 .onSuccess {
                     participationEvent.value = it
+                    if (participationEvent.value!!.iparticipation) {
+                        reservesEvent.value!!.reservationStatus = "CHATTING"
+                    }
 
                 }
                 .onError {
@@ -183,10 +186,16 @@ class ReservationDetailViewModel @Inject constructor(
     }
 
     override fun onClickedSelectSeatBottomDialog() {
+
         baseViewModelScope.launch {
-            _navigationHandler.emit(
-                ReservationDetailNavigationAction.NavigateToSelectSeatBottomDialog
-            )
+            if (reservesEvent.value!!.reservationStatus == "CHATTING") {
+
+
+            } else {
+                _navigationHandler.emit(
+                    ReservationDetailNavigationAction.NavigateToSelectSeatBottomDialog
+                )
+            }
         }
     }
 

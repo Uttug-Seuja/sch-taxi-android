@@ -23,20 +23,22 @@ private val sex =
 private val gender =
     hashMapOf<String, String>("ALL" to "남녀모두", "MAN" to "남자만", "WOMAN" to "여자만")
 private val reserveStatus =
-    hashMapOf<String, String>("POSSIBLE" to "좌석선택", "IMMINENT" to "좌석선택", "DEADLINE" to "신청 마감")
+    hashMapOf<String, String>("CHATTING" to "채팅하기", "POSSIBLE" to "좌석선택", "IMMINENT" to "좌석선택", "DEADLINE" to "신청 마감")
 private val stateTextColor = hashMapOf<String, String>(
+    "CHATTING" to "#FFFFFF",
     "POSSIBLE" to "#FFFFFF",
     "IMMINENT" to "#FFFFFF",
     "DEADLINE" to "#cccccc"
 )
 private val stateBtnColor = hashMapOf<String, String>(
+    "CHATTING" to "#1570ff",
     "POSSIBLE" to "#1570ff",
     "IMMINENT" to "#1570ff",
     "DEADLINE" to "#EEEEEE"
 )
 
 private val reserveStatusText =
-    hashMapOf<String, String>("POSSIBLE" to "지금 신청하면\n진행확정이 빨라져요!", "IMMINENT" to "곧 마감됩니다!\n지금 신청하세요", "DEADLINE" to "다른 예약을 신청하세요")
+    hashMapOf<String, String>("CHATTING" to "신청한 사람들과\n약속을 잡아봐요!", "POSSIBLE" to "지금 신청하면\n진행확정이 빨라져요!", "IMMINENT" to "곧 마감됩니다!\n지금 신청하세요", "DEADLINE" to "다른 예약을 신청하세요")
 
 
 @BindingAdapter("sexText")
