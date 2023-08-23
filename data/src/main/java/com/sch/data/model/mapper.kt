@@ -124,13 +124,11 @@ fun ParticipationResponse.toDomain(): Participation {
 }
 
 fun List<ParticipationInfoListResponse>.toDomain(): ParticipationInfoList {
-    return ParticipationInfoList(
-        map {
-            ParticipationInfo(
-                seatPosition = it.seatPosition,
-                userInfo = it.userInfo.toDomain()
-            )
-        }
+    return ParticipationInfoList(map {
+        ParticipationInfo(
+            seatPosition = it.seatPosition, userInfo = it.userInfo.toDomain()
+        )
+    }
 
     )
 }
@@ -155,25 +153,22 @@ fun List<ReservationResponse>.toDomain(): List<Reservation> {
 
 fun OptionsResponse.toDomain(): Options {
     return Options(
-        new_option = this.new_option,
-        reaction_option = reaction_option,
-        night_option = night_option
+        new_option = this.new_option, reaction_option = reaction_option, night_option = night_option
     )
 }
 
 fun List<NotificationResponse>.toDomain(): NotificationList {
-    return NotificationList(
-        map {
-            Notification(
-                content = it.content,
-                created_date = it.created_date,
-                image_url = it.image_url,
-                notification_id = it.notification_id,
-                send_user_id = it.send_user_id,
-                title = it.title
-            )
+    return NotificationList(map {
+        Notification(
+            content = it.content,
+            created_date = it.created_date,
+            image_url = it.image_url,
+            notification_id = it.notification_id,
+            send_user_id = it.send_user_id,
+            title = it.title
+        )
 
-        }
+    }
 
     )
 }
@@ -183,15 +178,11 @@ fun ImageUrlResponse.toDomain(): ImageUrl {
 }
 
 fun List<ProfileResponse>.toDomain(): ProfileList {
-    return ProfileList(
-        map {
-            Profile(
-                id = it.id,
-                title = it.title,
-                url = it.url
-            )
-        }
-    )
+    return ProfileList(map {
+        Profile(
+            id = it.id, title = it.title, url = it.url
+        )
+    })
 }
 
 fun ProfileResponse.toDomain(): Profile {
@@ -199,18 +190,16 @@ fun ProfileResponse.toDomain(): Profile {
 }
 
 fun List<AlarmResponse>.toDomain(): AlarmList {
-    return AlarmList(
-        map {
-            Alarm(
-                content = it.content,
-                created_at = it.created_at,
-                title = it.title,
-                type = it.type,
-                user_id = it.user_id,
-                user_profile = it.user_profile
-            )
-        }
-    )
+    return AlarmList(map {
+        Alarm(
+            content = it.content,
+            created_at = it.created_at,
+            title = it.title,
+            type = it.type,
+            user_id = it.user_id,
+            user_profile = it.user_profile
+        )
+    })
 }
 
 fun ReportNotificationResponse.toDomain(): ReportNotification {
@@ -221,4 +210,17 @@ fun ReportNotificationResponse.toDomain(): ReportNotification {
         description = this.description,
         defendant_id = this.defendant_id
     )
+}
+
+fun List<ChatResponse>.toDomain(): PagingChat {
+    return PagingChat(map {
+        Chat(
+            reservationId = it.reservationId,
+            userId = it.userId,
+            writer = it.writer,
+            message = it.message,
+            createdAt = it.createdAt,
+            profilePath = it.profilePath
+        )
+    })
 }

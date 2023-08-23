@@ -163,12 +163,19 @@ interface MainRepository {
     ): NetworkResult<ReportNotification>
 
     suspend fun postEmail(
-        email : String
-    ) : NetworkResult<Unit>
+        email: String
+    ): NetworkResult<Unit>
 
     suspend fun postEmailCode(
-        email : String,
-        code : String
-    ) : NetworkResult<Unit>
+        email: String,
+        code: String
+    ): NetworkResult<Unit>
+
+    suspend fun postChat(
+        participationId: Int,
+        message: String,
+        writer: String,
+        cursor: String
+    ): NetworkResult<PagingChat>
 
 }

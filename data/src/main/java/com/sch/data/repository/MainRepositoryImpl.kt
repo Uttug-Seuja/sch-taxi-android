@@ -211,7 +211,7 @@ class MainRepositoryImpl @Inject constructor(
         participationId: Int,
         seatPosition: String
     ): NetworkResult<Unit> {
-        val body = SeatPositionRequest(seatPosition= seatPosition)
+        val body = SeatPositionRequest(seatPosition = seatPosition)
         return handleApi {
             mainAPIService.patchParticipation(
                 id = participationId,
@@ -336,6 +336,21 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun postEmailCode(email: String, code: String): NetworkResult<Unit> {
         val body = EmailCodeRequest(email = email, code = code)
         return handleApi { mainAPIService.postEmailCode(body) }
+    }
+
+    override suspend fun postChat(
+        participationId: Int,
+        message: String,
+        writer: String,
+        cursor: String
+    ): NetworkResult<PagingChat> {
+        val body = PostChatRequest(message = message, writer = writer, cursor = cursor)
+        return handleApi {
+            mainAPIService.postChat(
+                participationId = participationId,
+                body = body
+            ).data.chatPagingResponseDtoList.toDomain()
+        }
     }
 
 //    override suspend fun getAlarms(): NetworkResult<AlarmList> {
