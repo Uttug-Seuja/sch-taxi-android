@@ -339,7 +339,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun postChat(
-        participationId: Int,
+        reservationId: Int,
         message: String,
         writer: String,
         cursor: String
@@ -347,7 +347,7 @@ class MainRepositoryImpl @Inject constructor(
         val body = PostChatRequest(message = message, writer = writer, cursor = cursor)
         return handleApi {
             mainAPIService.postChat(
-                participationId = participationId,
+                reservationId = reservationId,
                 body = body
             ).data.chatPagingResponseDtoList.toDomain()
         }

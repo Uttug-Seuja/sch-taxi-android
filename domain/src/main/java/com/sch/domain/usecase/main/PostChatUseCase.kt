@@ -9,13 +9,13 @@ class PostChatUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
     suspend operator fun invoke(
-        participationId: Int,
+        reservationId: Int,
         message: String,
         writer: String,
         cursor: String
     ): NetworkResult<PagingChat> =
         repository.postChat(
-            participationId = participationId,
+            reservationId = reservationId,
             message = message,
             writer = writer,
             cursor = cursor

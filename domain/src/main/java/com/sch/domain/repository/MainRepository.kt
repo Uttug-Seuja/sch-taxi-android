@@ -172,7 +172,7 @@ interface MainRepository {
     ): NetworkResult<Unit>
 
     suspend fun postChat(
-        participationId: Int,
+        reservationId: Int,
         message: String,
         writer: String,
         cursor: String

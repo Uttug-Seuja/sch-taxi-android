@@ -205,9 +205,9 @@ interface MainAPIService {
     ): BaseResponse<Unit>
 
 
-    @POST("/api/v1/chat/{reservaionId}")
+    @POST("/api/v1/chat/{reservationId}")
     suspend fun postChat(
-        @Path("participationId") participationId: Int,
+        @Path("reservationId") reservationId: Int,
         @Body body: PostChatRequest
     ): BaseResponse<PagingChatResponse>
 
