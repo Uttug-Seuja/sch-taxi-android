@@ -4,22 +4,16 @@ import android.annotation.SuppressLint
 import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.google.gson.JsonParser
 import com.sch.data.api.ApiClient
 import com.sch.domain.model.Reservation
-import com.sch.domain.model.Taxi
-import com.sch.domain.model.Taxis
-import com.sch.domain.onError
-import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetReservationUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import com.sch.sch_taxi.di.PresentationApplication.Companion.sSharedPreferences
-import com.sch.sch_taxi.di.StompNetworkModule
 import com.sch.sch_taxi.ui.home.adapter.createReservationPager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.json.JSONObject
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
@@ -57,19 +51,6 @@ class HomeViewModel @Inject constructor(
     @SuppressLint("CheckResult")
     fun runStomp() {
 
-        val headerList = arrayListOf<StompHeader>()
-        headerList.add(
-            StompHeader(
-                "Authorization",
-                "Bearer "+ sSharedPreferences.getString("accessToken", null)
-            )
-        )
-        headerList.add(StompHeader("simpSessionId", "1"))
-        stompClient.connect(headerList)
-
-        stompClient.topic("/sub/chat/room/1").subscribe { topicMessage ->
-            Log.i("message Recieve", topicMessage.payload)
-        }
 
         stompClient.lifecycle().subscribe { lifecycleEvent ->
             when (lifecycleEvent.type) {
@@ -88,16 +69,55 @@ class HomeViewModel @Inject constructor(
                 }
 
                 else -> {
-                    Log.d("ttt",  "ELSE" + lifecycleEvent.message)
+                    Log.d("ttt", "ELSE" + lifecycleEvent.message)
                 }
             }
         }
 
-        val data = JSONObject()
-        data.put("roomId", 1)
-        data.put("message", "안녕하세요")
+        val headerList = arrayListOf<StompHeader>()
+        headerList.add(
+            StompHeader(
+                "Authorization",
+                "Bearer " + sSharedPreferences.getString("accessToken", null)
+            )
+        )
+        headerList.add(StompHeader("simpDestination", "/sub/chat/room/3"))
+        headerList.add(StompHeader("simpSessionId", "asdasdfdfd"))
 
+        stompClient.connect(headerList)
+
+//        Thread.sleep(10000)
+        Log.d("ttt isConnected", stompClient.isConnected.toString())
+
+        Log.d("ttt subscribe", "/sub/chat/room/3")
+
+
+
+//        Thread.sleep(10000)
+
+        stompClient.topic("/sub/chat/room/3").subscribe { topicMessage ->
+            val parser = JsonParser()
+            val obj: Any = parser.parse(topicMessage.payload)
+            Log.d("ttt message RabbitPathMatcherecieve", obj.toString())
+        }
+
+//        stompClient.topic("/sub/chat/room/2").subscribe()
+
+
+
+        val data = JSONObject()
+        data.put("roomId", "3")
+        data.put("message", "하이 병신들")
+        data.put("uid", "11")
+
+        Log.d("ttt send", "/pub/chat/message")
         stompClient.send("/pub/chat/message", data.toString()).subscribe()
+        stompClient.send("/pub/chat/message", data.toString()).subscribe()
+        stompClient.send("/pub/chat/message", data.toString()).subscribe()
+        stompClient.send("/pub/chat/message", data.toString()).subscribe()
+        stompClient.send("/pub/chat/message", data.toString()).subscribe()
+        stompClient.send("/pub/chat/message", data.toString()).subscribe()
+
     }
 
     fun getReservation() {
