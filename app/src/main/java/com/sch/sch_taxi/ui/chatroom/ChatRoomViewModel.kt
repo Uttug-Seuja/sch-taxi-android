@@ -1,11 +1,17 @@
 package com.sch.sch_taxi.ui.chatroom
 
 import android.util.Log
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.sch.domain.model.Chat
+import com.sch.domain.model.Reservation
 import com.sch.domain.model.Taxis
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.PostChatUseCase
 import com.sch.sch_taxi.base.BaseViewModel
+import com.sch.sch_taxi.ui.chatroom.adapter.createChatRoomPager
+import com.sch.sch_taxi.ui.home.adapter.createReservationPager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -25,26 +31,17 @@ class ChatRoomViewModel @Inject constructor(
     val navigationHandler: SharedFlow<ChatRoomNavigationAction> =
         _navigationHandler.asSharedFlow()
 
-    private val _notificationsEvent: MutableStateFlow<Taxis> =
-        MutableStateFlow(Taxis(emptyList()))
-    val notificationsEvent: StateFlow<Taxis> = _notificationsEvent
+    var chatRoomEvent: Flow<PagingData<Chat>> = emptyFlow()
 
 
     fun postChat() {
-        baseViewModelScope.launch {
-            postChatUseCase(
+        chatRoomEvent =
+            createChatRoomPager(
                 reservationId = reservationId.value,
-                message = "",
-                writer = "",
-                cursor = ""
-            ).onSuccess {
-                Log.d("ttt onSuccess postChat", it.toString())
-            }.onError {
-                Log.d("ttt onError postChat", it.toString())
-
-            }
-
-        }
+                postChatUseCase = postChatUseCase
+            ).flow.cachedIn(
+                baseViewModelScope
+            )
     }
 
     override fun onClickedBack() {

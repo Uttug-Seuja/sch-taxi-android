@@ -81,7 +81,7 @@ class HomeViewModel @Inject constructor(
                 "Bearer " + sSharedPreferences.getString("accessToken", null)
             )
         )
-        headerList.add(StompHeader("simpDestination", "/sub/chat/room/3"))
+        headerList.add(StompHeader("simpDestination", "/sub/chat/room/2"))
         headerList.add(StompHeader("simpSessionId", "asdasdfdfd"))
 
         stompClient.connect(headerList)
@@ -89,7 +89,7 @@ class HomeViewModel @Inject constructor(
 //        Thread.sleep(10000)
         Log.d("ttt isConnected", stompClient.isConnected.toString())
 
-        Log.d("ttt subscribe", "/sub/chat/room/3")
+        Log.d("ttt subscribe", "/sub/chat/room/2")
 
 
 
@@ -106,7 +106,7 @@ class HomeViewModel @Inject constructor(
 
 
         val data = JSONObject()
-        data.put("roomId", "3")
+        data.put("roomId", "2")
         data.put("message", "하이 병신들")
         data.put("uid", "11")
 

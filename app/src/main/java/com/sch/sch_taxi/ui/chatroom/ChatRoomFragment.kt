@@ -1,9 +1,11 @@
 package com.sch.sch_taxi.ui.chatroom
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.map
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentChatRoomBinding
@@ -22,7 +24,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel
         get() = R.layout.fragment_chat_room
 
     override val viewModel: ChatRoomViewModel by viewModels()
-    private val chatAdapter by lazy { ChatRoomAdapter(viewModel) }
+    private val chatRoomAdapter by lazy { ChatRoomAdapter(viewModel) }
     private val navController by lazy { findNavController() }
     private val args: ChatRoomFragmentArgs by navArgs()
 
@@ -48,10 +50,17 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel
                 }
             }
         }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.chatRoomEvent.collectLatest {
+                Log.d("ttt asdasdasdasd", "여기는?")
+                chatRoomAdapter.submitData(it)
+            }
+        }
     }
 
     private fun initAdapter() {
-//        binding.rvChat.adapter = notificationsAdapter
+        binding.rvChat.adapter = chatRoomAdapter
     }
 
     override fun initAfterBinding() {
