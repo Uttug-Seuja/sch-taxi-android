@@ -349,7 +349,7 @@ class MainRepositoryImpl @Inject constructor(
             mainAPIService.postChat(
                 reservationId = reservationId,
                 body = body
-            ).data.chatPagingResponseDtoList.toDomain()
+            ).data.toDomain()
         }
     }
 

@@ -212,8 +212,19 @@ fun ReportNotificationResponse.toDomain(): ReportNotification {
     )
 }
 
-fun List<ChatResponse>.toDomain(): PagingChat {
-    return PagingChat(map {
+fun PagingChatResponse.toDomain(): PagingChat {
+    return PagingChat(
+        reservationId = this.reservationId,
+        passengerNum = this.passengerNum,
+        currentNum = this.currentNum,
+        hostInfo = this.hostInfo,
+        chatPagingResponseDtoList = this.chatPagingResponseDtoList.toDomain()
+    )
+}
+
+fun List<ChatResponse>.toDomain(): List<Chat> {
+    return map {
+
         Chat(
             reservationId = it.reservationId,
             userId = it.userId,
@@ -222,5 +233,5 @@ fun List<ChatResponse>.toDomain(): PagingChat {
             createdAt = it.createdAt,
             profilePath = it.profilePath
         )
-    })
+    }
 }
