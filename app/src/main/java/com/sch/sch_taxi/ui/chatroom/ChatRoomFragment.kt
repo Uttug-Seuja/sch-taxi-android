@@ -5,12 +5,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.paging.map
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentChatRoomBinding
 import com.sch.sch_taxi.ui.chatroom.adapter.ChatRoomAdapter
-import com.sch.sch_taxi.ui.reservationdetail.ReservationDetailFragmentArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -53,7 +51,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel
 
         lifecycleScope.launchWhenStarted {
             viewModel.chatRoomEvent.collectLatest {
-                Log.d("ttt asdasdasdasd", "여기는?")
+                Log.d("ttt asdasdasdasd", it.toString())
                 chatRoomAdapter.submitData(it)
             }
         }

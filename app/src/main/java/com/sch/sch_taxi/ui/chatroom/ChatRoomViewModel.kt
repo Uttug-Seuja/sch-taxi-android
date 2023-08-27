@@ -32,14 +32,22 @@ class ChatRoomViewModel @Inject constructor(
         _navigationHandler.asSharedFlow()
 
     var chatRoomEvent: Flow<PagingData<Chat>> = emptyFlow()
+    private val _tempChatRoomEvent: MutableStateFlow<List<Chat>> =
+        MutableStateFlow(listOf())
+    val tempChatRoomEvent: StateFlow<List<Chat>> = _tempChatRoomEvent
 
+    val message = MutableStateFlow("")
+    val writer = MutableStateFlow("")
+    val cursor = MutableStateFlow("")
+    val userId = MutableStateFlow(0)
 
     fun postChat() {
         chatRoomEvent =
             createChatRoomPager(
                 reservationId = reservationId.value,
-                postChatUseCase = postChatUseCase
-            ).flow.cachedIn(
+                postChatUseCase = postChatUseCase,
+                chatRoomViewModel = this
+                ).flow.cachedIn(
                 baseViewModelScope
             )
     }
