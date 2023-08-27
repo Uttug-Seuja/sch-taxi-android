@@ -1,15 +1,17 @@
 package com.sch.data.model.remote.response
 
-data class ChatResponse (
-    val reservationId : Int,
-    val userId : Int,
-    val writer : String,
-    val message : String,
-    val createdAt : String,
-    val profilePath : String
+import com.google.gson.annotations.SerializedName
+
+data class ChatResponse(
+    @SerializedName("reservationId") val reservationId: Int,
+    @SerializedName("userId") val userId: Int,
+    @SerializedName("writer") val writer: String,
+    @SerializedName("message") val message: String,
+    @SerializedName("createdAt") val createdAt: String,
+    @SerializedName("profilePath") val profilePath: String,
+    @SerializedName("isend") val isend: Boolean
 
 )
-
 
 
 //"reservationId": 1,

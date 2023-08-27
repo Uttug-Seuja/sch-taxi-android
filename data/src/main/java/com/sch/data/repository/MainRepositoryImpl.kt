@@ -342,7 +342,8 @@ class MainRepositoryImpl @Inject constructor(
         reservationId: Int,
         message: String,
         writer: String,
-        cursor: String
+        cursor: String,
+        userId: Int
     ): NetworkResult<PagingChat> {
         val body = PostChatRequest(message = message, writer = writer, cursor = cursor)
         return handleApi {

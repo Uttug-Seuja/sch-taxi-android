@@ -218,20 +218,21 @@ fun PagingChatResponse.toDomain(): PagingChat {
         passengerNum = this.passengerNum,
         currentNum = this.currentNum,
         hostInfo = this.hostInfo,
-        chatPagingResponseDtoList = this.chatPagingResponseDtoList.toDomain()
+        chatPagingResponseDtoList = this.chatPagingResponseDtoList.toDomain(),
+        ihost = this.ihost
     )
 }
 
 fun List<ChatResponse>.toDomain(): List<Chat> {
     return map {
-
         Chat(
             reservationId = it.reservationId,
             userId = it.userId,
             writer = it.writer,
             message = it.message,
             createdAt = it.createdAt,
-            profilePath = it.profilePath
+            profilePath = it.profilePath,
+            isend = it.isend
         )
     }
 }

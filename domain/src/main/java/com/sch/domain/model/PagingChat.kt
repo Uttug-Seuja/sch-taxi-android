@@ -7,6 +7,7 @@ data class PagingChat(
     val passengerNum: Int,
     val currentNum: Int,
     val hostInfo: HostInfo,
+    val ihost : Boolean
 //  l last: Boolean
 )
 

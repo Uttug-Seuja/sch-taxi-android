@@ -6,7 +6,9 @@ data class Chat (
     val writer : String,
     val message : String,
     val createdAt : String,
-    val profilePath : String
+    val profilePath : String,
+    val isend : Boolean
+
 
 )
 

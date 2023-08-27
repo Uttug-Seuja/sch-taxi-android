@@ -12,12 +12,14 @@ class PostChatUseCase @Inject constructor(
         reservationId: Int,
         message: String,
         writer: String,
-        cursor: String
+        cursor: String,
+        userId: Int
     ): NetworkResult<PagingChat> =
         repository.postChat(
             reservationId = reservationId,
             message = message,
             writer = writer,
-            cursor = cursor
+            cursor = cursor,
+            userId = userId
         )
 }

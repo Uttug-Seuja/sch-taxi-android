@@ -8,6 +8,8 @@ data class PagingChatResponse(
     @SerializedName("passengerNum") val passengerNum: Int,
     @SerializedName("currentNum") val currentNum: Int,
     @SerializedName("hostInfo") val hostInfo: HostInfo,
-    @SerializedName("chatPagingResponseDtoList") val chatPagingResponseDtoList: List<ChatResponse>,
+    @SerializedName("chatHistoryDtoList") val chatPagingResponseDtoList: List<ChatResponse>,
+    @SerializedName("ihost") val ihost: Boolean,
+
 //    @SerializedName("last") val last: Boolean
 )

@@ -175,7 +175,8 @@ interface MainRepository {
         reservationId: Int,
         message: String,
         writer: String,
-        cursor: String
+        cursor: String,
+        userId : Int
     ): NetworkResult<PagingChat>
 
 }
