@@ -17,21 +17,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+<!--        tempAdapter = "@{vm.tempChatRoomEvent}"-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_chat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="16dp"
+            tools:listitem="@layout/holder_chat_room_me"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@+id/text_gchat_indicator"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:reverseLayout="true"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScroolingViewBehavior"
+            />
 
         <TextView
             android:id="@+id/text_gchat_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/view"
             app:layout_constraintStart_toStartOf="parent" />
@@ -59,16 +65,16 @@
                 android:layout_marginStart="16dp"
                 android:layout_toStartOf="@+id/button_gchat_send"
                 android:background="@android:color/transparent"
-                android:hint="Enter Message"
+                android:hint="메시지 보내기"
                 android:inputType="text"
                 android:maxLines="6" />
 
             <Button
                 android:id="@+id/button_gchat_send"
-                android:layout_width="64dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:background="?attr/selectableItemBackground"
+                android:layout_margin="5dp"
                 android:text="Send" />
 
         </RelativeLayout>
