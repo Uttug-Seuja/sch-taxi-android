@@ -1,6 +1,10 @@
 package com.sch.sch_taxi.ui.chat
 
-import com.sch.domain.model.Taxis
+import android.util.Log
+import com.sch.domain.model.ChatRoom
+import com.sch.domain.onError
+import com.sch.domain.onSuccess
+import com.sch.domain.usecase.main.GetChatRoomUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -9,6 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatViewModel @Inject constructor(
+    private val getChatRoomUseCase: GetChatRoomUseCase,
 ) : BaseViewModel(), ChatActionHandler {
 
     private val TAG = "ChatViewModel"
@@ -18,9 +23,24 @@ class ChatViewModel @Inject constructor(
     val navigationHandler: SharedFlow<ChatNavigationAction> =
         _navigationHandler.asSharedFlow()
 
-    private val _notificationsEvent: MutableStateFlow<Taxis> =
-        MutableStateFlow(Taxis(emptyList()))
-    val notificationsEvent: StateFlow<Taxis> = _notificationsEvent
+    private val _chatRoomEvent: MutableStateFlow<List<ChatRoom>> = MutableStateFlow(emptyList())
+    val chatRoomEvent: StateFlow<List<ChatRoom>> = _chatRoomEvent
+
+    init {
+        getChatRoom()
+    }
+
+    fun getChatRoom() {
+        baseViewModelScope.launch {
+            getChatRoomUseCase().onSuccess {
+                _chatRoomEvent.value = it
+
+            }.onError {
+                Log.d("Ttt", it.toString())
+            }
+        }
+
+    }
 
     override fun onClickedBack() {
         baseViewModelScope.launch {

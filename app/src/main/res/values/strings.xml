@@ -75,6 +75,7 @@
     <string name="notifications_empty_title">알림이 없습니다.</string>
     <string name="user_declare">차단하기</string>
     <string name="report">신고하기</string>
+    <string name="chat_room_empty_title">채팅 내역이 없습니다.</string>
 
 
 </resources>

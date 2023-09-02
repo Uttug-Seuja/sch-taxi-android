@@ -45,7 +45,7 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(R.layout.f
     }
 
     private fun initAdapter() {
-//        binding.rvChat.adapter = notificationsAdapter
+        binding.rvChatRoom.adapter = chatAdapter
     }
 
     override fun initAfterBinding() {

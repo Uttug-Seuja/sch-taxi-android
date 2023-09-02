@@ -236,3 +236,34 @@ fun List<ChatResponse>.toDomain(): List<Chat> {
         )
     }
 }
+
+@JvmName("ChatRoomResponse")
+fun List<ChatRoomResponse>.toDomain(): List<ChatRoom> {
+    return map {
+        ChatRoom(
+            reservationId = it.reservationId,
+            title = it.title,
+            startPoint = it.startPoint,
+            destination = it.destination,
+            reservationStatus = it.reservationStatus,
+            departureDate = it.departureDate,
+            gender = it.gender,
+            passengerNum = it.passengerNum,
+            currentNum = it.currentNum,
+            latestChat = it.latestChat.toDomain()
+        )
+    }
+}
+
+@JvmName("LatestChatResponse")
+fun LatestChatResponse.toDomain(): LatestChat {
+    return LatestChat(
+        reservationId = this.reservationId,
+        userId = this.userId,
+        participationId = this.participationId,
+        writer = this.writer,
+        message = this.message,
+        createdAt = this.createdAt,
+        profilePath = this.profilePath
+    )
+}
