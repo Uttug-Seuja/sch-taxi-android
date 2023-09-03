@@ -7,6 +7,7 @@ import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentChatBinding
 import com.sch.sch_taxi.ui.chat.adapter.ChatAdapter
+import com.sch.sch_taxi.ui.chatroom.ChatRoomFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 
@@ -37,8 +38,8 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(R.layout.f
             viewModel.navigationHandler.collectLatest {
                 when(it) {
                     is ChatNavigationAction.NavigateToBack -> navController.popBackStack()
-                    ChatNavigationAction.NavigateToChatting -> TODO()
-                    ChatNavigationAction.NavigateToTaxiRoom -> TODO()
+                    is ChatNavigationAction.NavigateToChattingRoom -> navigate(ChatFragmentDirections.actionChatFragmentToChatRoomFragment(it.reservationId))
+                    is ChatNavigationAction.NavigateToTaxiRoom -> TODO()
                 }
             }
         }

@@ -53,4 +53,10 @@ class ChatViewModel @Inject constructor(
             _navigationHandler.emit(ChatNavigationAction.NavigateToBack)
         }
     }
+
+    override fun onClickedChatRoom(reservationId : Int) {
+        baseViewModelScope.launch {
+            _navigationHandler.emit(ChatNavigationAction.NavigateToChattingRoom(reservationId = reservationId))
+        }
+    }
 }
