@@ -354,6 +354,12 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getChatRoom(): NetworkResult<List<ChatRoom>> {
+        return handleApi {
+            mainAPIService.getChatRoom().data.toDomain()
+        }
+    }
+
 //    override suspend fun getAlarms(): NetworkResult<AlarmList> {
 //        return handleApi { mainAPIService.getAlarms().data.list.toDomain() }
 //    }

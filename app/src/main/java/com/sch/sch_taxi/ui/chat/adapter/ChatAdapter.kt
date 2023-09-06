@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.sch.domain.model.ChatRoom
 import com.sch.domain.model.Taxi
 import com.sch.sch_taxi.databinding.HolderChatBinding
 import com.sch.sch_taxi.ui.chat.ChatActionHandler
 
 class ChatAdapter(
     private val eventListener: ChatActionHandler,
-) : ListAdapter<Taxi, ChatAdapter.ChatViewHolder>(ChatItemDiffCallback) {
+) : ListAdapter<ChatRoom, ChatAdapter.ChatViewHolder>(ChatItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         return ChatViewHolder(
@@ -32,7 +33,7 @@ class ChatAdapter(
         private val binding: HolderChatBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Taxi) {
+        fun bind(item: ChatRoom) {
             binding.apply {
                 holder = item
                 executePendingBindings()
@@ -42,11 +43,11 @@ class ChatAdapter(
 
 
 
-    internal object ChatItemDiffCallback : DiffUtil.ItemCallback<Taxi>() {
-        override fun areItemsTheSame(oldItem: Taxi, newItem: Taxi) =
+    internal object ChatItemDiffCallback : DiffUtil.ItemCallback<ChatRoom>() {
+        override fun areItemsTheSame(oldItem: ChatRoom, newItem: ChatRoom) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: Taxi, newItem: Taxi) =
+        override fun areContentsTheSame(oldItem: ChatRoom, newItem: ChatRoom) =
             oldItem.equals(newItem)
     }
 }

@@ -11,7 +11,7 @@ interface MainRepository {
         provider: String,
         name: String,
         gender: String,
-        profilePath: String
+        profilePath: String,
     ): NetworkResult<Token>
 
     // 토큰 리프래쉬
@@ -50,7 +50,7 @@ interface MainRepository {
         startLatitude: Double,
         startLongitude: Double,
         destinationLatitude: Double,
-        destinationLongitude: Double
+        destinationLongitude: Double,
     ): NetworkResult<Reservation>
 
     // 예약 수정
@@ -63,7 +63,7 @@ interface MainRepository {
         startLatitude: Double,
         startLongitude: Double,
         destinationLatitude: Double,
-        destinationLongitude: Double
+        destinationLongitude: Double,
     ): NetworkResult<Reservation>
 
     // 예약 삭제
@@ -84,7 +84,7 @@ interface MainRepository {
 
     // 예약 검색하기
     suspend fun getReservationSearch(
-        keyword: String, page: Int, size: Int
+        keyword: String, page: Int, size: Int,
     ): NetworkResult<PagingReservation>
 
     // 참여하기
@@ -93,7 +93,7 @@ interface MainRepository {
     // 참여 수정하기
     suspend fun patchParticipation(
         participationId: Int,
-        seatPosition: String
+        seatPosition: String,
     ): NetworkResult<Unit>
 
     // 참여 취소하기
@@ -136,7 +136,7 @@ interface MainRepository {
 
     // 파일 URL로 바꾸기
     suspend fun postFileToUrl(
-        file: MultipartBody.Part
+        file: MultipartBody.Part,
     ): NetworkResult<ImageUrl?>
 
     // 그룹에서 나가기
@@ -159,16 +159,16 @@ interface MainRepository {
 
     // 알림 신고하기
     suspend fun postReportsParticipation(
-        participationId: Int, reportReason: String, reportType: String
+        participationId: Int, reportReason: String, reportType: String,
     ): NetworkResult<ReportNotification>
 
     suspend fun postEmail(
-        email: String
+        email: String,
     ): NetworkResult<Unit>
 
     suspend fun postEmailCode(
         email: String,
-        code: String
+        code: String,
     ): NetworkResult<Unit>
 
     suspend fun postChat(
@@ -176,7 +176,9 @@ interface MainRepository {
         message: String,
         writer: String,
         cursor: String,
-        userId : Int
+        userId: Int,
     ): NetworkResult<PagingChat>
+
+    suspend fun getChatRoom(): NetworkResult<List<ChatRoom>>
 
 }

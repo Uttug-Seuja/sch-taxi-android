@@ -12,7 +12,7 @@ interface MainAPIService {
     suspend fun postRegister(
         @Query("idToken") idToken: String,
         @Query("provider") provider: String,
-        @Body body: PostRegisterRequest
+        @Body body: PostRegisterRequest,
     ): BaseResponse<LoginResponse>
 
     // 토큰 리프래쉬
@@ -22,7 +22,7 @@ interface MainAPIService {
     // 로그인 요청 <- 가입한 유저 <- 1번 true일 경우
     @POST("/api/v1/credentials/login")
     suspend fun postLogin(
-        @Query("idToken") idToken: String, @Query("provider") provider: String
+        @Query("idToken") idToken: String, @Query("provider") provider: String,
     ): BaseResponse<LoginResponse>
 
     // 로그아웃
@@ -32,7 +32,7 @@ interface MainAPIService {
     // 토큰 검증 <- 로그인시 제일 처음 1번
     @GET("/api/v1/credentials/oauth/valid/register")
     suspend fun getTokenValidation(
-        @Query("idToken") idToken: String, @Query("provider") provider: String
+        @Query("idToken") idToken: String, @Query("provider") provider: String,
     ): BaseResponse<IsRegisteredResponse>
 
 //    // 회원 탈퇴
@@ -50,7 +50,7 @@ interface MainAPIService {
     // 다른 사람 프로필 가져오기
     @GET("/api/v1/user/other-profile/{userId}")
     suspend fun getOtherProfile(
-        @Path("userId") userId: Int
+        @Path("userId") userId: Int,
     ): BaseResponse<UserInfoResponse>
 
     // 유저 프로필 사진 변경하기
@@ -69,7 +69,7 @@ interface MainAPIService {
     @PATCH("/api/v1/reservation/{reservationId}")
     suspend fun patchReservation(
         @Path("reservationId") reservationId: Int,
-        @Body body: PatchReservationRequest
+        @Body body: PatchReservationRequest,
     ): BaseResponse<ReservationResponse>
 
     // 예약 상세정보
@@ -111,7 +111,7 @@ interface MainAPIService {
     @POST("/api/v1/participation/create/{reservationId}")
     suspend fun postParticipation(
         @Path("reservationId") reservationId: Int,
-        @Body body: SeatPositionRequest
+        @Body body: SeatPositionRequest,
     ): Unit
 
     // 참여 취소하기
@@ -122,7 +122,7 @@ interface MainAPIService {
     @PATCH("/api/v1/participation/update/{reservationId}")
     suspend fun patchParticipation(
         @Path("reservationId") id: Int,
-        @Body body: SeatPositionRequest
+        @Body body: SeatPositionRequest,
     ): Unit
 
     // 해당 게시글의 참여자 리스트 조회 및 내가 참여했는지 확인
@@ -190,26 +190,29 @@ interface MainAPIService {
     @POST("/api/v1/report/create/{participationId}")
     suspend fun postReportsParticipation(
         @Path("participationId") participationId: Int,
-        @Body body: PostReportsNotificationRequest
+        @Body body: PostReportsNotificationRequest,
     ): BaseResponse<ReportNotificationResponse>
 //    ): BaseResponse<Unit>
 
     @POST("/api/v1/email")
     suspend fun postEmail(
-        @Body body: EmailRequest
+        @Body body: EmailRequest,
     ): BaseResponse<Unit>
 
     @POST("/api/v1/email/code")
     suspend fun postEmailCode(
-        @Body body: EmailCodeRequest
+        @Body body: EmailCodeRequest,
     ): BaseResponse<Unit>
 
 
     @POST("/api/v1/chat/{reservationId}")
     suspend fun postChat(
         @Path("reservationId") reservationId: Int,
-        @Body body: PostChatRequest
+        @Body body: PostChatRequest,
     ): BaseResponse<PagingChatResponse>
+
+    @GET("/api/v1/reservation/chat/room")
+    suspend fun getChatRoom(): BaseResponse<List<ChatRoomResponse>>
 
 
 }

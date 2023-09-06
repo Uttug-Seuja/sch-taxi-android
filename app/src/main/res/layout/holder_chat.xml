@@ -14,11 +14,12 @@
 
         <variable
             name="holder"
-            type="com.sch.domain.model.Taxi" />
+            type="com.sch.domain.model.ChatRoom" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        onSingleClick="@{() -> eventListener.onClickedChatRoom(holder.reservationId)}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -39,6 +40,7 @@
 
             <ImageView
                 android:id="@+id/userProfileImage"
+                glide1000="@{holder.latestChat.profilePath}"
                 android:layout_width="58dp"
                 android:layout_height="58dp"
                 android:layout_margin="0dp"
@@ -63,6 +65,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:text="@{holder.title}"
                 android:textSize="18sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/timeText"
@@ -74,6 +77,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:text="@{holder.latestChat.message}"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -83,6 +87,7 @@
                 android:id="@+id/timeText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:text="@{holder.latestChat.createdAt}"
                 android:textSize="12sp"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

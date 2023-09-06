@@ -12,7 +12,9 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.sch.domain.model.ChatRoom
 import com.sch.domain.model.Taxis
+import com.sch.sch_taxi.ui.chat.adapter.ChatAdapter
 import com.sch.sch_taxi.ui.myparticipation.adapter.MyParticipationAdapter
 
 @BindingAdapter("addImageCardViewVisible")
@@ -49,13 +51,13 @@ fun TextView.bindEditTextVisible(textLength: Int) {
     }
 }
 
-//@BindingAdapter("notificationsAdapter")
-//fun RecyclerView.bindNotificationsAdapter(itemList: Taxis) {
-//    val boundAdapter = this.adapter
-//    if (boundAdapter is MyParticipationAdapter) {
-//        boundAdapter.submitList(itemList.Taxi)
-//    }
-//}
+@BindingAdapter("chatRoomAdapter")
+fun RecyclerView.bindChatRoomAdapter(itemList: List<ChatRoom>) {
+    val boundAdapter = this.adapter
+    if (boundAdapter is ChatAdapter) {
+        boundAdapter.submitList(itemList)
+    }
+}
 
 @BindingAdapter("textVisible")
 fun TextView.bindTextVisible(text: String) {

@@ -3,7 +3,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="vm"
             type="com.sch.sch_taxi.ui.chat.ChatViewModel" />
@@ -12,8 +14,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.view.SearchActivity"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:context=".ui.view.SearchActivity">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_header"
             android:layout_width="0dp"
@@ -40,7 +43,8 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_notifications"
+            android:id="@+id/rv_chat_room"
+            chatRoomAdapter="@{vm.chatRoomEvent}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="visible"
@@ -55,7 +59,7 @@
             android:background="#ffffff"
             android:gravity="center"
             android:orientation="vertical"
-            android:text="@string/notifications_empty_title"
+            android:text="@string/chat_room_empty_title"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@+id/container_header">
 
