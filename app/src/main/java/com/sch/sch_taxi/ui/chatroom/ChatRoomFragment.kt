@@ -1,20 +1,28 @@
 package com.sch.sch_taxi.ui.chatroom
 
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentChatRoomBinding
 import com.sch.sch_taxi.ui.chatroom.adapter.ChatRoomAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel>(R.layout.fragment_chat_room) {
+class ChatRoomFragment :
+    BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel>(R.layout.fragment_chat_room) {
 
     private val TAG = "ChatFragment"
 
@@ -29,6 +37,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel
     override fun initStartView() {
         viewModel.reservationId.value = args.reservationId
         viewModel.postChat()
+        viewModel.runStomp()
 
         binding.apply {
             this.vm = viewModel
@@ -41,7 +50,7 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
-                when(it) {
+                when (it) {
                     is ChatRoomNavigationAction.NavigateToBack -> navController.popBackStack()
                     ChatRoomNavigationAction.NavigateToChatting -> TODO()
                     ChatRoomNavigationAction.NavigateToTaxiRoom -> TODO()
@@ -49,10 +58,24 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel
             }
         }
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.chatRoomEvent.collectLatest {
-                Log.d("ttt asdasdasdasd", it.toString())
-                chatRoomAdapter.submitData(it)
+        collectLatestStateFlow(viewModel.chatRoomEvent) {
+            Log.d("ttt", "어뎁터 초기화??")
+
+            chatRoomAdapter.submitData(it)
+        }
+
+//        lifecycleScope.launchWhenStarted {
+//            viewModel.chatRoomEvent.collectLatest {
+//                Log.d("ttt", "어뎁터 초기화??")
+//                chatRoomAdapter.submitData(it)
+//            }
+//        }
+    }
+
+    fun <T> Fragment.collectLatestStateFlow(flow: Flow<T>, collector: suspend (T) -> Unit) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                flow.collectLatest(collector)
             }
         }
     }
@@ -62,5 +85,10 @@ class ChatRoomFragment : BaseFragment<FragmentChatRoomBinding, ChatRoomViewModel
     }
 
     override fun initAfterBinding() {
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.disconnect()
     }
 }

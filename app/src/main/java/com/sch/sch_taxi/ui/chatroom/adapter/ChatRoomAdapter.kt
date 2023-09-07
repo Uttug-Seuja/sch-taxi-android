@@ -133,23 +133,29 @@ class ChatRoomAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = if (viewType == VIEW_TYPE_USER_MESSAGE_ME) {
-            HolderChatRoomMeBinding.inflate(inflater, parent, false)
+            HolderChatRoomMeBinding.inflate(inflater, parent, false).apply {
+                eventListener = this@ChatRoomAdapter.eventListener
+
+            }
         } else {
-            HolderChatRoomOtherBinding.inflate(inflater, parent, false)
+            HolderChatRoomOtherBinding.inflate(inflater, parent, false).apply {
+                eventListener = this@ChatRoomAdapter.eventListener
+
+            }
         }
 
         return when (viewType) {
-            VIEW_TYPE_USER_MESSAGE_ME -> TempAdapter.MyUserHolder(binding as HolderChatRoomMeBinding)
-            VIEW_TYPE_USER_MESSAGE_OTHER -> TempAdapter.OtherUserHolder(binding as HolderChatRoomOtherBinding)
-            else -> TempAdapter.MyUserHolder(binding as HolderChatRoomMeBinding) // Default to my user holder
+            VIEW_TYPE_USER_MESSAGE_ME -> MyUserHolder(binding as HolderChatRoomMeBinding)
+            VIEW_TYPE_USER_MESSAGE_OTHER -> OtherUserHolder(binding as HolderChatRoomOtherBinding)
+            else -> MyUserHolder(binding as HolderChatRoomMeBinding) // Default to my user holder
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
         when (holder) {
-            is TempAdapter.MyUserHolder -> item?.let { holder.bind(it) }
-            is TempAdapter.OtherUserHolder -> item?.let { holder.bind(it) }
+            is MyUserHolder -> item?.let { holder.bind(it) }
+            is OtherUserHolder -> item?.let { holder.bind(it) }
         }
     }
 

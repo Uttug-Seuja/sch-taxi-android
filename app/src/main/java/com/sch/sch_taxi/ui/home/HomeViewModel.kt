@@ -41,10 +41,10 @@ class HomeViewModel @Inject constructor(
     init {
         getReservation()
 
-        Log.d("ttt", url.toString())
-        baseViewModelScope.launch {
-            runStomp()
-        }
+//        Log.d("ttt", url.toString())
+//        baseViewModelScope.launch {
+//            runStomp()
+//        }
 
     }
 
@@ -86,16 +86,12 @@ class HomeViewModel @Inject constructor(
 
         stompClient.connect(headerList)
 
-//        Thread.sleep(10000)
+        Thread.sleep(10000)
         Log.d("ttt isConnected", stompClient.isConnected.toString())
 
         Log.d("ttt subscribe", "/sub/chat/room/2")
 
-
-
-//        Thread.sleep(10000)
-
-        stompClient.topic("/sub/chat/room/3").subscribe { topicMessage ->
+        stompClient.topic("/sub/chat/room/2").subscribe { topicMessage ->
             val parser = JsonParser()
             val obj: Any = parser.parse(topicMessage.payload)
             Log.d("ttt message RabbitPathMatcherecieve", obj.toString())
@@ -108,7 +104,7 @@ class HomeViewModel @Inject constructor(
         val data = JSONObject()
         data.put("roomId", "2")
         data.put("message", "하이 병신들")
-        data.put("uid", "11")
+        data.put("uid", "1")
 
         Log.d("ttt send", "/pub/chat/message")
         stompClient.send("/pub/chat/message", data.toString()).subscribe()

@@ -13,7 +13,6 @@ import com.sch.domain.usecase.main.PostChatUseCase
 import com.sch.sch_taxi.ui.chatroom.ChatRoomViewModel
 
 fun createChatRoomPager(
-    reservationId: Int,
     postChatUseCase: PostChatUseCase,
     chatRoomViewModel: ChatRoomViewModel
 ): Pager<Int, Chat> = Pager(
@@ -21,7 +20,6 @@ fun createChatRoomPager(
     initialKey = 0,
     pagingSourceFactory = {
         ChatRoomPagingSource(
-            reservationId = reservationId,
             postChatUseCase = postChatUseCase,
             chatRoomViewModel = chatRoomViewModel
         )
@@ -29,7 +27,6 @@ fun createChatRoomPager(
 )
 
 class ChatRoomPagingSource(
-    private val reservationId: Int,
     private val postChatUseCase: PostChatUseCase,
     private val chatRoomViewModel: ChatRoomViewModel
 ) : PagingSource<Int, Chat>() {
@@ -40,16 +37,29 @@ class ChatRoomPagingSource(
         val pageIndex = params.key ?: 0
 
 
+        Log.d("ttt participationId", chatRoomViewModel.participationId.value.toString())
+        Log.d("ttt reservationId", chatRoomViewModel.reservationId.value.toString())
+
+        Log.d("ttt message", chatRoomViewModel.message.value)
+        Log.d("ttt writer", chatRoomViewModel.writer.value)
+        Log.d("ttt cursor", chatRoomViewModel.cursor.value)
+        Log.d("ttt userId", chatRoomViewModel.userId.value.toString())
+
         val result = postChatUseCase(
-            reservationId = reservationId,
+            participationId = chatRoomViewModel.participationId.value,
+            reservationId = chatRoomViewModel.reservationId.value,
             message = chatRoomViewModel.message.value,
             writer = chatRoomViewModel.writer.value,
             cursor = chatRoomViewModel.cursor.value,
-            userId = chatRoomViewModel.userId.value
+            userId = chatRoomViewModel.userId.value,
         ).onSuccess {
-            Log.d("ttt message", chatRoomViewModel.message.value)
-            Log.d("ttt writer", chatRoomViewModel.writer.value)
-            Log.d("ttt cursor", chatRoomViewModel.cursor.value)
+//            Log.d("ttt participationId", chatRoomViewModel.participationId.value.toString())
+//            Log.d("ttt reservationId", chatRoomViewModel.reservationId.value.toString())
+//
+//            Log.d("ttt message", chatRoomViewModel.message.value)
+//            Log.d("ttt writer", chatRoomViewModel.writer.value)
+//            Log.d("ttt cursor", chatRoomViewModel.cursor.value)
+//            Log.d("ttt userId", chatRoomViewModel.userId.value.toString())
 
             Log.d("ttt s", it.toString())
         }.onError {
@@ -65,10 +75,19 @@ class ChatRoomPagingSource(
                         Log.d("Ttt pageIndex", pageIndex.toString())
 
                         Log.d("Ttt last", contents.chatPagingResponseDtoList.last().message)
-                        chatRoomViewModel.message.value = contents.chatPagingResponseDtoList.last().message
-                        chatRoomViewModel.writer.value = contents.chatPagingResponseDtoList.last().writer
-                        chatRoomViewModel.cursor.value = contents.chatPagingResponseDtoList.last().createdAt
-                        chatRoomViewModel.userId.value = contents.chatPagingResponseDtoList.last().userId
+
+                        chatRoomViewModel.myParticipationId.value = contents.myParticipationId
+
+                        chatRoomViewModel.message.value =
+                            contents.chatPagingResponseDtoList.last().message
+                        chatRoomViewModel.writer.value =
+                            contents.chatPagingResponseDtoList.last().writer
+                        chatRoomViewModel.cursor.value =
+                            contents.chatPagingResponseDtoList.last().createdAt
+                        chatRoomViewModel.userId.value =
+                            contents.chatPagingResponseDtoList.last().userId
+                        chatRoomViewModel.participationId.value =
+                            contents.chatPagingResponseDtoList.last().participationId
 
                         pageIndex + 1
                     } else null
