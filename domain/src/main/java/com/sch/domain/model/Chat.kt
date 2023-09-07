@@ -2,6 +2,7 @@ package com.sch.domain.model
 
 data class Chat (
     val reservationId : Int,
+    val participationId : Int,
     val userId : Int,
     val writer : String,
     val message : String,

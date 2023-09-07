@@ -214,6 +214,7 @@ fun ReportNotificationResponse.toDomain(): ReportNotification {
 
 fun PagingChatResponse.toDomain(): PagingChat {
     return PagingChat(
+        myParticipationId = this.myParticipationId,
         reservationId = this.reservationId,
         passengerNum = this.passengerNum,
         currentNum = this.currentNum,
@@ -227,6 +228,7 @@ fun List<ChatResponse>.toDomain(): List<Chat> {
     return map {
         Chat(
             reservationId = it.reservationId,
+            participationId = it.participationId,
             userId = it.userId,
             writer = it.writer,
             message = it.message,

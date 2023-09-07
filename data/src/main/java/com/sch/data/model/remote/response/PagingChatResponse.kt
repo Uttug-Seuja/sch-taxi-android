@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.sch.domain.model.HostInfo
 
 data class PagingChatResponse(
+    @SerializedName("myParticipationId") val myParticipationId: Int,
     @SerializedName("reservationId") val reservationId: Int,
     @SerializedName("passengerNum") val passengerNum: Int,
     @SerializedName("currentNum") val currentNum: Int,

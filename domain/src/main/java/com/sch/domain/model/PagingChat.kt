@@ -2,6 +2,7 @@ package com.sch.domain.model
 
 
 data class PagingChat(
+    val myParticipationId : Int,
     val chatPagingResponseDtoList: List<Chat>,
     val reservationId: Int,
     val passengerNum: Int,

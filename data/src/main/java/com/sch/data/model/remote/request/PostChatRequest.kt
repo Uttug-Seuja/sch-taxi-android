@@ -4,5 +4,6 @@ data class PostChatRequest(
     val message: String,
     val writer: String,
     val cursor: String,
-//    val userId: Int
+    val userId: Int,
+    val participationId : Int
 )

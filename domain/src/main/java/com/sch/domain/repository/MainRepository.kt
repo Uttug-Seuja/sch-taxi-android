@@ -177,6 +177,7 @@ interface MainRepository {
         writer: String,
         cursor: String,
         userId: Int,
+        participationId: Int
     ): NetworkResult<PagingChat>
 
     suspend fun getChatRoom(): NetworkResult<List<ChatRoom>>
