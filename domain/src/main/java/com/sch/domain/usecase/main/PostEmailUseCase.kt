@@ -9,6 +9,6 @@ import javax.inject.Inject
 class PostEmailUseCase @Inject constructor(
     private val repository: MainRepository
 ) {
-    suspend operator fun invoke(email : String): NetworkResult<Unit> =
-        repository.postEmail(email = email)
+    suspend operator fun invoke(email : String, oauthProvider : String): NetworkResult<Unit> =
+        repository.postEmail(email = email, oauthProvider = oauthProvider)
 }

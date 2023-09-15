@@ -27,7 +27,7 @@ class SetProfileViewModel @Inject constructor(
     private val postFileToImageUseCase: PostFileToImageUseCase,
     private val postEmailUseCase: PostEmailUseCase,
     private val postEmailCodeUseCase: PostEmailCodeUseCase,
-    private val getAssetRandomUseCase: GetAssetRandomUseCase
+    private val getAssetRandomUseCase: GetAssetRandomUseCase,
 ) : BaseViewModel(), SetProfileActionHandler {
 
     private val TAG = "SetProfileViewModel"
@@ -93,11 +93,12 @@ class SetProfileViewModel @Inject constructor(
 
     override fun onSchoolEmailAuthClicked() {
         showLoading()
+        val provider = sSharedPreferences.getString("provider", null)
         isAuthEvent.value = true
         baseViewModelScope.launch {
             showLoading()
 
-            postEmailUseCase(email = schoolEmailInputContent.value)
+            postEmailUseCase(email = schoolEmailInputContent.value, oauthProvider = provider!!)
                 .onSuccess {
                     isAuthEvent.value = true
                     _navigationHandler.emit(

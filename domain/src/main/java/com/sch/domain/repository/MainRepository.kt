@@ -164,6 +164,7 @@ interface MainRepository {
 
     suspend fun postEmail(
         email: String,
+        oauthProvider: String
     ): NetworkResult<Unit>
 
     suspend fun postEmailCode(
