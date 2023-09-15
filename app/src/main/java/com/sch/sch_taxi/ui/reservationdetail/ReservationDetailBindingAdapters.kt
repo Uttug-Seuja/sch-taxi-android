@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.card.MaterialCardView
+import com.sch.domain.model.ReservationDetail
 import com.sch.sch_taxi.R
 import org.w3c.dom.Text
 
@@ -84,4 +85,11 @@ fun EditText.messageTextOnFocusChangeListener(context: Context, linearLayout: Li
         if (gainFocus) linearLayout.background = context.getDrawable(R.drawable.custom_backgroundgray03_radius10_line_gray08)
         else linearLayout.background = context.getDrawable(R.drawable.custom_backgroundgray03_radius10)
     }
+}
+
+@BindingAdapter("initText")
+fun TextView.bindInitText(reservationDetail : ReservationDetail?){
+    if (reservationDetail == null) this.text = ""
+    else this.text = reservationDetail.startPoint + "->" + reservationDetail.destination
+
 }
