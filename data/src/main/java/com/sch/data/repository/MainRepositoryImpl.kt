@@ -14,7 +14,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class MainRepositoryImpl @Inject constructor(
-    @Named("Main") private val mainAPIService: MainAPIService
+    @Named("Main") private val mainAPIService: MainAPIService,
 ) : MainRepository {
 
     override suspend fun postRegister(
@@ -22,12 +22,14 @@ class MainRepositoryImpl @Inject constructor(
         provider: String,
         name: String,
         gender: String,
-        profilePath: String
+        profilePath: String,
+        schEmail: String,
     ): NetworkResult<Token> {
         val body = PostRegisterRequest(
             name = name,
             gender = gender,
-            profilePath = profilePath
+            profilePath = profilePath,
+            schEmail = schEmail
         )
         return handleApi {
             mainAPIService.postRegister(
@@ -58,7 +60,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun getTokenValidation(
         idToken: String,
-        provider: String
+        provider: String,
     ): NetworkResult<IsRegistered> {
         return handleApi {
             mainAPIService.getTokenValidation(
@@ -85,7 +87,7 @@ class MainRepositoryImpl @Inject constructor(
     }
 
     override suspend fun patchUserProfile(
-        profilePath: String
+        profilePath: String,
     ): NetworkResult<UserInfo> {
         val body = PatchUserProfileRequest(profilePath = profilePath)
         return handleApi { mainAPIService.patchUserProfile(body = body).data.toDomain() }
@@ -100,7 +102,7 @@ class MainRepositoryImpl @Inject constructor(
         startLatitude: Double,
         startLongitude: Double,
         destinationLatitude: Double,
-        destinationLongitude: Double
+        destinationLongitude: Double,
     ): NetworkResult<Reservation> {
         val body = PostReservationRequest(
             title = title,
@@ -125,7 +127,7 @@ class MainRepositoryImpl @Inject constructor(
         startLatitude: Double,
         startLongitude: Double,
         destinationLatitude: Double,
-        destinationLongitude: Double
+        destinationLongitude: Double,
     ): NetworkResult<Reservation> {
         val body = PatchReservationRequest(
             title = title,
@@ -168,7 +170,7 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun getReservationKeyword(
         word: String,
         page: Int,
-        size: Int
+        size: Int,
     ): NetworkResult<PagingReservationKeyword> {
         return handleApi {
             mainAPIService.getReservationKeyword(
@@ -196,7 +198,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun postParticipation(
         reservationId: Int,
-        seatPosition: String
+        seatPosition: String,
     ): NetworkResult<Unit> {
         val body = SeatPositionRequest(seatPosition)
         return handleApi {
@@ -209,7 +211,7 @@ class MainRepositoryImpl @Inject constructor(
 
     override suspend fun patchParticipation(
         participationId: Int,
-        seatPosition: String
+        seatPosition: String,
     ): NetworkResult<Unit> {
         val body = SeatPositionRequest(seatPosition = seatPosition)
         return handleApi {
@@ -316,7 +318,7 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun postReportsParticipation(
         participationId: Int,
         reportReason: String,
-        reportType: String
+        reportType: String,
     ): NetworkResult<ReportNotification> {
         val body =
             PostReportsNotificationRequest(reportReason = reportReason, reportType = reportType)
@@ -328,8 +330,8 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun postEmail(email: String, oauthProvider : String): NetworkResult<Unit> {
-        val body = EmailRequest(email = email, oauthProvider= oauthProvider)
+    override suspend fun postEmail(email: String, oauthProvider: String): NetworkResult<Unit> {
+        val body = EmailRequest(email = email, oauthProvider = oauthProvider)
         return handleApi { mainAPIService.postEmail(body) }
     }
 
@@ -344,9 +346,15 @@ class MainRepositoryImpl @Inject constructor(
         writer: String,
         cursor: String,
         userId: Int,
-        participationId : Int
+        participationId: Int,
     ): NetworkResult<PagingChat> {
-        val body = PostChatRequest(message = message, writer = writer, cursor = cursor, userId = userId, participationId = participationId)
+        val body = PostChatRequest(
+            message = message,
+            writer = writer,
+            cursor = cursor,
+            userId = userId,
+            participationId = participationId
+        )
         return handleApi {
             mainAPIService.postChat(
                 reservationId = reservationId,

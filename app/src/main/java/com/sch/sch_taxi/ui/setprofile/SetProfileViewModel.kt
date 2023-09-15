@@ -193,6 +193,7 @@ class SetProfileViewModel @Inject constructor(
                             false -> "WOMAN"
                         },
                         profilePath = profileImgPath.value!!,
+                        schEmail = schoolEmailInputContent.value
                     ).onSuccess {
                         editor.putString("accessToken", it.accessToken)
                         editor.putString("refreshToken", it.refreshToken)

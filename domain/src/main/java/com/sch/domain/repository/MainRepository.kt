@@ -12,6 +12,7 @@ interface MainRepository {
         name: String,
         gender: String,
         profilePath: String,
+        schEmail: String,
     ): NetworkResult<Token>
 
     // 토큰 리프래쉬
@@ -164,7 +165,7 @@ interface MainRepository {
 
     suspend fun postEmail(
         email: String,
-        oauthProvider: String
+        oauthProvider: String,
     ): NetworkResult<Unit>
 
     suspend fun postEmailCode(
@@ -178,7 +179,7 @@ interface MainRepository {
         writer: String,
         cursor: String,
         userId: Int,
-        participationId: Int
+        participationId: Int,
     ): NetworkResult<PagingChat>
 
     suspend fun getChatRoom(): NetworkResult<List<ChatRoom>>

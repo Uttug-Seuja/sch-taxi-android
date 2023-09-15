@@ -9,20 +9,22 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class PostRegisterUseCase @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
 ) {
     suspend operator fun invoke(
         idToken: String,
         provider: String,
         name: String,
         gender: String,
-        profilePath: String
+        profilePath: String,
+        schEmail: String,
     ): NetworkResult<Token> =
         repository.postRegister(
             idToken = idToken,
             provider = provider,
             name = name,
             gender = gender,
-            profilePath = profilePath
+            profilePath = profilePath,
+            schEmail = schEmail
         )
 }
