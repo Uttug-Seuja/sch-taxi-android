@@ -171,6 +171,7 @@ interface MainRepository {
     suspend fun postEmailCode(
         email: String,
         code: String,
+        oauthProvider: String,
     ): NetworkResult<Unit>
 
     suspend fun postChat(

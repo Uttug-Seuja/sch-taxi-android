@@ -335,8 +335,12 @@ class MainRepositoryImpl @Inject constructor(
         return handleApi { mainAPIService.postEmail(body) }
     }
 
-    override suspend fun postEmailCode(email: String, code: String): NetworkResult<Unit> {
-        val body = EmailCodeRequest(email = email, code = code)
+    override suspend fun postEmailCode(
+        email: String,
+        code: String,
+        oauthProvider: String,
+    ): NetworkResult<Unit> {
+        val body = EmailCodeRequest(email = email, code = code, oauthProvider = oauthProvider)
         return handleApi { mainAPIService.postEmailCode(body) }
     }
 

@@ -123,10 +123,12 @@ class SetProfileViewModel @Inject constructor(
     override fun onSchoolEmailCodeAuthClicked() {
         baseViewModelScope.launch {
             showLoading()
+            val provider = sSharedPreferences.getString("provider", null)
 
             postEmailCodeUseCase(
                 email = schoolEmailInputContent.value,
-                code = schoolEmailCodeInputContent.value
+                code = schoolEmailCodeInputContent.value,
+                oauthProvider = provider!!
             ).onSuccess {
                 isSchoolEmailAuth.value = true
                 _navigationHandler.emit(

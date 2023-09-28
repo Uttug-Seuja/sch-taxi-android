@@ -7,8 +7,12 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class PostEmailCodeUseCase @Inject constructor(
-    private val repository: MainRepository
+    private val repository: MainRepository,
 ) {
-    suspend operator fun invoke(email: String, code: String): NetworkResult<Unit> =
-        repository.postEmailCode(email = email, code = code)
+    suspend operator fun invoke(
+        email: String,
+        code: String,
+        oauthProvider: String,
+    ): NetworkResult<Unit> =
+        repository.postEmailCode(email = email, code = code, oauthProvider = oauthProvider)
 }
