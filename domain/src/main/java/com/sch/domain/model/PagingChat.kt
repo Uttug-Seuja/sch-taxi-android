@@ -3,7 +3,7 @@ package com.sch.domain.model
 
 data class PagingChat(
     val myParticipationId : Int,
-    val chatPagingResponseDtoList: List<Chat>,
+    var chatPagingResponseDtoList: List<Chat>,
     val reservationId: Int,
     val passengerNum: Int,
     val currentNum: Int,

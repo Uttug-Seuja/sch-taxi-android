@@ -7,14 +7,12 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sch.domain.fold
 import com.sch.domain.model.Chat
-import com.sch.domain.onError
-import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.PostChatUseCase
 import com.sch.sch_taxi.ui.chatroom.ChatRoomViewModel
 
 fun createChatRoomPager(
     postChatUseCase: PostChatUseCase,
-    chatRoomViewModel: ChatRoomViewModel
+    chatRoomViewModel: ChatRoomViewModel,
 ): Pager<Int, Chat> = Pager(
     config = PagingConfig(pageSize = 10, initialLoadSize = 10, enablePlaceholders = true),
     initialKey = 0,
@@ -28,7 +26,7 @@ fun createChatRoomPager(
 
 class ChatRoomPagingSource(
     private val postChatUseCase: PostChatUseCase,
-    private val chatRoomViewModel: ChatRoomViewModel
+    private val chatRoomViewModel: ChatRoomViewModel,
 ) : PagingSource<Int, Chat>() {
 
     override fun getRefreshKey(state: PagingState<Int, Chat>): Int? = null
@@ -52,19 +50,8 @@ class ChatRoomPagingSource(
             writer = chatRoomViewModel.writer.value,
             cursor = chatRoomViewModel.cursor.value,
             userId = chatRoomViewModel.userId.value,
-        ).onSuccess {
-//            Log.d("ttt participationId", chatRoomViewModel.participationId.value.toString())
-//            Log.d("ttt reservationId", chatRoomViewModel.reservationId.value.toString())
-//
-//            Log.d("ttt message", chatRoomViewModel.message.value)
-//            Log.d("ttt writer", chatRoomViewModel.writer.value)
-//            Log.d("ttt cursor", chatRoomViewModel.cursor.value)
-//            Log.d("ttt userId", chatRoomViewModel.userId.value.toString())
+        )
 
-            Log.d("ttt s", it.toString())
-        }.onError {
-            Log.d("ttt e", it.toString())
-        }
 
         return result.fold(
             onSuccess = { contents ->

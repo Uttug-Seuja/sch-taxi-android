@@ -1,22 +1,17 @@
 package com.sch.sch_taxi.ui.chatroom
 
 import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.paging.PagingData
-import androidx.paging.map
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentChatRoomBinding
 import com.sch.sch_taxi.ui.chatroom.adapter.ChatRoomAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.launch
 
 
@@ -58,24 +53,22 @@ class ChatRoomFragment :
             }
         }
 
-        collectLatestStateFlow(viewModel.chatRoomEvent) {
-            Log.d("ttt", "어뎁터 초기화??")
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.chatRoomEvent.collectLatest { pagingData ->
+                Log.d("ttt", "어뎁터 초기화??")
+                chatRoomAdapter.submitData(pagingData)
 
-            chatRoomAdapter.submitData(it)
+            }
         }
 
-//        lifecycleScope.launchWhenStarted {
-//            viewModel.chatRoomEvent.collectLatest {
-//                Log.d("ttt", "어뎁터 초기화??")
-//                chatRoomAdapter.submitData(it)
-//            }
-//        }
-    }
-
-    fun <T> Fragment.collectLatestStateFlow(flow: Flow<T>, collector: suspend (T) -> Unit) {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                flow.collectLatest(collector)
+            viewModel.check.collectLatest { pagingData ->
+                viewModel.chatRoomEvent.collect {
+                    chatRoomAdapter.submitData(it)
+                    viewModel.check.value = 0
+
+                }
+
             }
         }
     }
