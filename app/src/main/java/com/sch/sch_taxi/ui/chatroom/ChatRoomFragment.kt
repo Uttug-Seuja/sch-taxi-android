@@ -5,6 +5,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import com.sch.sch_taxi.R
 import com.sch.sch_taxi.base.BaseFragment
 import com.sch.sch_taxi.databinding.FragmentChatRoomBinding
@@ -53,28 +55,28 @@ class ChatRoomFragment :
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.chatRoomEvent.collectLatest { pagingData ->
-                Log.d("ttt", "어뎁터 초기화??")
-                chatRoomAdapter.submitData(pagingData)
-
-            }
-        }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.check.collectLatest { pagingData ->
+            viewModel.newMessageCheck.collectLatest { pagingData ->
                 viewModel.chatRoomEvent.collect {
                     chatRoomAdapter.submitData(it)
-                    viewModel.check.value = 0
-
                 }
-
             }
         }
     }
 
     private fun initAdapter() {
         binding.rvChat.adapter = chatRoomAdapter
+
+        binding.rvChat.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (viewModel.isEditMessageSend.value) {
+                    binding.rvChat.smoothScrollToPosition(0)
+                    viewModel.isEditMessageSend.value = false
+                }
+            }
+        })
     }
 
     override fun initAfterBinding() {

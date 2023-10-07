@@ -52,92 +52,18 @@ class ChatRoomViewModel @Inject constructor(
     val userId = MutableStateFlow(0)
 
     var editMessage: MutableStateFlow<String> = MutableStateFlow("")
+    var isEditMessageSend: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val newMessage: MutableStateFlow<MutableList<Chat>> = MutableStateFlow(mutableListOf())
 
     private val url = "ws" + ApiClient.BASE_URL.substring(4) + "stomp/chat"
     private val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)
 
-    lateinit var chatPager: Flow<PagingData<Chat>>
-
-    val check = MutableStateFlow(0)
+    val newMessageCheck = MutableStateFlow(0)
 
     fun postChat() {
-
-        chatPager = createChatRoomPager(
+        chatRoomEvent = createChatRoomPager(
             postChatUseCase = postChatUseCase, chatRoomViewModel = this
         ).flow.cachedIn(baseViewModelScope)
-
-        chatRoomEvent = chatPager.map { pagingData ->
-            Log.d("ttt", "hy")
-            // 원래의 PagingData와 새로운 아이템을 합치는 작업을 수행
-            val newItem = Chat(
-                reservationId = 11,
-                participationId = 22,
-                userId = 11,
-                writer = "data.writer",
-                message = "data.message",
-                createdAt = "2023/09/07 20:59:42.990",
-                profilePath = "https://ohsoontaxi.s3.ap-northeast-2.amazonaws.com/1%7C737421e7-e595-4349-9ecb-d2363e821463.jpeg",
-                isend = participationId == myParticipationId
-            )
-
-            // 새로운 아이템을 PagingData에 추가
-            val combinedPagingData = pagingData.insertHeaderItem(item = newItem)
-            combinedPagingData
-        }
-
-//        chatRoomEvent =
-//            createChatRoomPager(
-//                postChatUseCase = postChatUseCase,
-//                chatRoomViewModel = this
-//            ).flow.cachedIn(
-//                baseViewModelScope
-//            ).combine(newItemsFlow) { pagingData, newItems ->
-//                // Flow.combine을 사용하여 PagingData와 새로운 아이템들을 합칩니다.
-//
-//                pagingData
-////                // 새로운 아이템들을 PagingData에 추가
-////                var combinedPagingData = pagingData
-////                newItems.forEach {
-////                    combinedPagingData =
-////                        pagingData.insertHeaderItem(TerminalSeparatorType.FULLY_COMPLETE, it)
-////
-////                }
-////
-////                combinedPagingData
-//            }
-//                .map { pagingData ->
-//
-//                baseViewModelScope.launch {
-//                    newMessage.collectLatest {
-//                        Log.d("ttt newMessage", newMessage.toString())
-//                        it.fold(pagingData) { acc, item ->
-//                            acc.insertHeaderItem(TerminalSeparatorType.FULLY_COMPLETE, item)
-//                        }
-//                    }
-//                }
-//
-//
-//                // 원래의 PagingData와 새로운 아이템을 합치는 작업을 수행
-//                val newItem = Chat(
-//                    reservationId = 11,
-//                    participationId = 22,
-//                    userId = 11,
-//                    writer = "data.writer",
-//                    message = "data.message",
-//                    createdAt = "2023/09/07 20:59:42.990",
-//                    profilePath = "https://ohsoontaxi.s3.ap-northeast-2.amazonaws.com/1%7C737421e7-e595-4349-9ecb-d2363e821463.jpeg",
-//                    isend = participationId == myParticipationId
-//                )
-//
-//                val headerList = listOf(newItem, newItem, newItem)
-//
-//                headerList.fold(pagingData) { acc, item ->
-//                    acc.insertHeaderItem(TerminalSeparatorType.FULLY_COMPLETE, item)
-//                }
-//            }
-
     }
 
 
@@ -217,11 +143,8 @@ class ChatRoomViewModel @Inject constructor(
                         message = data.message,
                         createdAt = data.createdAt,
                         profilePath = data.profilePath,
-                        isend = participationId != myParticipationId
+                        isend = data.participationId == myParticipationId.value
                     )
-
-                    newMessage.value =
-                        (newMessage.value + mutableListOf(newChatMessage)) as MutableList<Chat>
 
                     Log.d("ttt", "ㅗㅑㅠ야")
 
@@ -229,13 +152,11 @@ class ChatRoomViewModel @Inject constructor(
                         Log.d("ttt", "ㅗㅑ3야")
 
                         pagingData.insertHeaderItem(
-                            TerminalSeparatorType.FULLY_COMPLETE,
-                            item = newChatMessage
+                            TerminalSeparatorType.FULLY_COMPLETE, item = newChatMessage
                         )
                     }
 
-                    check.value = 1
-//                    _chatRoomEvent.value = updatedPagingData
+                    newMessageCheck.value += 1
                 }
         }
     }
@@ -256,6 +177,7 @@ class ChatRoomViewModel @Inject constructor(
 
         stompClient.send("/pub/chat/message", data.toString()).subscribe()
         editMessage.value = ""
+        isEditMessageSend.value = true
     }
 
     override fun onClickedBack() {
