@@ -282,15 +282,15 @@ class MainRepositoryImpl @Inject constructor(
 //
 //    }
 //
-//    override suspend fun postNotificationToken(
-//        deviceId: String,
-//        token: String
-//    ): NetworkResult<Unit> {
-//        val body = PostNotificationTokenRequest(deviceId = deviceId, token = token)
-//        return handleApi {
-//            mainAPIService.postNotificationToken(body = body)
-//        }
-//    }
+    override suspend fun postNotificationToken(
+        deviceId: String,
+        token: String
+    ): NetworkResult<Unit> {
+        val body = PostNotificationTokenRequest(deviceId = deviceId, token = token)
+        return handleApi {
+            mainAPIService.postNotificationToken(body = body)
+        }
+    }
 
     override suspend fun postFileToUrl(file: MultipartBody.Part): NetworkResult<ImageUrl> {
         return handleApi { mainAPIService.postFileToUrl(file = file).data.toDomain() }

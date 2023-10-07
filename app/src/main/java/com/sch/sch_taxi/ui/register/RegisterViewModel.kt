@@ -5,6 +5,7 @@ import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetTokenValidationUseCase
 import com.sch.domain.usecase.main.PostLoginUseCase
+import com.sch.domain.usecase.main.PostNotificationTokenUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import com.sch.sch_taxi.di.PresentationApplication.Companion.editor
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val getTokenValidationUseCase: GetTokenValidationUseCase,
     private val postLoginUseCase: PostLoginUseCase,
+    private val postNotificationTokenUseCase: PostNotificationTokenUseCase
 ) : BaseViewModel(), RegisterActionHandler {
 
     private val TAG = "RegisterViewModel"
@@ -32,39 +34,32 @@ class RegisterViewModel @Inject constructor(
     val deviceId: MutableStateFlow<String> = MutableStateFlow("")
 
     fun oauthLogin(idToken: String, provider: String) {
-        Log.d("ttt idToken", idToken)
-        Log.d("ttt provider", provider)
 
         baseViewModelScope.launch {
             showLoading()
-            getTokenValidationUseCase(idToken = idToken, provider = provider)
-                .onSuccess {
+            getTokenValidationUseCase(idToken = idToken, provider = provider).onSuccess {
                     editor.putString("idToken", idToken)
                     editor.putString("provider", provider)
                     editor.putString("fcmToken", firebaseToken.value)
                     editor.putString("deviceId", deviceId.value)
 
-                    Log.d("ttt isRegistered", it.toString())
-                    Log.d("ttt fcmToken", firebaseToken.value)
-                    Log.d("ttt deviceId", deviceId.value)
-
                     if (!it.isRegistered) {
                         editor.commit()
                         _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginFirst)
                     } else {
-                        postLoginUseCase(idToken = idToken, provider = provider)
-                            .onSuccess { response ->
+                        postLoginUseCase(
+                            idToken = idToken,
+                            provider = provider
+                        ).onSuccess { response ->
                                 editor.putString("accessToken", response.accessToken)
                                 editor.putString("refreshToken", response.refreshToken)
                                 editor.commit()
 
-//                                postNotificationTokenUseCase(
-//                                    token = firebaseToken.value,
-//                                    deviceId = deviceId.value
-//                                )
-//                                    .onSuccess {
+                                postNotificationTokenUseCase(
+                                    token = firebaseToken.value, deviceId = deviceId.value
+                                ).onSuccess {
                                         _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
-//                                    }
+                                    }
                             }
                     }
                 }.onError {

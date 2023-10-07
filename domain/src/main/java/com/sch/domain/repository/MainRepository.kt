@@ -133,7 +133,7 @@ interface MainRepository {
 //    ): NetworkResult<Unit>
 //
 //    // FCM 토큰 등록
-//    suspend fun postNotificationToken(deviceId: String, token: String): NetworkResult<Unit>
+    suspend fun postNotificationToken(deviceId: String, token: String): NetworkResult<Unit>
 
     // 파일 URL로 바꾸기
     suspend fun postFileToUrl(
