@@ -200,6 +200,9 @@
         <argument
             android:name="reservation_id"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_chatRoomFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
 
     </fragment>
 

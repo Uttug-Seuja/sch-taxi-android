@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:orientation="vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="24dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_bottom_sheet_all_round"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/update_btn"
+            style="@style/Theme.AppCompat.TextView.Friend.More"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/seat_update"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
+
+        <View
+            android:id="@+id/line_update"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray04"
+            app:layout_constraintTop_toBottomOf="@id/update_btn"></View>
+
+        <TextView
+            android:id="@+id/delete_btn"
+            style="@style/Theme.AppCompat.TextView.Friend.More"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/promise_close"
+            app:layout_constraintTop_toBottomOf="@id/line_update"></TextView>
+
+        <View
+            android:id="@+id/line_delete"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray04"
+            app:layout_constraintTop_toBottomOf="@id/delete_btn"></View>
+
+        <TextView
+            android:id="@+id/user_declare_btn"
+            style="@style/Theme.AppCompat.TextView.Friend.More"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/user_declare"
+            app:layout_constraintTop_toBottomOf="@id/line_delete"></TextView>
+
+        <View
+            android:id="@+id/line_user_declare"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray04"
+            app:layout_constraintTop_toBottomOf="@id/user_declare_btn"></View>
+
+        <TextView
+            android:id="@+id/report_btn"
+            style="@style/Theme.AppCompat.TextView.Report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/report"
+            app:layout_constraintTop_toBottomOf="@id/line_user_declare"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/close_btn"
+        style="@style/Theme.AppCompat.TextView.Friend.More"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/custom_bottom_sheet_all_round"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/close"
+        app:layout_constraintTop_toBottomOf="@id/layout_main"></TextView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

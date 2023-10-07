@@ -17,20 +17,62 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<!--        tempAdapter = "@{vm.tempChatRoomEvent}"-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                app:initText="@{vm.reservesEvent}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_close"
+                onSingleClick="@{() -> vm.onClickedBack()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/baseline_arrow_back_24" />
+
+            <ImageView
+                android:id="@+id/iv_more"
+                onSingleClick="@{() -> vm.onClickedReservationMoreBottomDialog()}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_more_black" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_chat"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/holder_chat_room_me"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScroolingViewBehavior"
             app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toTopOf="@+id/text_gchat_indicator"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/container_header"
             app:reverseLayout="true"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScroolingViewBehavior"
-            />
+            tools:listitem="@layout/holder_chat_room_me" />
 
         <TextView
             android:id="@+id/text_gchat_indicator"
@@ -59,7 +101,6 @@
 
             <EditText
                 android:id="@+id/edit_gchat_message"
-                android:text="@={vm.editMessage}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -68,7 +109,8 @@
                 android:background="@android:color/transparent"
                 android:hint="메시지 보내기"
                 android:inputType="text"
-                android:maxLines="6" />
+                android:maxLines="6"
+                android:text="@={vm.editMessage}" />
 
             <Button
                 android:id="@+id/button_gchat_send"
@@ -79,8 +121,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="5dp"
-                app:onSingleClick="@{() -> vm.send()}"
-                android:text="Send" />
+                android:text="Send"
+                app:onSingleClick="@{() -> vm.send()}" />
 
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
