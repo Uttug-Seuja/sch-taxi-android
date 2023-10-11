@@ -162,7 +162,7 @@ interface MainAPIService {
 //    suspend fun postNotifications(@Body body: PostNotificationRequest): Unit
 //
 //    // FCM 토큰 등록
-    @POST("/api/v1/notifications/token")
+    @POST("/api/v1/notification/token")
     suspend fun postNotificationToken(@Body body: PostNotificationTokenRequest): Unit
 
     // 파일 URL로 바꾸기
