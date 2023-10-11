@@ -26,16 +26,11 @@ class MainRepositoryImpl @Inject constructor(
         schEmail: String,
     ): NetworkResult<Token> {
         val body = PostRegisterRequest(
-            name = name,
-            gender = gender,
-            profilePath = profilePath,
-            schEmail = schEmail
+            name = name, gender = gender, profilePath = profilePath, schEmail = schEmail
         )
         return handleApi {
             mainAPIService.postRegister(
-                idToken = idToken,
-                provider = provider,
-                body = body
+                idToken = idToken, provider = provider, body = body
             ).data.toDomain()
         }
     }
@@ -48,8 +43,7 @@ class MainRepositoryImpl @Inject constructor(
     override suspend fun postLogin(idToken: String, provider: String): NetworkResult<Token> {
         return handleApi {
             mainAPIService.postLogin(
-                idToken = idToken,
-                provider = provider
+                idToken = idToken, provider = provider
             ).data.toDomain()
         }
     }
@@ -64,8 +58,7 @@ class MainRepositoryImpl @Inject constructor(
     ): NetworkResult<IsRegistered> {
         return handleApi {
             mainAPIService.getTokenValidation(
-                idToken = idToken,
-                provider = provider
+                idToken = idToken, provider = provider
             ).data.toDomain()
         }
     }
@@ -141,8 +134,7 @@ class MainRepositoryImpl @Inject constructor(
         )
         return handleApi {
             mainAPIService.patchReservation(
-                reservationId = reservationId,
-                body = body
+                reservationId = reservationId, body = body
             ).data.toDomain()
         }
     }
@@ -174,9 +166,7 @@ class MainRepositoryImpl @Inject constructor(
     ): NetworkResult<PagingReservationKeyword> {
         return handleApi {
             mainAPIService.getReservationKeyword(
-                word = word,
-                page = page,
-                size = size
+                word = word, page = page, size = size
             ).data.toDomain()
         }
 
@@ -203,8 +193,7 @@ class MainRepositoryImpl @Inject constructor(
         val body = SeatPositionRequest(seatPosition)
         return handleApi {
             mainAPIService.postParticipation(
-                reservationId = reservationId,
-                body = body
+                reservationId = reservationId, body = body
             )
         }
     }
@@ -216,8 +205,7 @@ class MainRepositoryImpl @Inject constructor(
         val body = SeatPositionRequest(seatPosition = seatPosition)
         return handleApi {
             mainAPIService.patchParticipation(
-                id = participationId,
-                body = body
+                id = participationId, body = body
             )
         }
     }
@@ -242,7 +230,7 @@ class MainRepositoryImpl @Inject constructor(
         }
     }
 
-//    override suspend fun postOptionNight(): NetworkResult<Unit> {
+    //    override suspend fun postOptionNight(): NetworkResult<Unit> {
 //        return handleApi { mainAPIService.postOptionNight() }
 //    }
 //
@@ -262,11 +250,15 @@ class MainRepositoryImpl @Inject constructor(
 //        return handleApi { mainAPIService.getOptions().data.toDomain() }
 //    }
 //
-//    override suspend fun getNotifications(): NetworkResult<NotificationList> {
-//        return handleApi { mainAPIService.getNotifications().data.notifications.toDomain() }
-//    }
+    override suspend fun getNotification(page: Int, size: Int): NetworkResult<NotificationList> {
+        return handleApi {
+            mainAPIService.getNotifications(
+                page = page, size = size
+            ).data.toDomain()
+        }
+    }
 
-//    override suspend fun postNotifications(
+    //    override suspend fun postNotifications(
 //        group_id: Int,
 //        title: String,
 //        content: String,
@@ -283,8 +275,7 @@ class MainRepositoryImpl @Inject constructor(
 //    }
 //
     override suspend fun postNotificationToken(
-        deviceId: String,
-        token: String
+        deviceId: String, token: String
     ): NetworkResult<Unit> {
         val body = PostNotificationTokenRequest(deviceId = deviceId, token = token)
         return handleApi {
@@ -324,8 +315,7 @@ class MainRepositoryImpl @Inject constructor(
             PostReportsNotificationRequest(reportReason = reportReason, reportType = reportType)
         return handleApi {
             mainAPIService.postReportsParticipation(
-                participationId = participationId,
-                body = body
+                participationId = participationId, body = body
             ).data.toDomain()
         }
     }
@@ -361,8 +351,7 @@ class MainRepositoryImpl @Inject constructor(
         )
         return handleApi {
             mainAPIService.postChat(
-                reservationId = reservationId,
-                body = body
+                reservationId = reservationId, body = body
             ).data.toDomain()
         }
     }

@@ -2,5 +2,11 @@ package com.sch.domain.model
 
 
 data class NotificationList(
-    val notifications: List<Notification>
+    val size: Int,
+    val content: List<Notification>,
+    val number: Int,
+    val numberOfElements: Int,
+    val first: Boolean,
+    val last: Boolean,
+    val empty: Boolean
 )

@@ -109,7 +109,7 @@ interface MainRepository {
     // 내가 참여한 예약
     suspend fun getUserParticipation(): NetworkResult<List<Reservation>>
 
-//    // 야간 푸시알림 설정 <- 마이페이지
+    //    // 야간 푸시알림 설정 <- 마이페이지
 //    suspend fun postOptionNight(): NetworkResult<Unit>
 //
 //    // 야간 푸시알림 설정하제 <- 마이페이지
@@ -124,9 +124,10 @@ interface MainRepository {
 //    // 유저의 알림 세팅
 //    suspend fun getOptions(): NetworkResult<Options>
 //
-//    // 최신 푸쉬 알림 리스트
-//    suspend fun getNotifications(): NetworkResult<NotificationList>
-//
+    // 최신 푸쉬 알림 리스트
+    suspend fun getNotification(page: Int, size: Int): NetworkResult<NotificationList>
+
+    //
 //    // 푸쉬 알림 보내기
 //    suspend fun postNotifications(
 //        group_id: Int, title: String, content: String, image_url: String

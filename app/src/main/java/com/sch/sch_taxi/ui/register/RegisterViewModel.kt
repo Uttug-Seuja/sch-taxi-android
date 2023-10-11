@@ -38,33 +38,35 @@ class RegisterViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             getTokenValidationUseCase(idToken = idToken, provider = provider).onSuccess {
-                    editor.putString("idToken", idToken)
-                    editor.putString("provider", provider)
-                    editor.putString("fcmToken", firebaseToken.value)
-                    editor.putString("deviceId", deviceId.value)
+                editor.putString("idToken", idToken)
+                editor.putString("provider", provider)
+                editor.putString("fcmToken", firebaseToken.value)
+                editor.putString("deviceId", deviceId.value)
 
-                    if (!it.isRegistered) {
+                if (!it.isRegistered) {
+                    editor.commit()
+                    _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginFirst)
+                } else {
+                    postLoginUseCase(
+                        idToken = idToken,
+                        provider = provider
+                    ).onSuccess { response ->
+                        editor.putString("accessToken", response.accessToken)
+                        editor.putString("refreshToken", response.refreshToken)
                         editor.commit()
-                        _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginFirst)
-                    } else {
-                        postLoginUseCase(
-                            idToken = idToken,
-                            provider = provider
-                        ).onSuccess { response ->
-                                editor.putString("accessToken", response.accessToken)
-                                editor.putString("refreshToken", response.refreshToken)
-                                editor.commit()
 
-                                postNotificationTokenUseCase(
-                                    token = firebaseToken.value, deviceId = deviceId.value
-                                ).onSuccess {
-                                        _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
-                                    }
-                            }
+                        postNotificationTokenUseCase(
+                            token = firebaseToken.value, deviceId = deviceId.value
+                        ).onSuccess {
+                            _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
+                        }.onError {
+                            Log.d("ttt postNotificationTokenUseCase", it.toString())
+                        }
                     }
-                }.onError {
-                    Log.d("ttt it", it.toString())
                 }
+            }.onError {
+                Log.d("ttt it", it.toString())
+            }
             dismissLoading()
         }
     }

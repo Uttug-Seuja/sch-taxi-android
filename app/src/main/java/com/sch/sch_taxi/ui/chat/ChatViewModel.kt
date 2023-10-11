@@ -36,7 +36,6 @@ class ChatViewModel @Inject constructor(
                 _chatRoomEvent.value = it
 
             }.onError {
-                Log.d("Ttt", it.toString())
             }
         }
 

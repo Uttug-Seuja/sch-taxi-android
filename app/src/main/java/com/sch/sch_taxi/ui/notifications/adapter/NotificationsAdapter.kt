@@ -2,16 +2,18 @@ package com.sch.sch_taxi.ui.notifications.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sch.domain.model.Alarm
+import com.sch.domain.model.Notification
 import com.sch.sch_taxi.databinding.HolderNotificationAlarmBinding
 import com.sch.sch_taxi.ui.notifications.NotificationsActionHandler
 
 class NotificationsAdapter(
     private val eventListener: NotificationsActionHandler,
-) : ListAdapter<Alarm, NotificationsAdapter.NotificationsViewHolder>(TaxiSearchItemDiffCallback) {
+) : PagingDataAdapter<Notification, NotificationsAdapter.NotificationsViewHolder>(TaxiSearchItemDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationsViewHolder {
         return NotificationsViewHolder(
@@ -32,7 +34,7 @@ class NotificationsAdapter(
         private val binding: HolderNotificationAlarmBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Alarm) {
+        fun bind(item: Notification) {
             binding.apply {
                 holder = item
                 executePendingBindings()
@@ -42,11 +44,11 @@ class NotificationsAdapter(
 
 
 
-    internal object TaxiSearchItemDiffCallback : DiffUtil.ItemCallback<Alarm>() {
-        override fun areItemsTheSame(oldItem: Alarm, newItem: Alarm) =
+    internal object TaxiSearchItemDiffCallback : DiffUtil.ItemCallback<Notification>() {
+        override fun areItemsTheSame(oldItem: Notification, newItem: Notification) =
             oldItem == newItem
 
-        override fun areContentsTheSame(oldItem: Alarm, newItem: Alarm) =
+        override fun areContentsTheSame(oldItem: Notification, newItem: Notification) =
             oldItem.equals(newItem)
     }
 }

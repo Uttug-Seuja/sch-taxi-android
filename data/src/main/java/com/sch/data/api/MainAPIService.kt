@@ -133,7 +133,7 @@ interface MainAPIService {
     @GET("/api/v1/reservation/my/participation")
     suspend fun getUserParticipation(): BaseResponse<List<ReservationResponse>>
 
-//    // 야간 푸시알림 설정 <- 마이페이지
+    //    // 야간 푸시알림 설정 <- 마이페이지
 //    @POST("/api/v1/options/night")
 //    suspend fun postOptionNight(): Unit
 //
@@ -153,10 +153,14 @@ interface MainAPIService {
 //    @GET("/api/v1/options")
 //    suspend fun getOptions(): BaseResponse<OptionsResponse>
 //
-//    // 최신 푸쉬 알림 리스트
-//    @GET("/api/v1/notifications")
-//    suspend fun getNotifications(): BaseResponse<NotificationListResponse>
-//
+    // 최신 푸쉬 알림 리스트
+    @GET("/api/v1/notification")
+    suspend fun getNotifications(
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): BaseResponse<NotificationListResponse>
+
+    //
 //    // 푸쉬 알림 보내기
 //    @POST("/api/v1/notifications")
 //    suspend fun postNotifications(@Body body: PostNotificationRequest): Unit

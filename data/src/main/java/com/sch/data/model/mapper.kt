@@ -157,20 +157,30 @@ fun OptionsResponse.toDomain(): Options {
     )
 }
 
-fun List<NotificationResponse>.toDomain(): NotificationList {
-    return NotificationList(map {
-        Notification(
-            content = it.content,
-            created_date = it.created_date,
-            image_url = it.image_url,
-            notification_id = it.notification_id,
-            send_user_id = it.send_user_id,
-            title = it.title
-        )
+fun NotificationListResponse.toDomain(): NotificationList {
+    return NotificationList(
+        size = this.size,
+        content = this.content.toDomain(),
+        number = this.number,
+        numberOfElements = this.numberOfElements,
+        first = this.first,
+        last = this.last,
+        empty = this.empty
 
-    }
 
     )
+}
+
+@JvmName("NotificationResponse")
+fun List<NotificationResponse>.toDomain(): List<Notification> {
+    return map {
+        Notification(
+            notificationId = it.notificationId,
+            title = it.title,
+            content = it.content,
+            createdDate = it.createdDate
+        )
+    }
 }
 
 fun ImageUrlResponse.toDomain(): ImageUrl {

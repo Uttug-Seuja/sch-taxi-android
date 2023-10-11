@@ -42,6 +42,12 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
                 }
             }
         }
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.notificationsEvent.collectLatest {
+                notificationsAdapter.submitData(it)
+            }
+        }
     }
 
     private fun initAdapter() {
