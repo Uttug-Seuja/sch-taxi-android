@@ -182,18 +182,20 @@ class ChatRoomViewModel @Inject constructor(
     }
 
     fun send() {
-        val data = JSONObject()
-        data.put("roomId", reservationId.value.toString())
-        data.put("message", editMessage.value)
-        data.put(
-            "accessToken", "Bearer " + PresentationApplication.sSharedPreferences.getString(
-                "accessToken", null
+        if (editMessage.value != "") {
+            val data = JSONObject()
+            data.put("roomId", reservationId.value.toString())
+            data.put("message", editMessage.value)
+            data.put(
+                "accessToken", "Bearer " + PresentationApplication.sSharedPreferences.getString(
+                    "accessToken", null
+                )
             )
-        )
 
-        stompClient.send("/pub/chat/message", data.toString()).subscribe()
-        editMessage.value = ""
-        isEditMessageSend.value = true
+            stompClient.send("/pub/chat/message", data.toString()).subscribe()
+            editMessage.value = ""
+            isEditMessageSend.value = true
+        }
     }
 
     override fun onClickedBack() {
@@ -312,7 +314,7 @@ class ChatRoomViewModel @Inject constructor(
     }
 
     override fun onClickedUserProfile(userId: Int) {
-         baseViewModelScope.launch {
+        baseViewModelScope.launch {
             _navigationHandler.emit(ChatRoomNavigationAction.NavigateToUserProfile(userId = userId))
 
         }
