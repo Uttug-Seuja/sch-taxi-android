@@ -36,9 +36,12 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(R.layout.f
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
-                when(it) {
+                when (it) {
                     is ChatNavigationAction.NavigateToBack -> navController.popBackStack()
-                    is ChatNavigationAction.NavigateToChattingRoom -> navigate(ChatFragmentDirections.actionChatFragmentToChatRoomFragment(it.reservationId))
+                    is ChatNavigationAction.NavigateToChattingRoom -> navigate(
+                        ChatFragmentDirections.actionChatFragmentToChatRoomFragment(it.reservationId)
+                    )
+
                     is ChatNavigationAction.NavigateToTaxiRoom -> TODO()
                 }
             }
@@ -50,5 +53,10 @@ class ChatFragment : BaseFragment<FragmentChatBinding, ChatViewModel>(R.layout.f
     }
 
     override fun initAfterBinding() {
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getChatRoom()
     }
 }
