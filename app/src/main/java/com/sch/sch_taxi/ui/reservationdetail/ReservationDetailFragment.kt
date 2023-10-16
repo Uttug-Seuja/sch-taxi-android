@@ -284,14 +284,14 @@ class ReservationDetailFragment :
         // http://www.taxi.or.kr/02/01.php <= 기역별 택시 요금안내
         var fee = 0
         if (distance - 2000 <= 0) {
-            binding.feeText.text = "약 3300원"
-            fee = 3300
+            binding.feeText.text = "약 4000원"
+            fee = 4000
         } else {
             distance -= 2000
 
-            val drivingFee = distance / 131
-            fee = (3300 + drivingFee * 100).toInt()
-            binding.feeText.text = "약 ${3300 + drivingFee * 100}원"
+            val drivingFee = distance / 127
+            fee = (4000 + drivingFee * 100).toInt()
+            binding.feeText.text = "약 ${4000 + drivingFee * 100}원"
 
         }
 
