@@ -36,7 +36,6 @@ class ReservationSearchResultViewModel @Inject constructor(
         MutableStateFlow(emptyList<Keyword>())
 
     fun getReservationSearch() {
-        Log.d("ttt searchTitleEvent.value", searchTitleEvent.value.toString())
         baseViewModelScope.launch {
             showLoading()
             reservationSearchResultEvent = createReservationSearchResultPager(
@@ -62,9 +61,7 @@ class ReservationSearchResultViewModel @Inject constructor(
                         size = 10,
                     ).onSuccess {
                         reservationSearchEvent.value = it.content
-                        Log.d("Ttt onSuccess", it.toString())
                     }.onError {
-                        Log.d("Ttt onError", it.toString())
                     }
                 }
             }

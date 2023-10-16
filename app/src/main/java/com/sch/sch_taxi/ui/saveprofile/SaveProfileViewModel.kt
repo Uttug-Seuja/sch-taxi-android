@@ -66,10 +66,8 @@ class SaveProfileViewModel @Inject constructor(
             showLoading()
             postFileToImageUseCase(file = file)
                 .onSuccess {
-                    Log.d("ttt it", it.toString())
                     profileImg.value = it!!.imageUrl!!
                 }
-                .onError { Log.d("ttt onError", it.toString()) }
             dismissLoading()
         }
     }

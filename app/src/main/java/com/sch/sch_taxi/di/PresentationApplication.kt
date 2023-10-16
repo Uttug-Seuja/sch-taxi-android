@@ -27,7 +27,6 @@ class PresentationApplication :Application(){
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         KakaoSdk.init(this, BuildConfig.KAKAO_LOGIN_NATIVE_APP_KEY)
         val keyHash = Utility.getKeyHash(this)
-        Log.d("HashKey", keyHash)
 
         DataApplication.sSharedPreferences = applicationContext.getSharedPreferences("KnockKnock", MODE_PRIVATE)
         DataApplication.editor = DataApplication.sSharedPreferences.edit()
@@ -35,7 +34,6 @@ class PresentationApplication :Application(){
         sSharedPreferences = DataApplication.sSharedPreferences
         editor = sSharedPreferences.edit()
 
-        Log.d("accessToken", sSharedPreferences.getString("accessToken", "").toString())
 
     }
 }

@@ -1,7 +1,6 @@
 package com.sch.sch_taxi.ui.reservationdetail
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -157,9 +156,6 @@ class ReservationDetailFragment :
                         else -> "SEAT_1"
 
                     }
-                    Log.d("Ttt", seatPosition.toString())
-                    Log.d("Ttt", viewModel.participationEvent.value!!.iparticipation.toString())
-
                     if (viewModel.participationEvent.value!!.iparticipation) viewModel.onClickedPatchParticipation(
                         seatPosition = seatPosition
                     )

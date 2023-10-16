@@ -1,7 +1,6 @@
 package com.sch.sch_taxi.ui.reservationupdate
 
 import android.database.sqlite.SQLiteException
-import android.util.Log
 import com.sch.domain.model.KakaoLocal
 import com.sch.domain.model.KakaoLocals
 import com.sch.domain.onError
@@ -9,7 +8,6 @@ import com.sch.domain.onSuccess
 import com.sch.domain.runCatching
 import com.sch.domain.usecase.kakao.GetResultKeywordUseCase
 import com.sch.domain.usecase.main.PatchReservationUseCase
-import com.sch.domain.usecase.main.PostReservationUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -157,7 +155,6 @@ class ReservationUpdateViewModel @Inject constructor(
 
                     }
                         .onError { e ->
-                            Log.d("ttt", e.toString())
                             when (e) {
                                 is SQLiteException -> _toastMessage.emit("데이터 베이스 에러가 발생하였습니다.")
                                 else -> _toastMessage.emit("시스템 에러가 발생 하였습니다.")

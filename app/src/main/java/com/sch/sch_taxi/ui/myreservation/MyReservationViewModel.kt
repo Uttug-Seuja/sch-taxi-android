@@ -44,7 +44,6 @@ class MyReservationViewModel @Inject constructor(
                     _userReservationEvent.value = it
                 }
                 .onError {
-                    Log.d("ttt onError", it.toString())
                 }
         }
     }

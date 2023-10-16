@@ -33,18 +33,13 @@ class ReservationKeywordPagingSource(
     override fun getRefreshKey(state: PagingState<Int, Keyword>): Int? = null
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Keyword> {
-        Log.d("Ttt load", "load")
 
         val pageIndex = params.key ?: 0
         val result = getReservationKeywordUseCase(
             word = keyword,
             page = pageIndex,
             size = params.loadSize,
-        ).onSuccess {
-            Log.d("Ttt onSuccess", it.toString())
-        }.onError {
-            Log.d("Ttt onError",  it.toString())
-        }
+        )
         return result.fold(
             onSuccess = { contents ->
                 LoadResult.Page(

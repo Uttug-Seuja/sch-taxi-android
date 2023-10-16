@@ -1,15 +1,12 @@
 package com.sch.sch_taxi.ui.reservationcreate
 
 import android.database.sqlite.SQLiteException
-import android.util.Log
 import com.sch.domain.model.KakaoLocal
 import com.sch.domain.model.KakaoLocals
-import com.sch.domain.model.Reservation
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.runCatching
 import com.sch.domain.usecase.kakao.GetResultKeywordUseCase
-import com.sch.domain.usecase.main.PatchReservationUseCase
 import com.sch.domain.usecase.main.PostParticipationUseCase
 import com.sch.domain.usecase.main.PostReservationUseCase
 import com.sch.sch_taxi.base.BaseViewModel
@@ -140,12 +137,6 @@ class ReservationCreateViewModel @Inject constructor(
 
     override fun onClickedTaxiCreate() {
         baseViewModelScope.launch {
-            Log.d("ttt", titleEvent.value.toString())
-            Log.d("ttt", startPlaceTitleEvent.value.toString())
-            Log.d("ttt", destinationTitleEvent.value.toString())
-            Log.d("ttt", seatEvent.value.toString())
-            Log.d("ttt", genderEvent.value.toString())
-            Log.d("ttt", dateEvent.value.toString())
 
             if (titleEvent.value.isNotEmpty() && startPlaceTitleEvent.value.isNotEmpty() && destinationTitleEvent.value.isNotEmpty() && seatEvent.value.isNotEmpty()
                 && genderEvent.value != "모집 성별" && dateEvent.value != "탑승 날짜"
@@ -178,7 +169,6 @@ class ReservationCreateViewModel @Inject constructor(
 
                     }
                         .onError { e ->
-                            Log.d("ttt onError", e.toString())
                             when (e) {
                                 is SQLiteException -> _toastMessage.emit("데이터 베이스 에러가 발생하였습니다.")
                                 else -> _toastMessage.emit("시스템 에러가 발생 하였습니다.")

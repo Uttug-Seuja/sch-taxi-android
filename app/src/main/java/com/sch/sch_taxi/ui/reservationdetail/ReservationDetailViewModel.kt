@@ -1,19 +1,14 @@
 package com.sch.sch_taxi.ui.reservationdetail
 
-import android.util.Log
 import com.sch.data.model.remote.error.BadRequestException
 import com.sch.domain.model.Participation
-import com.sch.domain.model.ParticipationInfo
-import com.sch.domain.model.Reservation
 import com.sch.domain.model.ReservationDetail
 import com.sch.domain.model.Taxis
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.DeleteReservationUseCase
-import com.sch.domain.usecase.main.GetOtherProfileUseCase
 import com.sch.domain.usecase.main.GetParticipationUseCase
 import com.sch.domain.usecase.main.GetReservationDetailUseCase
-import com.sch.domain.usecase.main.GetUserParticipationUseCase
 import com.sch.domain.usecase.main.PatchParticipationUseCase
 import com.sch.domain.usecase.main.PostParticipationUseCase
 import com.sch.domain.usecase.main.PostReportsParticipationUseCase
@@ -21,12 +16,7 @@ import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.lang.Math.acos
-import java.lang.Math.cos
-import java.lang.Math.sin
 import javax.inject.Inject
-import kotlin.math.roundToLong
-import kotlin.reflect.typeOf
 
 @HiltViewModel
 class ReservationDetailViewModel @Inject constructor(
@@ -73,7 +63,6 @@ class ReservationDetailViewModel @Inject constructor(
 
                 }
                 .onError {
-                    Log.d("ttt getReservationDetailUseCase onError", it.toString())
 
                 }
             dismissLoading()
@@ -93,7 +82,6 @@ class ReservationDetailViewModel @Inject constructor(
 
                 }
                 .onError {
-                    Log.d("ttt onError", it.toString())
 
                 }
             dismissLoading()
@@ -129,9 +117,6 @@ class ReservationDetailViewModel @Inject constructor(
     }
 
     fun onClickedPatchParticipation(seatPosition: String) {
-        Log.d("ttt it", reservationId.value.toString())
-        Log.d("ttt it", seatPosition.toString())
-
         baseViewModelScope.launch {
             showLoading()
             patchParticipationUseCase(
@@ -144,7 +129,6 @@ class ReservationDetailViewModel @Inject constructor(
 
                 }
                 .onError {
-                    Log.d("ttt it", it.toString())
                     when (it) {
                         is BadRequestException -> baseViewModelScope.launch {
                             _toastMessage.emit("잘못된 성별입니다")

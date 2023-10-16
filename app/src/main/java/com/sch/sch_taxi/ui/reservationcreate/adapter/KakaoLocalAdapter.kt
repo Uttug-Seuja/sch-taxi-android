@@ -25,7 +25,6 @@ class KakaoLocalAdapter(
 
     override fun onBindViewHolder(holder: TaxiCreateViewHolder, position: Int) {
         getItem(position)?.let { item ->
-            Log.d("Ttt", item.toString())
             holder.bind(item)
         }
     }

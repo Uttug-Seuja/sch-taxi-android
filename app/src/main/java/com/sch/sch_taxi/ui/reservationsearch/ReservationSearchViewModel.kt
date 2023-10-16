@@ -1,9 +1,6 @@
 package com.sch.sch_taxi.ui.reservationsearch
 
 import android.database.sqlite.SQLiteException
-import android.util.Log
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.sch.domain.model.Keyword
 import com.sch.domain.model.SearchHistory
 import com.sch.domain.model.SearchHistoryList
@@ -17,7 +14,6 @@ import com.sch.domain.usecase.main.GetRecommendKeywordUseCase
 import com.sch.domain.usecase.main.GetReservationKeywordUseCase
 import com.sch.domain.usecase.main.GetSearchHistoryUseCase
 import com.sch.sch_taxi.base.BaseViewModel
-import com.sch.sch_taxi.ui.reservationsearch.adapter.createReservationKeywordPager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.*
@@ -93,9 +89,7 @@ class ReservationSearchViewModel @Inject constructor(
                         size = 10,
                     ).onSuccess {
                         reservationSearchEvent.value = it.content
-                        Log.d("Ttt onSuccess", it.toString())
                     }.onError {
-                        Log.d("Ttt onError", it.toString())
                     }
                 }
             }
@@ -109,10 +103,8 @@ class ReservationSearchViewModel @Inject constructor(
             getRecommendKeywordUseCase()
                 .onSuccess {
                     recommendKeywordEvent.value = it
-                    Log.d("ttt recommendKeywordEvent", it.toString())
                 }
                 .onError {
-                    Log.d("ttt recommendKeywordEvent", it.toString())
 
                 }
         }
@@ -126,7 +118,6 @@ class ReservationSearchViewModel @Inject constructor(
             getSearchHistoryUseCase()
                 .onSuccess {
                     _taxiSearchHistoryEvent.value = it
-                    Log.d("ttt 최근 검색어", "최근 검색어 $it")
                 }
                 .onError { e ->
                     when (e) {
@@ -142,7 +133,6 @@ class ReservationSearchViewModel @Inject constructor(
     fun createSearchHistory() {
         showLoading()
         baseViewModelScope.launch {
-            Log.d("Ttt searchTitleEvent", searchTitleEvent.value.toString())
             val searchHistory = SearchHistory(
                 searchHistoryIdx = null,
                 title = searchTitleEvent.value
@@ -150,7 +140,6 @@ class ReservationSearchViewModel @Inject constructor(
 
             createSearchHistoryUseCase(searchHistory)
                 .onSuccess {
-                    Log.d("ttt 최근 검색어", "최근 검색어")
                 }
                 .onError { e ->
                     when (e) {
@@ -189,7 +178,6 @@ class ReservationSearchViewModel @Inject constructor(
     }
 
     override fun onClickedDeleteSearchTitle() {
-        Log.d("ttt", "??")
         baseViewModelScope.launch {
             searchTitleEvent.value = ""
         }
@@ -212,7 +200,6 @@ class ReservationSearchViewModel @Inject constructor(
     }
 
     override fun onClickedTaxiSearchResult(searchTitle: String) {
-        Log.d("ttt searchTitle", searchTitle.toString())
         baseViewModelScope.launch {
             _navigationHandler.emit(
                 ReservationSearchNavigationAction.NavigateToTaxiSearchResult(

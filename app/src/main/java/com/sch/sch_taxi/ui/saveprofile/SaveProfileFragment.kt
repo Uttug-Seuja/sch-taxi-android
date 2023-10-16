@@ -56,7 +56,6 @@ class SaveProfileFragment :
     private val requestMultiplePermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
             results.forEach {
-                Log.d("Ttt", it.toString())
                 if (!it.value) toastMessage("권한 허용 필요")
             }
         }
@@ -168,7 +167,6 @@ class SaveProfileFragment :
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         val requestBody = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
-        Log.d("ttt requestBody", requestBody.toString())
         // Update Profile API
         viewModel.setFileToUri(file = requestBody)
     }

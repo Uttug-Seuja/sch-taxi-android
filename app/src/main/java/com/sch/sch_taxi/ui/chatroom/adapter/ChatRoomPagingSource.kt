@@ -1,6 +1,5 @@
 package com.sch.sch_taxi.ui.chatroom.adapter
 
-import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
@@ -34,15 +33,6 @@ class ChatRoomPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Chat> {
         val pageIndex = params.key ?: 0
 
-
-        Log.d("ttt participationId", chatRoomViewModel.participationId.value.toString())
-        Log.d("ttt reservationId", chatRoomViewModel.reservationId.value.toString())
-
-        Log.d("ttt message", chatRoomViewModel.message.value)
-        Log.d("ttt writer", chatRoomViewModel.writer.value)
-        Log.d("ttt cursor", chatRoomViewModel.cursor.value)
-        Log.d("ttt userId", chatRoomViewModel.userId.value.toString())
-
         val result = postChatUseCase(
             participationId = chatRoomViewModel.participationId.value,
             reservationId = chatRoomViewModel.reservationId.value,
@@ -59,10 +49,6 @@ class ChatRoomPagingSource(
                     data = contents.chatPagingResponseDtoList,
                     prevKey = null,
                     nextKey = if (contents.chatPagingResponseDtoList.lastOrNull() != null) {
-                        Log.d("Ttt pageIndex", pageIndex.toString())
-
-                        Log.d("Ttt last", contents.chatPagingResponseDtoList.last().message)
-
                         chatRoomViewModel.myParticipationId.value = contents.myParticipationId
 
                         chatRoomViewModel.message.value =

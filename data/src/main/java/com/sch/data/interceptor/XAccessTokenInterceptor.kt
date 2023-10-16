@@ -1,6 +1,5 @@
 package com.sch.data.interceptor
 
-import android.util.Log
 import com.sch.data.DataApplication
 import okhttp3.Interceptor
 import okhttp3.Request

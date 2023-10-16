@@ -1,6 +1,5 @@
 package com.sch.sch_taxi.ui.register
 
-import android.util.Log
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetTokenValidationUseCase
@@ -60,12 +59,10 @@ class RegisterViewModel @Inject constructor(
                         ).onSuccess {
                             _navigationHandler.emit(RegisterNavigationAction.NavigateToLoginAlready)
                         }.onError {
-                            Log.d("ttt postNotificationTokenUseCase", it.toString())
                         }
                     }
                 }
             }.onError {
-                Log.d("ttt it", it.toString())
             }
             dismissLoading()
         }
@@ -73,14 +70,11 @@ class RegisterViewModel @Inject constructor(
 
     override fun onSendTestPushAlarmClicked() {
         baseViewModelScope.launch {
-            Log.d("ttt", "1")
 
             if (!notificationAgreed.value) {
-                Log.d("ttt", "3")
 
                 _navigationHandler.emit(RegisterNavigationAction.NavigateToPushSetting)
             } else {
-                Log.d("ttt", "4")
 
                 _navigationHandler.emit(RegisterNavigationAction.NavigateToNotificationAlarm)
             }

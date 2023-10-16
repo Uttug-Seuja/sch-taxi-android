@@ -1,6 +1,5 @@
 package com.sch.sch_taxi.ui.reservationupdate.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -25,7 +24,6 @@ class KakaoLocalUpdateAdapter(
 
     override fun onBindViewHolder(holder: TaxiCreateViewHolder, position: Int) {
         getItem(position)?.let { item ->
-            Log.d("Ttt", item.toString())
             holder.bind(item)
         }
     }

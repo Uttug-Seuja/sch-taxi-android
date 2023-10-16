@@ -5,7 +5,6 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.provider.Settings.Secure
 import android.os.Build
-import android.util.Log
 import androidx.navigation.fragment.findNavController
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -53,9 +52,6 @@ class RegisterFragment :
     private val requestMultiplePermission =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { results ->
             results.forEach {
-                Log.d("ttt key ", it.key)
-                Log.d("ttt value", it.value.toString())
-
                 if (!it.value) toastMessage("권한 허용 필요")
             }
         }
@@ -115,9 +111,6 @@ class RegisterFragment :
 
     private fun kakaoLogin() {
         val kakaoCallback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-            Log.d("ttt token", token.toString())
-            Log.d("ttt error", error.toString())
-
             // 로그인 실패
             if (error != null) {
                 when {
@@ -133,8 +126,6 @@ class RegisterFragment :
                 }
             } else if (token != null) {
                 token.idToken?.let {
-                    Log.d("ttt kakao id token", it)
-
                     viewModel.oauthLogin(idToken = it, provider = "KAKAO")
                 }
             }
@@ -188,11 +179,8 @@ class RegisterFragment :
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
-            Log.d(TAG, completedTask.result.idToken.toString())
-
             val idToken = completedTask.getResult(ApiException::class.java).idToken
             idToken?.let { token ->
-                Log.d("ttt google id token", token)
                 viewModel.oauthLogin(idToken = token, provider = "GOOGLE")
             }
         } catch (e: ApiException) {

@@ -1,7 +1,6 @@
 package com.sch.sch_taxi.ui.chatroom
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.paging.PagingData
 import androidx.paging.TerminalSeparatorType
 import androidx.paging.cachedIn
@@ -92,21 +91,16 @@ class ChatRoomViewModel @Inject constructor(
             stompClient.lifecycle().subscribe { lifecycleEvent ->
                 when (lifecycleEvent.type) {
                     LifecycleEvent.Type.OPENED -> {
-                        Log.d("ttt", "OPEND !!")
                     }
 
                     LifecycleEvent.Type.CLOSED -> {
-                        Log.d("ttt", "CLOSED !!")
 
                     }
 
                     LifecycleEvent.Type.ERROR -> {
-                        Log.d("ttt", "ERROR !!")
-                        Log.d("ttt", "CONNECT ERROR" + lifecycleEvent.exception.toString())
                     }
 
                     else -> {
-                        Log.d("ttt", "ELSE" + lifecycleEvent.message)
                     }
                 }
             }
@@ -125,7 +119,6 @@ class ChatRoomViewModel @Inject constructor(
 
             kotlinx.coroutines.delay(500)
             dismissLoading()
-            Log.d("ttt isConnected", stompClient.isConnected.toString())
 
             val subscribeHeader = arrayListOf<StompHeader>()
             subscribeHeader.add(
@@ -162,11 +155,7 @@ class ChatRoomViewModel @Inject constructor(
                         isend = data.participationId == myParticipationId.value
                     )
 
-                    Log.d("ttt", "ㅗㅑㅠ야")
-
                     chatRoomEvent = chatRoomEvent.map { pagingData ->
-                        Log.d("ttt", "ㅗㅑ3야")
-
                         pagingData.insertHeaderItem(
                             TerminalSeparatorType.FULLY_COMPLETE, item = newChatMessage
                         )
@@ -216,8 +205,6 @@ class ChatRoomViewModel @Inject constructor(
             getReservationDetailUseCase(reservationId = reservationId.value).onSuccess {
                 reservesEvent.value = it
             }.onError {
-                Log.d("ttt getReservationDetailUseCase onError", it.toString())
-
             }
             dismissLoading()
 
@@ -234,8 +221,6 @@ class ChatRoomViewModel @Inject constructor(
                 }
 
             }.onError {
-                Log.d("ttt onError", it.toString())
-
             }
             dismissLoading()
 
@@ -243,9 +228,6 @@ class ChatRoomViewModel @Inject constructor(
     }
 
     fun onClickedPatchParticipation(seatPosition: String) {
-        Log.d("ttt it", reservationId.value.toString())
-        Log.d("ttt it", seatPosition.toString())
-
         baseViewModelScope.launch {
             showLoading()
             patchParticipationUseCase(
@@ -255,7 +237,6 @@ class ChatRoomViewModel @Inject constructor(
                 _toastMessage.emit("수정되었습니다")
 
             }.onError {
-                Log.d("ttt it", it.toString())
                 when (it) {
                     is BadRequestException -> baseViewModelScope.launch {
                         _toastMessage.emit("잘못된 성별입니다")
@@ -272,10 +253,6 @@ class ChatRoomViewModel @Inject constructor(
 
     fun onClickedReservationMoreBottomDialog() {
         baseViewModelScope.launch {
-//            _navigationHandler.emit(ChatRoomNavigationAction.NavigateToBack)
-            Log.d("Ttt reservationId.value", reservationId.value.toString())
-            Log.d("Ttt reservesEvent", reservesEvent.value.toString())
-
             _navigationHandler.emit(
                 ChatRoomNavigationAction.NavigateToReservationMoreBottomDialog(
                     reservationId = reservationId.value, reservesEvent.value!!.hostInfo.userId
@@ -325,10 +302,7 @@ class ChatRoomViewModel @Inject constructor(
             deleteParticipationUseCase(id = reservationId.value).onSuccess {
                 _navigationHandler.emit(ChatRoomNavigationAction.NavigateToBack)
             }.onError {
-                Log.d("ttt", it.toString())
             }
-
         }
-
     }
 }

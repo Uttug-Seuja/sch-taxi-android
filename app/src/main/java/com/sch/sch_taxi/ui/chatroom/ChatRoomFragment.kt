@@ -1,6 +1,5 @@
 package com.sch.sch_taxi.ui.chatroom
 
-import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -14,7 +13,6 @@ import com.sch.sch_taxi.databinding.FragmentChatRoomBinding
 import com.sch.sch_taxi.ui.chatroom.adapter.ChatRoomAdapter
 import com.sch.sch_taxi.ui.chatroom.bottom.BottomChatRoomMore
 import com.sch.sch_taxi.ui.reservationcreate.bottom.BottomSelectSeat
-import com.sch.sch_taxi.ui.reservationdetail.ReservationDetailFragmentDirections
 import com.sch.sch_taxi.ui.chatroom.bottom.ChatRoomMoreType
 import com.sch.sch_taxi.ui.reservationdetail.bottom.BottomTaxiReport
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +52,6 @@ class ChatRoomFragment :
     override fun initDataBinding() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.navigationHandler.collectLatest {
-                Log.d("ttt", it.toString())
                 when (it) {
                     is ChatRoomNavigationAction.NavigateToBack -> navController.popBackStack()
                     is ChatRoomNavigationAction.NavigateToReservationMoreBottomDialog -> reservationMoreBottomDialog(

@@ -1,13 +1,8 @@
 package com.sch.sch_taxi.ui.setprofile
 
-import android.util.Log
-import com.sch.domain.model.AssetRandom
-import com.sch.domain.model.Profile
-import com.sch.domain.model.UserInfo
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetAssetRandomUseCase
-import com.sch.domain.usecase.main.GetUserProfileUseCase
 import com.sch.domain.usecase.main.PostEmailCodeUseCase
 import com.sch.domain.usecase.main.PostEmailUseCase
 import com.sch.domain.usecase.main.PostFileToImageUseCase
@@ -19,7 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlinx.coroutines.flow.*
-import okhttp3.MultipartBody
 
 @HiltViewModel
 class SetProfileViewModel @Inject constructor(
@@ -211,7 +205,6 @@ class SetProfileViewModel @Inject constructor(
 //                            }
                     }
                         .onError {
-                            Log.d("ttt error", it.toString())
                         }
                 }
             }

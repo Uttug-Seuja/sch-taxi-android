@@ -73,7 +73,6 @@ fun View.bindMannerTemperatureInfoVisible(clickable: Boolean) {
 
 @BindingAdapter("progressPercent")
 fun ProgressBar.bindProgressPercent(progress: Double) {
-    Log.d("ttt progress", progress.toString())
     this.max = 100
     this.progress = progress.toInt()
 }
