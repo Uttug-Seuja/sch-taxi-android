@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "507159752720-uk5b6dvn2bh5moleve80pubt4o1gfc0f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sch.sch_taxi",
+            "certificate_hash": "093c4c780ae90698f078caec1b5b34a93e262649"
+          }
+        },
+        {
           "client_id": "507159752720-5e7i6ocrr0ukoocp3qshrok2k7c9f49i.apps.googleusercontent.com",
           "client_type": 3
         }
