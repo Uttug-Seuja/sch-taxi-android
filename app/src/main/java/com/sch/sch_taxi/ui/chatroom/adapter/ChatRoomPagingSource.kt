@@ -6,22 +6,21 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sch.domain.fold
 import com.sch.domain.model.Chat
+import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.PostChatUseCase
 import com.sch.sch_taxi.ui.chatroom.ChatRoomViewModel
 
 fun createChatRoomPager(
     postChatUseCase: PostChatUseCase,
     chatRoomViewModel: ChatRoomViewModel,
-): Pager<Int, Chat> = Pager(
-    config = PagingConfig(pageSize = 10, initialLoadSize = 10, enablePlaceholders = true),
-    initialKey = 0,
-    pagingSourceFactory = {
-        ChatRoomPagingSource(
-            postChatUseCase = postChatUseCase,
-            chatRoomViewModel = chatRoomViewModel
-        )
-    }
-)
+): Pager<Int, Chat> =
+    Pager(config = PagingConfig(pageSize = 10, initialLoadSize = 10, enablePlaceholders = true),
+        initialKey = 0,
+        pagingSourceFactory = {
+            ChatRoomPagingSource(
+                postChatUseCase = postChatUseCase, chatRoomViewModel = chatRoomViewModel
+            )
+        })
 
 class ChatRoomPagingSource(
     private val postChatUseCase: PostChatUseCase,
@@ -40,34 +39,32 @@ class ChatRoomPagingSource(
             writer = chatRoomViewModel.writer.value,
             cursor = chatRoomViewModel.cursor.value,
             userId = chatRoomViewModel.userId.value,
-        )
+        ).onSuccess {
+            chatRoomViewModel.myParticipationId.value = it.myParticipationId
+        }
 
 
-        return result.fold(
-            onSuccess = { contents ->
-                LoadResult.Page(
-                    data = contents.chatPagingResponseDtoList,
-                    prevKey = null,
-                    nextKey = if (contents.chatPagingResponseDtoList.lastOrNull() != null) {
-                        chatRoomViewModel.myParticipationId.value = contents.myParticipationId
+        return result.fold(onSuccess = { contents ->
+            LoadResult.Page(
+                data = contents.chatPagingResponseDtoList,
+                prevKey = null,
+                nextKey = if (contents.chatPagingResponseDtoList.lastOrNull() != null) {
 
-                        chatRoomViewModel.message.value =
-                            contents.chatPagingResponseDtoList.last().message
-                        chatRoomViewModel.writer.value =
-                            contents.chatPagingResponseDtoList.last().writer
-                        chatRoomViewModel.cursor.value =
-                            contents.chatPagingResponseDtoList.last().createdAt
-                        chatRoomViewModel.userId.value =
-                            contents.chatPagingResponseDtoList.last().userId
-                        chatRoomViewModel.participationId.value =
-                            contents.chatPagingResponseDtoList.last().participationId
+                    chatRoomViewModel.message.value =
+                        contents.chatPagingResponseDtoList.last().message
+                    chatRoomViewModel.writer.value =
+                        contents.chatPagingResponseDtoList.last().writer
+                    chatRoomViewModel.cursor.value =
+                        contents.chatPagingResponseDtoList.last().createdAt
+                    chatRoomViewModel.userId.value =
+                        contents.chatPagingResponseDtoList.last().userId
+                    chatRoomViewModel.participationId.value =
+                        contents.chatPagingResponseDtoList.last().participationId
 
-                        pageIndex + 1
-                    } else null
-                )
-            },
-            onError = { e -> LoadResult.Error(e) }
-        )
+                    pageIndex + 1
+                } else null
+            )
+        }, onError = { e -> LoadResult.Error(e) })
     }
 
 }
