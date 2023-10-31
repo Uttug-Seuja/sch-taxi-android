@@ -206,11 +206,11 @@ class ReservationDetailViewModel @Inject constructor(
         }
     }
 
-    fun onClickedReport(reservationId: Int, reportReason: String) {
+    fun onClickedReport(sendUserId: Int, reportReason: String) {
         baseViewModelScope.launch {
             showLoading()
             postReportsParticipationUseCase(
-                participationId = reservationId,
+                participationId = sendUserId,
                 reportReason = reportReason,
                 reportType = reportReason
 

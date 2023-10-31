@@ -59,8 +59,11 @@ class ReservationDetailFragment :
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.reservesEvent.collectLatest {
                 when (it) {
-                    null -> {}
-                    else -> initAdapter()
+                    null -> binding.mapView.removeAllViews()
+                    else -> {
+                        binding.mapView.removeAllViews()
+                        initAdapter()
+                    }
                 }
             }
         }
@@ -73,8 +76,7 @@ class ReservationDetailFragment :
                 when (it) {
                     is ReservationDetailNavigationAction.NavigateToBack -> navController.popBackStack()
                     is ReservationDetailNavigationAction.NavigateToReservationMoreBottomDialog -> reservationMoreBottomDialog(
-                        reservationId = it.reservationId,
-                        sendUserId = it.sendUserId
+                        reservationId = it.reservationId, sendUserId = it.sendUserId
                     )
 
                     is ReservationDetailNavigationAction.NavigateToSelectSeatBottomDialog -> selectSeatBottomDialog()
@@ -116,8 +118,7 @@ class ReservationDetailFragment :
         mapView.setCalloutBalloonAdapter(customBalloonAdapter)  // 커스텀 말풍선 등록
 
 
-        mapView.currentLocationTrackingMode =
-            MapView.CurrentLocationTrackingMode.TrackingModeOff
+        mapView.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOff
         val mapPoint = MapPoint.mapPointWithGeoCoord(
             (viewModel.reservesEvent.value!!.startLatitude + viewModel.reservesEvent.value!!.destinationLatitude) / 2,
             (viewModel.reservesEvent.value!!.startLongitude + viewModel.reservesEvent.value!!.destinationLongitude) / 2
@@ -167,8 +168,7 @@ class ReservationDetailFragment :
     }
 
     private fun reservationMoreBottomDialog(
-        reservationId: Int,
-        sendUserId: Int
+        reservationId: Int, sendUserId: Int
     ) {
         val dialog: BottomTaxiMore = BottomTaxiMore(viewModel.reservesEvent.value!!.iHost) {
             when (it) {
@@ -178,7 +178,7 @@ class ReservationDetailFragment :
 
                 is TaxiMoreType.Delete -> reservationDeleteDialog(reservationId = reservationId)
                 TaxiMoreType.UserDeclare -> usersBlockDialog(sendUserId = sendUserId)
-                TaxiMoreType.Report -> reportDialog(reservationId = reservationId)
+                TaxiMoreType.Report -> reportDialog(sendUserId = sendUserId)
             }
         }
         dialog.show(childFragmentManager, TAG)
@@ -191,17 +191,14 @@ class ReservationDetailFragment :
             positiveContents = "삭제하기",
             negativeContents = "취소"
         )
-        val dialog: DefaultRedAlertDialog = DefaultRedAlertDialog(
-            alertDialogModel = res,
-            clickToPositive = {
+        val dialog: DefaultRedAlertDialog =
+            DefaultRedAlertDialog(alertDialogModel = res, clickToPositive = {
                 toastMessage("게시글를 삭제했습니다")
                 // api
                 viewModel.onReservationDeleteClicked(reservationId)
-            },
-            clickToNegative = {
+            }, clickToNegative = {
                 toastMessage("아니요")
-            }
-        )
+            })
         dialog.show(childFragmentManager, TAG)
     }
 
@@ -212,24 +209,21 @@ class ReservationDetailFragment :
             positiveContents = "차단하기",
             negativeContents = getString(R.string.no)
         )
-        val dialog: DefaultRedAlertDialog = DefaultRedAlertDialog(
-            alertDialogModel = res,
-            clickToPositive = {
+        val dialog: DefaultRedAlertDialog =
+            DefaultRedAlertDialog(alertDialogModel = res, clickToPositive = {
                 viewModel.onClickedUserReport(sendUserId = sendUserId)
                 toastMessage("유저를 차단했습니다")
-            },
-            clickToNegative = {
+            }, clickToNegative = {
                 toastMessage("아니요")
-            }
-        )
+            })
         dialog.show(childFragmentManager, TAG)
     }
 
-    private fun reportDialog(reservationId: Int) {
+    private fun reportDialog(sendUserId: Int) {
         val bottomSheet = BottomTaxiReport(
         ) { reportReason ->
             toastMessage("게시글를 신고했습니다")
-            viewModel.onClickedReport(reservationId = reservationId, reportReason = reportReason)
+            viewModel.onClickedReport(sendUserId = sendUserId, reportReason = reportReason)
         }
         bottomSheet.show(requireActivity().supportFragmentManager, TAG)
     }
@@ -268,13 +262,12 @@ class ReservationDetailFragment :
             selectedMarkerType = MapPOIItem.MarkerType.RedPin // 클릭 시 마커 모양
         }
 
-        var distance =
-            calDist(
-                viewModel.reservesEvent.value!!.startLatitude,
-                viewModel.reservesEvent.value!!.startLongitude,
-                viewModel.reservesEvent.value!!.destinationLatitude,
-                viewModel.reservesEvent.value!!.destinationLongitude
-            )
+        var distance = calDist(
+            viewModel.reservesEvent.value!!.startLatitude,
+            viewModel.reservesEvent.value!!.startLongitude,
+            viewModel.reservesEvent.value!!.destinationLatitude,
+            viewModel.reservesEvent.value!!.destinationLongitude
+        )
 
 
         // http://www.taxi.or.kr/02/01.php <= 기역별 택시 요금안내
