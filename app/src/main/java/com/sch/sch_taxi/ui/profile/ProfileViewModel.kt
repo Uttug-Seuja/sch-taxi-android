@@ -1,12 +1,12 @@
 package com.sch.sch_taxi.ui.profile
 
 
-import android.util.Log
 import com.sch.domain.model.UserInfo
 import com.sch.domain.onError
 import com.sch.domain.onSuccess
 import com.sch.domain.usecase.main.GetOtherProfileUseCase
 import com.sch.domain.usecase.main.GetUserProfileUseCase
+import com.sch.domain.usecase.main.PostReportsParticipationUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -19,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
-    private val getOtherProfileUseCase: GetOtherProfileUseCase
+    private val getOtherProfileUseCase: GetOtherProfileUseCase,
+    private val postReportsParticipationUseCase: PostReportsParticipationUseCase
 ) : BaseViewModel(), ProfileActionHandler {
 
     private val TAG = "ProfileViewModel"
@@ -35,15 +36,13 @@ class ProfileViewModel @Inject constructor(
         if (userId.value != -1) {
             baseViewModelScope.launch {
                 showLoading()
-                getOtherProfileUseCase(userId = userId.value)
-                    .onSuccess { userProfile.value = it }
+                getOtherProfileUseCase(userId = userId.value).onSuccess { userProfile.value = it }
                 dismissLoading()
             }
         } else {
             baseViewModelScope.launch {
                 showLoading()
-                getUserProfileUseCase()
-                    .onSuccess { userProfile.value = it }
+                getUserProfileUseCase().onSuccess { userProfile.value = it }
                 dismissLoading()
             }
         }
@@ -64,6 +63,30 @@ class ProfileViewModel @Inject constructor(
     override fun onClickedMannerTemperatureInfo() {
         baseViewModelScope.launch {
             mannerTemperatureInfoState.value = !mannerTemperatureInfoState.value
+        }
+    }
+
+    override fun onClickedMoreBottomDialog() {
+        baseViewModelScope.launch {
+            _navigationEvent.emit(ProfileNavigationAction.NavigateToMoreBottomDialog(userId.value))
+        }
+    }
+
+    fun onClickedUserReport(sendUserId: Int) {
+        baseViewModelScope.launch {
+
+        }
+    }
+
+    fun onClickedReport(sendUserId: Int, reportReason: String) {
+        baseViewModelScope.launch {
+            showLoading()
+            postReportsParticipationUseCase(
+                participationId = sendUserId, reportReason = reportReason, reportType = reportReason
+
+            ).onSuccess { }.onError { }
+            dismissLoading()
+
         }
     }
 }

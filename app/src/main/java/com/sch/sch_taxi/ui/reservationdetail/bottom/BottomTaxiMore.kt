@@ -56,6 +56,9 @@ class BottomTaxiMore(
         if (!isHost) {
             update.visibility = View.GONE
             delete.visibility = View.GONE
+            requireView().findViewById<View>(R.id.line_update).visibility = View.GONE
+            requireView().findViewById<View>(R.id.line_delete).visibility = View.GONE
+
         }
 
 

@@ -5,4 +5,6 @@ interface ProfileActionHandler {
     fun onClickedBack()
     fun onClickedEditProfile()
     fun onClickedMannerTemperatureInfo()
+    fun onClickedMoreBottomDialog()
+
 }
