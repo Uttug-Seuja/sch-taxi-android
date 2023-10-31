@@ -91,84 +91,86 @@ class ChatRoomViewModel @Inject constructor(
     fun runStomp() {
         baseViewModelScope.launch {
 
-            showLoading()
+            if (!stompClient.isConnected) {
+                showLoading()
 
-            stompClient.lifecycle().subscribe { lifecycleEvent ->
-                when (lifecycleEvent.type) {
-                    LifecycleEvent.Type.OPENED -> {
-                    }
+                stompClient.lifecycle().subscribe { lifecycleEvent ->
+                    when (lifecycleEvent.type) {
+                        LifecycleEvent.Type.OPENED -> {
+                        }
 
-                    LifecycleEvent.Type.CLOSED -> {
+                        LifecycleEvent.Type.CLOSED -> {
 
-                    }
+                        }
 
-                    LifecycleEvent.Type.ERROR -> {
-                    }
+                        LifecycleEvent.Type.ERROR -> {
+                        }
 
-                    else -> {
+                        else -> {
+                        }
                     }
                 }
-            }
 
-            val headerList = arrayListOf<StompHeader>()
-            headerList.add(
-                StompHeader(
-                    "Authorization",
-                    "Bearer " + PresentationApplication.sSharedPreferences.getString(
-                        "accessToken", null
-                    )
-                )
-            )
-
-            stompClient.connect(headerList)
-
-            kotlinx.coroutines.delay(500)
-            dismissLoading()
-
-            val subscribeHeader = arrayListOf<StompHeader>()
-            subscribeHeader.add(
-                StompHeader(
-                    "Authorization",
-                    "Bearer " + PresentationApplication.sSharedPreferences.getString(
-                        "accessToken", null
-                    )
-                )
-            )
-            subscribeHeader.add(
-                StompHeader(
-                    "simpDestination", "/sub/chat/room/${reservationId.value}"
-                )
-            )
-            subscribeHeader.add(StompHeader("simpSessionId", "asdasdfdfd"))
-
-
-            stompClient.topic("/sub/chat/room/${reservationId.value}", subscribeHeader)
-                .subscribe { topicMessage ->
-                    val parser = JsonParser()
-                    val obj: String = parser.parse(topicMessage.payload).toString()
-                    val data = Gson().fromJson(obj, SocketMessage::class.java)
-
-
-                    val newChatMessage = Chat(
-                        reservationId = data.roomId.toInt(),
-                        participationId = data.participationId,
-                        userId = data.userId,
-                        writer = data.writer,
-                        message = data.message,
-                        createdAt = data.createdAt,
-                        profilePath = data.profilePath,
-                        isend = data.participationId == myParticipationId.value
-                    )
-
-                    chatRoomEvent = chatRoomEvent.map { pagingData ->
-                        pagingData.insertHeaderItem(
-                            TerminalSeparatorType.FULLY_COMPLETE, item = newChatMessage
+                val headerList = arrayListOf<StompHeader>()
+                headerList.add(
+                    StompHeader(
+                        "Authorization",
+                        "Bearer " + PresentationApplication.sSharedPreferences.getString(
+                            "accessToken", null
                         )
-                    }
+                    )
+                )
 
-                    newMessageCheck.value += 1
-                }
+                stompClient.connect(headerList)
+
+                kotlinx.coroutines.delay(500)
+                dismissLoading()
+
+                val subscribeHeader = arrayListOf<StompHeader>()
+                subscribeHeader.add(
+                    StompHeader(
+                        "Authorization",
+                        "Bearer " + PresentationApplication.sSharedPreferences.getString(
+                            "accessToken", null
+                        )
+                    )
+                )
+                subscribeHeader.add(
+                    StompHeader(
+                        "simpDestination", "/sub/chat/room/${reservationId.value}"
+                    )
+                )
+                subscribeHeader.add(StompHeader("simpSessionId", "asdasdfdfd"))
+
+
+                stompClient.topic("/sub/chat/room/${reservationId.value}", subscribeHeader)
+                    .subscribe { topicMessage ->
+                        val parser = JsonParser()
+                        val obj: String = parser.parse(topicMessage.payload).toString()
+                        val data = Gson().fromJson(obj, SocketMessage::class.java)
+
+
+                        val newChatMessage = Chat(
+                            reservationId = data.roomId.toInt(),
+                            participationId = data.participationId,
+                            userId = data.userId,
+                            writer = data.writer,
+                            message = data.message,
+                            createdAt = data.createdAt,
+                            profilePath = data.profilePath,
+                            isend = data.participationId == myParticipationId.value
+                        )
+                        chatRoomEvent = chatRoomEvent.map { pagingData ->
+                            pagingData.insertHeaderItem(
+                                TerminalSeparatorType.FULLY_COMPLETE, item = newChatMessage
+                            )
+                        }
+
+                        newMessageCheck.value += 1
+                    }
+            }
         }
+
     }
 
     fun disconnect() {
@@ -209,8 +211,7 @@ class ChatRoomViewModel @Inject constructor(
             showLoading()
             getReservationDetailUseCase(reservationId = reservationId.value).onSuccess {
                 reservesEvent.value = it
-            }.onError {
-            }
+            }.onError {}
             dismissLoading()
 
         }
@@ -225,8 +226,7 @@ class ChatRoomViewModel @Inject constructor(
                     reservesEvent.value!!.reservationStatus = "CHATTING"
                 }
 
-            }.onError {
-            }
+            }.onError {}
             dismissLoading()
 
         }
@@ -306,8 +306,7 @@ class ChatRoomViewModel @Inject constructor(
         baseViewModelScope.launch {
             deleteParticipationUseCase(id = reservationId.value).onSuccess {
                 _navigationHandler.emit(ChatRoomNavigationAction.NavigateToBack)
-            }.onError {
-            }
+            }.onError {}
         }
     }
 }
