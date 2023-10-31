@@ -37,10 +37,11 @@
 
             <TextView
                 android:id="@+id/start_time_text"
+                reserveDepartureDateText="@{holder.departureDate}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="10:00"
+                android:gravity="center"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -69,10 +70,12 @@
 
                 <TextView
                     android:id="@+id/sub_title_text"
+                    reserveInfoText="@{holder}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="end"
                     android:gravity="center"
-                    android:text="순천향대->신창역•남녀모두"
+                    android:maxLines="1"
                     android:textAlignment="center"
                     android:textSize="12sp" />
 
@@ -81,6 +84,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/state_btn"
+                reserveInfoBtn="@{holder.reservationStatus}"
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -92,6 +96,7 @@
 
                 <TextView
                     android:id="@+id/state_text"
+                    reserveInfoBtnDescription="@{holder.reservationStatus}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -100,7 +105,6 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
-                    android:text="신청가능"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="14sp" />
