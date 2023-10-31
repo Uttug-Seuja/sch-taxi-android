@@ -1,5 +1,6 @@
 package com.sch.sch_taxi.ui.home
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -7,19 +8,14 @@ import com.google.android.material.card.MaterialCardView
 import com.sch.domain.model.Reservation
 
 
-private val gender =
-    hashMapOf<String, String>("ALL" to "남녀모두", "MAN" to "남자만", "WOMAN" to "여자만")
+private val gender = hashMapOf<String, String>("ALL" to "남녀모두", "MAN" to "남자만", "WOMAN" to "여자만")
 private val reserveStatus =
     hashMapOf<String, String>("POSSIBLE" to "신청가능", "IMMINENT" to "마감임박!", "DEADLINE" to "마감")
 private val stateTextColor = hashMapOf<String, String>(
-    "POSSIBLE" to "#FFFFFF",
-    "IMMINENT" to "#FFFFFF",
-    "DEADLINE" to "#cccccc"
+    "POSSIBLE" to "#FFFFFF", "IMMINENT" to "#FFFFFF", "DEADLINE" to "#cccccc"
 )
 private val stateBtnColor = hashMapOf<String, String>(
-    "POSSIBLE" to "#1570ff",
-    "IMMINENT" to "#FF4D37",
-    "DEADLINE" to "#EEEEEE"
+    "POSSIBLE" to "#1570ff", "IMMINENT" to "#FF4D37", "DEADLINE" to "#EEEEEE"
 )
 
 @BindingAdapter("reserveInfoBtnDescription")
@@ -44,4 +40,12 @@ fun TextView.bindReserveInfoText(reservation: Reservation) {
         reservation.destination,
         gender[reservation.gender]
     )
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("reserveDepartureDateText")
+fun TextView.bindReserveDepartureDateText(departureDate: String) {
+    this.text = "${
+        departureDate.substring(5, 10).replace("-", "/")
+    }\n${departureDate.substring(11, 16)}"
 }
