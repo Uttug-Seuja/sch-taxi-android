@@ -164,7 +164,7 @@ class ReservationDetailViewModel @Inject constructor(
     override fun onClickedSelectSeatBottomDialog() {
 
         baseViewModelScope.launch {
-            if (reservesEvent.value!!.reservationStatus == "CHATTING") {
+            if (reservationStatus.value == "CHATTING") {
                 _navigationHandler.emit(
                     ReservationDetailNavigationAction.NavigateToChatRoom(
                         reservationId = reservationId.value
