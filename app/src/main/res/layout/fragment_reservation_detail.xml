@@ -619,7 +619,7 @@
 
             <TextView
                 android:id="@+id/apply_explanation_text"
-                reserveStatusText="@{vm.reservesEvent.reservationStatus}"
+                reserveStatusText="@{vm.reservationStatus}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -634,7 +634,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/apply_btn"
-                applyBtn="@{vm.reservesEvent.reservationStatus}"
+                applyBtn="@{vm.reservationStatus}"
                 onSingleClick="@{() -> vm.onClickedSelectSeatBottomDialog()}"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -649,7 +649,7 @@
 
                 <TextView
                     android:id="@+id/apply_text12"
-                    applyText="@{vm.reservesEvent.reservationStatus}"
+                    applyText="@{vm.reservationStatus}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

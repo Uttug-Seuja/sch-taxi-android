@@ -67,6 +67,7 @@ fun TextView.bindApplyText(reservationStatus: String?){
 @BindingAdapter("applyBtn")
 fun MaterialCardView.bindApplyBtn(reservationStatus: String?){
     reservationStatus?.let {
+        this.isEnabled = it != "DEADLINE"
         this.setCardBackgroundColor(Color.parseColor(stateBtnColor[it]))
     }
 }

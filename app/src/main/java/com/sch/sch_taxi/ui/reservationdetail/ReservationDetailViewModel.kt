@@ -36,8 +36,7 @@ class ReservationDetailViewModel @Inject constructor(
         _navigationHandler.asSharedFlow()
 
     var reservationId = MutableStateFlow<Int>(-1)
-    private val _notificationsEvent: MutableStateFlow<Taxis> =
-        MutableStateFlow(Taxis(emptyList()))
+    private val _notificationsEvent: MutableStateFlow<Taxis> = MutableStateFlow(Taxis(emptyList()))
     val notificationsEvent: StateFlow<Taxis> = _notificationsEvent
     var editTextReportEvent = MutableStateFlow<String>("")
 
@@ -46,23 +45,24 @@ class ReservationDetailViewModel @Inject constructor(
     var startLongitude = MutableStateFlow<Double>(0.0)
     var destinationLatitude = MutableStateFlow<Double>(0.0)
     var destinationLongitude = MutableStateFlow<Double>(0.0)
+    val reservationStatus = MutableStateFlow<String?>(null)
 
     val participationEvent: MutableStateFlow<Participation?> = MutableStateFlow(null)
 
     fun getReservationDetail() {
         baseViewModelScope.launch {
             showLoading()
-            getReservationDetailUseCase(reservationId = reservationId.value)
-                .onSuccess {
+            getReservationDetailUseCase(reservationId = reservationId.value).onSuccess {
                     reservesEvent.value = it
                     startLatitude.value = it.startLatitude
                     startLongitude.value = it.startLongitude
                     destinationLatitude.value = it.destinationLatitude
                     destinationLongitude.value = it.destinationLongitude
+                    if (reservationStatus.value != "CHATTING") reservationStatus.value =
+                        it.reservationStatus
 
 
-                }
-                .onError {
+                }.onError {
 
                 }
             dismissLoading()
@@ -73,15 +73,13 @@ class ReservationDetailViewModel @Inject constructor(
     fun getParticipation() {
         baseViewModelScope.launch {
             showLoading()
-            getParticipationUseCase(id = reservationId.value)
-                .onSuccess {
+            getParticipationUseCase(id = reservationId.value).onSuccess {
                     participationEvent.value = it
                     if (participationEvent.value!!.iparticipation) {
-                        reservesEvent.value!!.reservationStatus = "CHATTING"
+                        reservationStatus.value = "CHATTING"
                     }
 
-                }
-                .onError {
+                }.onError {
 
                 }
             dismissLoading()
@@ -93,15 +91,12 @@ class ReservationDetailViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             postParticipationUseCase(
-                reservationId = reservationId.value,
-                seatPosition = seatPosition
-            )
-                .onSuccess {
+                reservationId = reservationId.value, seatPosition = seatPosition
+            ).onSuccess {
                     getParticipation()
                     _toastMessage.emit("신청되었습니다")
 
-                }
-                .onError {
+                }.onError {
                     when (it) {
                         is BadRequestException -> baseViewModelScope.launch {
                             _toastMessage.emit("잘못된 성별입니다")
@@ -120,15 +115,12 @@ class ReservationDetailViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
             patchParticipationUseCase(
-                participationId = reservationId.value,
-                seatPosition = seatPosition
-            )
-                .onSuccess {
+                participationId = reservationId.value, seatPosition = seatPosition
+            ).onSuccess {
                     getParticipation()
                     _toastMessage.emit("수정되었습니다")
 
-                }
-                .onError {
+                }.onError {
                     when (it) {
                         is BadRequestException -> baseViewModelScope.launch {
                             _toastMessage.emit("잘못된 성별입니다")
@@ -173,7 +165,11 @@ class ReservationDetailViewModel @Inject constructor(
 
         baseViewModelScope.launch {
             if (reservesEvent.value!!.reservationStatus == "CHATTING") {
-                _navigationHandler.emit(ReservationDetailNavigationAction.NavigateToChatRoom(reservationId = reservationId.value))
+                _navigationHandler.emit(
+                    ReservationDetailNavigationAction.NavigateToChatRoom(
+                        reservationId = reservationId.value
+                    )
+                )
 
             } else {
                 _navigationHandler.emit(
@@ -194,14 +190,12 @@ class ReservationDetailViewModel @Inject constructor(
     fun onReservationDeleteClicked(reservationId: Int) {
         baseViewModelScope.launch {
             showLoading()
-            deleteReservationUseCase(reservationId = reservationId)
-                .onSuccess {
+            deleteReservationUseCase(reservationId = reservationId).onSuccess {
                     _toastMessage.emit("게시글이 삭제되었습니다")
                     baseViewModelScope.launch {
                         _navigationHandler.emit(ReservationDetailNavigationAction.NavigateToBack)
                     }
-                }
-                .onError { }
+                }.onError { }
             dismissLoading()
         }
     }
