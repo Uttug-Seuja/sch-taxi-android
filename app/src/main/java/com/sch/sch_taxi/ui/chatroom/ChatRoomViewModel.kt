@@ -76,6 +76,11 @@ class ChatRoomViewModel @Inject constructor(
 
 
     fun postChat() {
+        message.value = ""
+        writer.value = ""
+        cursor.value = ""
+        userId.value = 0
+
         chatRoomEvent = createChatRoomPager(
             postChatUseCase = postChatUseCase, chatRoomViewModel = this
         ).flow.cachedIn(baseViewModelScope)
