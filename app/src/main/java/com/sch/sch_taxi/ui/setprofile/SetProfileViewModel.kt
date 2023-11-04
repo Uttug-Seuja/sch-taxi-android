@@ -6,6 +6,7 @@ import com.sch.domain.usecase.main.GetAssetRandomUseCase
 import com.sch.domain.usecase.main.PostEmailCodeUseCase
 import com.sch.domain.usecase.main.PostEmailUseCase
 import com.sch.domain.usecase.main.PostFileToImageUseCase
+import com.sch.domain.usecase.main.PostNotificationTokenUseCase
 import com.sch.domain.usecase.main.PostRegisterUseCase
 import com.sch.sch_taxi.base.BaseViewModel
 import com.sch.sch_taxi.di.PresentationApplication.Companion.editor
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.*
 class SetProfileViewModel @Inject constructor(
     private val postRegisterUseCase: PostRegisterUseCase,
     private val postFileToImageUseCase: PostFileToImageUseCase,
+    private val postNotificationTokenUseCase: PostNotificationTokenUseCase,
     private val postEmailUseCase: PostEmailUseCase,
     private val postEmailCodeUseCase: PostEmailCodeUseCase,
     private val getAssetRandomUseCase: GetAssetRandomUseCase,
@@ -49,8 +51,7 @@ class SetProfileViewModel @Inject constructor(
     init {
         baseViewModelScope.launch {
             showLoading()
-            getAssetRandomUseCase()
-                .onSuccess { userInFo ->
+            getAssetRandomUseCase().onSuccess { userInFo ->
                     profileImgPath.emit(
                         userInFo.url
                     )
@@ -92,16 +93,17 @@ class SetProfileViewModel @Inject constructor(
         baseViewModelScope.launch {
             showLoading()
 
-            postEmailUseCase(email = schoolEmailInputContent.value, oauthProvider = provider!!)
-                .onSuccess {
+            postEmailUseCase(
+                email = schoolEmailInputContent.value,
+                oauthProvider = provider!!
+            ).onSuccess {
                     isAuthEvent.value = true
                     _navigationHandler.emit(
                         SetProfileNavigationAction.NavigateToToastMessage(
                             "인증 메일을 보냈습니다"
                         )
                     )
-                }
-                .onError {
+                }.onError {
                     isAuthEvent.value = false
                     _navigationHandler.emit(
                         SetProfileNavigationAction.NavigateToToastMessage(
@@ -147,14 +149,13 @@ class SetProfileViewModel @Inject constructor(
             showLoading()
             val idToken = sSharedPreferences.getString("idToken", null)
             val provider = sSharedPreferences.getString("provider", null)
-            if (nicknameInputContent.value == "")
-                baseViewModelScope.launch {
-                    _navigationHandler.emit(
-                        SetProfileNavigationAction.NavigateToToastMessage(
-                            "이름을 입력해주세요"
-                        )
+            if (nicknameInputContent.value == "") baseViewModelScope.launch {
+                _navigationHandler.emit(
+                    SetProfileNavigationAction.NavigateToToastMessage(
+                        "이름을 입력해주세요"
                     )
-                }
+                )
+            }
             else if (isManEvent.value == null) baseViewModelScope.launch {
                 _navigationHandler.emit(
                     SetProfileNavigationAction.NavigateToToastMessage(
@@ -199,13 +200,13 @@ class SetProfileViewModel @Inject constructor(
                          * */
                         val deviceId = sSharedPreferences.getString("deviceId", null)
                         val fcmToken = sSharedPreferences.getString("fcmToken", null)
-//                        postNotificationTokenUseCase(deviceId = deviceId!!, token = fcmToken!!)
-//                            .onSuccess {
-                        _navigationHandler.emit(SetProfileNavigationAction.NavigateToHome)
-//                            }
-                    }
-                        .onError {
-                        }
+                        postNotificationTokenUseCase(
+                            deviceId = deviceId!!,
+                            token = fcmToken!!
+                        ).onSuccess {
+                                _navigationHandler.emit(SetProfileNavigationAction.NavigateToHome)
+                            }
+                    }.onError {}
                 }
             }
             dismissLoading()
