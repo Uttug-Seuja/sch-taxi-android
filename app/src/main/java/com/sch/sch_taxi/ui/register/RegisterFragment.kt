@@ -1,13 +1,17 @@
 package com.sch.sch_taxi.ui.register
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.provider.Settings.Secure
 import android.os.Build
 import androidx.navigation.fragment.findNavController
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -38,6 +42,11 @@ class RegisterFragment :
     override val viewModel: RegisterViewModel by viewModels()
     private val navController by lazy { findNavController() }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private val permissionList = arrayOf(
+        Manifest.permission.POST_NOTIFICATIONS,
+    )
+
     private var googleLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
@@ -64,7 +73,7 @@ class RegisterFragment :
             this.lifecycleOwner = viewLifecycleOwner
         }
         exception = viewModel.errorEvent
-//        requestMultiplePermission.launch(permissionList)
+        requestMultiplePermission.launch(permissionList)
 
         createNotification()
 
@@ -76,18 +85,19 @@ class RegisterFragment :
                 when (it) {
                     is RegisterNavigationAction.NavigateToPushSetting -> {
                         if (!viewModel.notificationAgreed.value) {
-//                            pushSettingDialog()
                             toastMessage("푸쉬 알림 전송 권한 없음")
                         } else {
                             toastMessage("푸쉬 알림 전송 완료")
                         }
                     }
+
                     is RegisterNavigationAction.NavigateToNotificationAlarm -> createNotification()
                     is RegisterNavigationAction.NavigateToKakaoLogin -> kakaoLogin()
                     is RegisterNavigationAction.NavigateToGoogleLogin -> googleLogin()
                     is RegisterNavigationAction.NavigateToLoginFirst -> navigate(
                         RegisterFragmentDirections.actionRegisterFragmentToSetProfileFragment()
                     )
+
                     is RegisterNavigationAction.NavigateToLoginAlready -> navigate(
                         RegisterFragmentDirections.actionRegisterFragmentToHomeFragment()
                     )
