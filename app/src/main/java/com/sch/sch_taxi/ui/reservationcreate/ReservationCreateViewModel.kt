@@ -138,7 +138,7 @@ class ReservationCreateViewModel @Inject constructor(
     override fun onClickedTaxiCreate() {
         baseViewModelScope.launch {
 
-            if (titleEvent.value.isNotEmpty() && startPlaceTitleEvent.value.isNotEmpty() && destinationTitleEvent.value.isNotEmpty() && seatEvent.value.isNotEmpty()
+            if (titleEvent.value.isNotEmpty() && startPlaceTitleEvent.value.isNotEmpty() && destinationTitleEvent.value.isNotEmpty() && seatEvent.value != "좌석 선택"
                 && genderEvent.value != "모집 성별" && dateEvent.value != "탑승 날짜"
             ) {
 
