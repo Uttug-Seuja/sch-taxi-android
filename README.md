@@ -55,3 +55,59 @@
 ![image6](https://github.com/Uttug-Seuja/ohsoontaxi-sever-v2.0/assets/104710245/4ac1a0b1-0618-421e-9540-92dadb5672e5)
 
 ---
+
+## 🛠️ ****Tech Stack****
+
+- Kotlin
+- Data binding
+- Coroutine
+- Retrofit2 + OkHttp
+- Flow
+- Debounce
+- DataStore
+- Kakao Map
+- Kakao Local
+
+## ⚙️ Architecture
+
+- MVVM
+
+## 👨‍👩‍👧‍👦 Owner
+
+<table>
+
+  <td align=center>
+  <a href="https://github.com/junjange">
+  <img src="https://avatars.githubusercontent.com/u/69571848?v=4" width="100px"  />
+  <br/>
+  Android 🖥
+  <br/>
+  조준장
+  </a>
+  </td>
+ 
+  <td align=center>
+  <a href="https://github.com/chanu2">
+  <img src="https://avatars.githubusercontent.com/u/96942183?v=4" width="100px"  />
+  <br/>
+  BeckEnd 🖥
+  <br/>
+  김찬우
+  </a>
+  </td>
+  
+  <td align=center>
+  <a href="https://github.com/GeonHui2">
+  <img src="https://avatars.githubusercontent.com/u/92250144?v=4" width="100px"  />
+  <br/>
+  BeckEnd 🖥
+  <br/>
+  이건희
+  </a>
+  </td>
+  
+</tr>
+ 
+  
+</table>
+
