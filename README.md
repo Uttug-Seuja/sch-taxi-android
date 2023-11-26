@@ -73,7 +73,6 @@
 - MVVM
 
 ## 👨‍👩‍👧‍👦 Owner
-
 <table>
 
   <td align=center>
@@ -95,7 +94,17 @@
   김찬우
   </a>
   </td>
-  
+
+  <td align=center>
+  <a href="https://github.com/Leehunil">
+  <img src="https://avatars.githubusercontent.com/u/104710245?v=4" width="100px"  />
+  <br/>
+  BeckEnd 🖥
+  <br/>
+  이훈일
+  </a>
+  </td>
+
   <td align=center>
   <a href="https://github.com/GeonHui2">
   <img src="https://avatars.githubusercontent.com/u/92250144?v=4" width="100px"  />
@@ -105,9 +114,11 @@
   이건희
   </a>
   </td>
+
   
 </tr>
  
   
 </table>
+
 
