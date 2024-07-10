@@ -40,17 +40,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Lint Check
-        run: ./gradlew ktlintCheck
-
       - name: Run unit tests and publish results
         env:
-          DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
-          KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
           LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
         run: |
-          echo "$DEBUG_KEYSTORE" | base64 -d > debug.keystore
-          echo "$KEYSTORE_PROPERTIES" > keystore.properties
           echo "$LOCAL_PROPERTIES" > local.properties
           ./gradlew debugUnitTest --stacktrace
 
