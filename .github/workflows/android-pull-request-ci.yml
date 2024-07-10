@@ -43,13 +43,7 @@ jobs:
       - name: Lint Check
         run: ./gradlew ktlintCheck
 
-      - name: run rest
-        run: ./gradlew test
-
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Run unit tests
+      - name: Run unit tests and publish results
         env:
           DEBUG_KEYSTORE: ${{ secrets.DEBUG_KEYSTORE }}
           KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
